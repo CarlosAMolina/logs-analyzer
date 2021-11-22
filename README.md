@@ -1,3 +1,10 @@
+## Table of contents
+
+- [Introduction](#introduction)
+- [Configuracion](#configuracion)
+  - [Analyze an IP](#analyze-an-ip)
+- [Run](#run)
+
 ## Introduction
 
 Project to facilitate the analysis of logs.
@@ -21,3 +28,10 @@ Install `jq`:
 sudo apt-get install jq
 ```
 
+## Run
+
+Run each script with the required arguments. Example:
+
+```bash
+./get-analysis-of-ip 8.8.8.8
+```
