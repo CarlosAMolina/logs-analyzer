@@ -1,0 +1,3 @@
+## Reference: https://support.virustotal.com/hc/en-us/articles/360006819798
+echo "## Analysis ($1):"
+curl -s --request GET --url "https://www.virustotal.com/api/v3/ip_addresses/$1" --header "x-apikey: $VT_KEY" | jq '.data | .attributes | .last_analysis_stats'
