@@ -1,0 +1,2 @@
+echo "## Total matches ($1): $(grep -r $1 /var/log/nginx/ | wc -l)"
+grep -r $1 /var/log/nginx/ --color
