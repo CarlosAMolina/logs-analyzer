@@ -1,0 +1,15 @@
+# Project
+access.log
+
+# Python.
+/build/
+/env/
+/dist/
+*.egg-info/
+*.pyc
+
+# Tox
+/.tox/
+
+# Vim.
+*.swp
