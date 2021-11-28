@@ -1,21 +1,18 @@
 import datetime as datetime
 import re
-from typing import List
+from typing import Iterator
 
 
-class Log:
-    def __init__(self, remote_addr: str, time_local: datetime.datetime):
-        self.remote_addr = remote_addr
-        self.time_local = time_local
-
-
-class LineParser:
+class LogParser:
     """
     https://docs.nginx.com/nginx/admin-guide/monitoring/logging/
     """
 
     def __init__(self, line: str):
-        regex = r'^(([0-9]{1,3}[\.]){3}[0-9]{1,3})\s-\s(.+)\s\[(.*)\]\s"(.*)"\s(\d{1,3})\s(\d+)\s"(.*)"\s"(.*)"'
+        regex = (
+            r'^(([0-9]{1,3}[\.]){3}[0-9]{1,3})\s-\s(.+)\s\[(.*)\]\s"(.*)"\s(\d{1,3})'
+            r'\s(\d+)\s"(.*)"\s"(.*)"'
+        )
         self._match = re.search(regex, line)
 
     @property
@@ -66,17 +63,12 @@ class LineParser:
 
 class FileParser:
     def __init__(self):
-        self._parse_line = LineParser
+        self._parse_log = LogParser
 
     def __call__(self, file: str):
         return self._get_file_parsed(file)
 
-    def _get_file_parsed(self, file: str) -> List[LineParser]:
+    def _get_file_parsed(self, file: str) -> Iterator[LogParser]:
         with open(file, "r") as f:
-            return [
-                Log(
-                    remote_addr=self._parse_line(line).remote_addr,
-                    time_local=None,
-                )
-                for line in f.read().splitlines()
-            ]
+            for line in f.read().splitlines():
+                yield LogParser(line)

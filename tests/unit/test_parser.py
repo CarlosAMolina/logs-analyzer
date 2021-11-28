@@ -4,14 +4,14 @@ import unittest
 from src_python import parser as m_parser
 
 
-class TestLineParser(unittest.TestCase):
+class TestLogParser(unittest.TestCase):
     def setUp(self):
         line = (
             '8.8.8.8 - abc [28/Nov/2021:00:18:22 +0100] "GET / HTTP/1.1" 200 77 "-"'
             ' "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36'
             ' (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"'
         )
-        self.parser = m_parser.LineParser(line)
+        self.parser = m_parser.LogParser(line)
 
     def test_remote_addr(self):
         self.assertEqual("8.8.8.8", self.parser.remote_addr)
@@ -61,10 +61,47 @@ class TestLineParser(unittest.TestCase):
 
 
 class TestFileParser(unittest.TestCase):
-    def _test_get_file_parsed(self):
+    def test_get_file_parsed(self):
         parse_file = m_parser.FileParser()
-        line_parsed = parse_file("tests/access.log")[0]
-        self.assertEqual("8.8.8.8", line_parsed.remote_addr)
+        logs = [log for log in parse_file("tests/access.log")]
+        self.assertEqual("8.8.8.8", logs[0].remote_addr)
+        self.assertEqual("111.222.33.4", logs[1].remote_addr)
+        self.assertEqual("-", logs[0].remote_user)
+        self.assertEqual("abc", logs[1].remote_user)
+        self.assertEqual(
+            datetime.datetime(
+                2021,
+                10,
+                28,
+                0,
+                18,
+                22,
+                tzinfo=datetime.timezone(datetime.timedelta(seconds=3600)),
+            ),
+            logs[0].time_local,
+        )
+        self.assertEqual(
+            datetime.datetime(
+                2021,
+                11,
+                28,
+                6,
+                8,
+                15,
+                tzinfo=datetime.timezone(datetime.timedelta(seconds=3600)),
+            ),
+            logs[1].time_local,
+        )
+        self.assertEqual("GET / HTTP/1.1", logs[0].request)
+        self.assertEqual("GET /foo/bar HTTP/1.1", logs[1].request)
+        self.assertEqual(200, logs[0].status)
+        self.assertEqual(404, logs[1].status)
+        self.assertEqual(77, logs[0].body_bytes_sent)
+        self.assertEqual(118, logs[1].body_bytes_sent)
+        self.assertEqual("-", logs[0].http_referer)
+        self.assertEqual("-", logs[1].http_referer)
+        self.assertEqual("foo bar 1", logs[0].http_user_agent)
+        self.assertEqual("foo bar 2", logs[1].http_user_agent)
 
 
 if __name__ == "__main__":
