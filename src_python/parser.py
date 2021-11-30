@@ -2,6 +2,8 @@ import datetime as datetime
 import re
 from typing import Iterator
 
+import pandas as pd
+
 
 class LogParser:
     """
@@ -72,3 +74,37 @@ class FileParser:
         with open(file, "r") as f:
             for line in f.read().splitlines():
                 yield LogParser(line)
+
+
+class PandasParser:
+    def __init__(self):
+        self._get_logs_from_file = FileParser()
+
+    def __call__(self, file: str):
+        result = self._get_file_as_df(file)
+        return self._get_df_cast_values(result)
+
+    def _get_file_as_df(self, file: str) -> pd.DataFrame:
+        result = pd.DataFrame()
+        for log in self._get_logs_from_file(file):
+            result = result.append(
+                {
+                    "remote_addr": log.remote_addr,
+                    "remote_user": log.remote_user,
+                    "time_local": log.time_local,
+                    "request": log.request,
+                    "status": log.status,
+                    "body_bytes_sent": log.body_bytes_sent,
+                    "http_referer": log.http_referer,
+                    "http_user_agent": log.http_user_agent,
+                },
+                ignore_index=True,
+            )
+        return result
+
+    def _get_df_cast_values(self, df: pd.DataFrame) -> pd.DataFrame:
+        result = df
+        result["status"] = result["status"].astype(int)
+        result["body_bytes_sent"] = result["body_bytes_sent"].astype(int)
+        return result
+

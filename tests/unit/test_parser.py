@@ -1,6 +1,8 @@
 import datetime
 import unittest
 
+import pandas as pd
+
 from src_python import parser as m_parser
 
 
@@ -102,6 +104,44 @@ class TestFileParser(unittest.TestCase):
         self.assertEqual("-", logs[1].http_referer)
         self.assertEqual("foo bar 1", logs[0].http_user_agent)
         self.assertEqual("foo bar 2", logs[1].http_user_agent)
+
+
+class TestPandasParser(unittest.TestCase):
+    def test_get_file_as_df(self):
+        result_expected = pd.DataFrame(
+            {
+                "remote_addr": ["8.8.8.8", "111.222.33.4"],
+                "remote_user": ["-", "abc"],
+                "time_local": [
+                    datetime.datetime(
+                        2021,
+                        10,
+                        28,
+                        0,
+                        18,
+                        22,
+                        tzinfo=datetime.timezone(datetime.timedelta(seconds=3600)),
+                    ),
+                    datetime.datetime(
+                        2021,
+                        11,
+                        28,
+                        6,
+                        8,
+                        15,
+                        tzinfo=datetime.timezone(datetime.timedelta(seconds=3600)),
+                    ),
+                ],
+                "request": ["GET / HTTP/1.1", "GET /foo/bar HTTP/1.1"],
+                "status": [200, 404],
+                "body_bytes_sent": [77, 118],
+                "http_referer": ["-", "-"],
+                "http_user_agent": ["foo bar 1", "foo bar 2"],
+            }
+        )
+        parse_file = m_parser.PandasParser()
+        result = parse_file("tests/access.log")
+        self.assertTrue(result_expected.equals(result))
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+with open("README.md", "r") as f:
+    long_description = f.read()
 
 setuptools.setup(
     author="Carlos A Molina",
@@ -12,10 +12,16 @@ setuptools.setup(
     ],
     description="Python's logs parser",
     include_package_data=True,
+    install_requires=[
+        "pandas",
+    ],
     long_description_content_type="text/markdown",
     long_description=long_description,
     name="logs_parser",
     packages=setuptools.find_packages(),
+    project_urls={
+        "Source": "https://github.com/CarlosAMolina/logs-parser",
+    },
     python_requires=">=3.9",
     version="0.0.1",
 )
