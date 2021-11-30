@@ -1,4 +1,4 @@
-# Python.
+# Python
 /build/
 /env/
 /dist/
@@ -8,5 +8,5 @@
 # Tox
 /.tox/
 
-# Vim.
+# Vim
 *.swp
