@@ -107,4 +107,3 @@ class PandasParser:
         result["status"] = result["status"].astype(int)
         result["body_bytes_sent"] = result["body_bytes_sent"].astype(int)
         return result
-
