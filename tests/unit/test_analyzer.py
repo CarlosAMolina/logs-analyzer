@@ -1,4 +1,3 @@
-import datetime
 import unittest
 
 import pandas as pd
@@ -12,7 +11,7 @@ class TestLogsAnalyzer(unittest.TestCase):
         analyze_logs = analyzer.LogsAnalyzer(logs)
         self.assertEqual(["1.1.1.1", "2.2.2.2"], analyze_logs.get_remote_addr())
 
-    def test_remote_addr(self):
+    def test_remote_addr_count(self):
         logs = pd.DataFrame({"remote_addr": ["2.2.2.2", "1.1.1.1", "1.1.1.1"]})
         analyze_logs = analyzer.LogsAnalyzer(logs)
         self.assertTrue(
@@ -23,6 +22,16 @@ class TestLogsAnalyzer(unittest.TestCase):
                 }
             ).equals(analyze_logs.get_remote_addr_count())
         )
+
+    def test_get_log_repr(self):
+        # TODO fix
+        log = pd.Series({"a": "foo", "b": 1})
+        logs = pd.Series({"a": ["foo"], "b": [1]})
+        analyze_logs = analyzer.LogsAnalyzer(None)
+        print(logs)
+        print(logs.iloc[0])
+        # breakpoint()
+        self.assertEqual("foo 1", analyze_logs.get_log_repr(logs))
 
 
 if __name__ == "__main__":

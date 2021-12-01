@@ -1,8 +1,6 @@
 """This file is used for manual tests.
 """
 
-import pandas as pd
-
 import analyzer
 import parser
 
@@ -14,5 +12,6 @@ if __name__ == "__main__":
     printer.print_full_logs()
     printer.print_remote_addr()
     printer.print_remote_addr_count()
+    printer.print_logs_group_by_ip()
     # print(df.request.str.len().max())
     # df.to_csv('access.log.csv')

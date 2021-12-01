@@ -17,6 +17,9 @@ class LogsAnalyzer:
     def _get_column_count(self, column) -> pd.DataFrame:
         return self._logs.groupby([column])[column].count().reset_index(name="count")
 
+    def get_log_repr(self, log: pd.Series) -> str:
+        return log.to_string(header=False, index=False)
+
 
 class LogsPrinter:
     def __init__(self, logs: pd.DataFrame):
@@ -38,3 +41,13 @@ class LogsPrinter:
             None,
         ):
             print(self._logs.to_string())
+
+    def print_logs_group_by_ip(self):
+        for indes, row in self._analyze_log.get_remote_addr_count().iterrows():
+            print(f"## {row['remote_addr']} ({row['count']})")
+            print(
+                self._analyze_log.get_log_repr(
+                    self._logs.loc[self._logs["remote_addr"] == row["remote_addr"]]
+                )
+            )
+            print("\n")
