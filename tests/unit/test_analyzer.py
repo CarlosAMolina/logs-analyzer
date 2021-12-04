@@ -24,13 +24,8 @@ class TestLogsAnalyzer(unittest.TestCase):
         )
 
     def test_get_log_repr(self):
-        # TODO fix
-        log = pd.Series({"a": "foo", "b": 1})
-        logs = pd.Series({"a": ["foo"], "b": [1]})
+        logs = pd.DataFrame({"a": ["foo"], "b": [1]})
         analyze_logs = analyzer.LogsAnalyzer(None)
-        print(logs)
-        print(logs.iloc[0])
-        # breakpoint()
         self.assertEqual("foo 1", analyze_logs.get_log_repr(logs))
 
 
