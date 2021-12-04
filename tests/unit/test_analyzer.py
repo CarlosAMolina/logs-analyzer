@@ -25,8 +25,8 @@ class TestLogsAnalyzer(unittest.TestCase):
 
     def test_get_logs_repr(self):
         logs = pd.DataFrame({"a": ["foo"], "b": [1]})
-        analyze_logs = analyzer.LogsAnalyzer(None)
-        self.assertEqual("foo 1", analyze_logs.get_logs_repr(logs))
+        analyze_logs = analyzer.LogsAnalyzer(logs)
+        self.assertEqual("foo 1", analyze_logs.get_logs_repr())
 
     def test_get_logs_columns(self):
         logs = pd.DataFrame({"a": ["foo"], "b": [1]})
