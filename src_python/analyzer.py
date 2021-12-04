@@ -17,8 +17,11 @@ class LogsAnalyzer:
     def _get_column_count(self, column) -> pd.DataFrame:
         return self._logs.groupby([column])[column].count().reset_index(name="count")
 
-    def get_log_repr(self, log: pd.DataFrame) -> str:
-        return log.to_string(header=False, index=False)
+    def get_logs_repr(self, logs: pd.DataFrame) -> str:
+        return logs.to_string(header=False, index=False)
+
+    def get_logs_columns(self, columns: List[str]) -> pd.DataFrame:
+        return self._logs[columns]
 
 
 class LogsPrinter:

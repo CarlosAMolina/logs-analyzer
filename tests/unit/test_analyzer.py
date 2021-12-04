@@ -23,10 +23,17 @@ class TestLogsAnalyzer(unittest.TestCase):
             ).equals(analyze_logs.get_remote_addr_count())
         )
 
-    def test_get_log_repr(self):
+    def test_get_logs_repr(self):
         logs = pd.DataFrame({"a": ["foo"], "b": [1]})
         analyze_logs = analyzer.LogsAnalyzer(None)
-        self.assertEqual("foo 1", analyze_logs.get_log_repr(logs))
+        self.assertEqual("foo 1", analyze_logs.get_logs_repr(logs))
+
+    def test_get_logs_columns(self):
+        logs = pd.DataFrame({"a": ["foo"], "b": [1]})
+        analyze_logs = analyzer.LogsAnalyzer(logs)
+        self.assertTrue(
+            pd.DataFrame({"a": ["foo"]}).equals(analyze_logs.get_logs_columns(["a"]))
+        )
 
 
 if __name__ == "__main__":
