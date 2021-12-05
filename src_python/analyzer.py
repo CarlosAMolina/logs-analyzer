@@ -32,6 +32,15 @@ class LogsAnalyzer:
     def get_logs_of_remote_addr(self, ip: str) -> pd.DataFrame:
         return self._logs.loc[self._logs["remote_addr"] == ip]
 
+    def get_logs_remove_not_malicious_requests(self) -> pd.DataFrame:
+        not_malicious_requests = [
+            "GET / HTTP/1.0",
+            "GET / HTTP/1.1",
+            "GET /index.css HTTP/1.1",
+            "GET /agallas.png HTTP/1.1",
+        ]
+        return self._logs.loc[~self._logs["request"].isin(not_malicious_requests)]
+
 
 class LogsPrinter:
     def __init__(self, logs: pd.DataFrame):
@@ -47,15 +56,19 @@ class LogsPrinter:
 
     def print_logs_group_by_remote_addr(self):
         for index, row in self._analyze_logs.get_remote_addr_count().iterrows():
+            logs_analyzer = LogsAnalyzer(
+                self._analyze_logs.get_logs_of_remote_addr(row["remote_addr"])
+            )
+            logs = logs_analyzer.get_logs_remove_not_malicious_requests()
             print(
                 "## {ip} ({count})\n{logs}\n".format(
                     ip=row["remote_addr"],
                     count=row["count"],
-                    logs=repr(
+                    logs=""
+                    if logs.empty
+                    else repr(
                         LogsAnalyzer(
-                            self._analyze_logs.get_logs_of_remote_addr(
-                                row["remote_addr"]
-                            )[
+                            logs[
                                 [
                                     "request",
                                     "status",

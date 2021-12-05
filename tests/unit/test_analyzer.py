@@ -35,10 +35,29 @@ class TestLogsAnalyzer(unittest.TestCase):
             pd.DataFrame({"a": ["foo"]}).equals(analyze_logs.get_logs_columns(["a"]))
         )
 
+    def test_get_logs_remove_not_malicious_requests(self):
+        logs = pd.DataFrame(
+            {"remote_addr": ["1", "2"], "request": ["GET / HTTP/1.0", "GET foo"]}
+        )
+        analyze_logs = analyzer.LogsAnalyzer(logs)
+        self.assertTrue(
+            pd.DataFrame({"remote_addr": ["2"], "request": ["GET foo"]}).equals(
+                analyze_logs.get_logs_remove_not_malicious_requests().reset_index(
+                    drop=True
+                )
+            )
+        )
+
 
 class TestLogsPrinter(unittest.TestCase):
     def setUp(self):
-        logs = pd.DataFrame({"remote_addr": ["1.1.1.1", "1.1.1.1", "2.2.2.2"]})
+        logs = pd.DataFrame(
+            {
+                "remote_addr": ["1.1.1.1", "1.1.1.1", "2.2.2.2"],
+                "request": [None] * 3,
+                "status": [None] * 3,
+            }
+        )
         self.printer = analyzer.LogsPrinter(logs)
 
     def test_methods_do_not_raise_exception(self):
