@@ -36,12 +36,24 @@ class TestLogsAnalyzer(unittest.TestCase):
         )
 
     def test_get_logs_remove_not_malicious_requests(self):
+        requests = [
+            "GET / HTTP/1.0",
+            "GET foo",
+            "GET /index.css HTTP/1.1",
+            "GET /agallas.png HTTP/1.1",
+        ]
         logs = pd.DataFrame(
-            {"remote_addr": ["1", "2"], "request": ["GET / HTTP/1.0", "GET foo"]}
+            {
+                "remote_addr": ["1"] * len(requests),
+                "request": requests,
+            }
         )
         analyze_logs = analyzer.LogsAnalyzer(logs)
+        print(
+            analyze_logs.get_logs_remove_not_malicious_requests().reset_index(drop=True)
+        )
         self.assertTrue(
-            pd.DataFrame({"remote_addr": ["2"], "request": ["GET foo"]}).equals(
+            pd.DataFrame({"remote_addr": ["1"], "request": ["GET foo"]}).equals(
                 analyze_logs.get_logs_remove_not_malicious_requests().reset_index(
                     drop=True
                 )

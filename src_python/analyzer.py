@@ -33,13 +33,9 @@ class LogsAnalyzer:
         return self._logs.loc[self._logs["remote_addr"] == ip]
 
     def get_logs_remove_not_malicious_requests(self) -> pd.DataFrame:
-        not_malicious_requests = [
-            "GET / HTTP/1.0",
-            "GET / HTTP/1.1",
-            "GET /index.css HTTP/1.1",
-            "GET /agallas.png HTTP/1.1",
-        ]
-        return self._logs.loc[~self._logs["request"].isin(not_malicious_requests)]
+        regex = r"GET /(index.css|agallas.png)? HTTP/1.[0|1]"
+        exp = self._logs["request"].str.match(regex, na=False)
+        return self._logs.loc[~exp]
 
 
 class LogsPrinter:
