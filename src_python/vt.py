@@ -28,10 +28,17 @@ class ResponseParserIp:
         self._response = response
 
     def get_summary(self) -> str:
-        return "{analysis} {date} UTC".format(
-            analysis=self._get_last_analysis_stats(),
-            date=self._get_last_modification_date(),
+        return (
+            "{analysis} {date} UTC".format(
+                analysis=self._get_last_analysis_stats(),
+                date=self._get_last_modification_date(),
+            )
+            if self._is_ip_analyzed()
+            else "-"
         )
+
+    def _is_ip_analyzed(self) -> bool:
+        return "error" not in self._response.keys()
 
     def _get_last_analysis_stats(self) -> str:
         analysis = self._response["data"]["attributes"]["last_analysis_stats"]
