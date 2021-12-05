@@ -11,6 +11,11 @@ class TestLogsAnalyzer(unittest.TestCase):
         analyze_logs = analyzer.LogsAnalyzer(logs)
         self.assertEqual("foo 1", repr(analyze_logs))
 
+    def test_repr_empty(self):
+        logs = pd.DataFrame()
+        analyze_logs = analyzer.LogsAnalyzer(logs)
+        self.assertEqual("", repr(analyze_logs))
+
     def test_remote_addr(self):
         logs = pd.DataFrame({"remote_addr": ["1.1.1.1", "1.1.1.1", "2.2.2.2"]})
         analyze_logs = analyzer.LogsAnalyzer(logs)
@@ -35,7 +40,7 @@ class TestLogsAnalyzer(unittest.TestCase):
             pd.DataFrame({"a": ["foo"]}).equals(analyze_logs.get_logs_columns(["a"]))
         )
 
-    def test_get_logs_remove_not_malicious_requests(self):
+    def test_get_logs_remove_not_suspicious_requests(self):
         requests = [
             "GET / HTTP/1.0",
             "GET foo",
@@ -50,11 +55,13 @@ class TestLogsAnalyzer(unittest.TestCase):
         )
         analyze_logs = analyzer.LogsAnalyzer(logs)
         print(
-            analyze_logs.get_logs_remove_not_malicious_requests().reset_index(drop=True)
+            analyze_logs.get_logs_remove_not_suspicious_requests().reset_index(
+                drop=True
+            )
         )
         self.assertTrue(
             pd.DataFrame({"remote_addr": ["1"], "request": ["GET foo"]}).equals(
-                analyze_logs.get_logs_remove_not_malicious_requests().reset_index(
+                analyze_logs.get_logs_remove_not_suspicious_requests().reset_index(
                     drop=True
                 )
             )

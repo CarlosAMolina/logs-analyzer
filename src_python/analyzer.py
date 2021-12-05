@@ -6,14 +6,39 @@ class LogsAnalyzer:
     def __init__(self, logs: pd.DataFrame):
         self._logs = logs
 
+    def __len__(self) -> int:
+        return len(self._logs)
+
     def __repr__(self) -> str:
-        with pd.option_context(
+        with pd.option_context(*self._repr_option_content):
+            return self._get_repr(self._logs)
+
+    def _get_repr(self, df: pd.DataFrame) -> str:
+        return "" if df.empty else df.to_string(**self._repr_args)
+
+    @property
+    def _repr_option_content(self) -> tuple:
+        return (
             "display.max_rows",
             None,
             "display.max_columns",
             None,
-        ):
-            return self._logs.to_string(header=False, index=False)
+        )
+
+    @property
+    def _repr_args(self) -> dict:
+        return {"header": False, "index": False}
+
+    def get_repr_summary(self) -> str:
+        with pd.option_context(*self._repr_option_content):
+            return self._get_repr(
+                self._logs[
+                    [
+                        "request",
+                        "status",
+                    ]
+                ]
+            )
 
     def get_remote_addr(self) -> List[str]:
         return self._logs["remote_addr"].drop_duplicates().tolist()
@@ -32,10 +57,13 @@ class LogsAnalyzer:
     def get_logs_of_remote_addr(self, ip: str) -> pd.DataFrame:
         return self._logs.loc[self._logs["remote_addr"] == ip]
 
-    def get_logs_remove_not_malicious_requests(self) -> pd.DataFrame:
+    def get_logs_remove_not_suspicious_requests(self) -> pd.DataFrame:
         regex = r"GET /(index.css|agallas.png)? HTTP/1.[0|1]"
         exp = self._logs["request"].str.match(regex, na=False)
         return self._logs.loc[~exp]
+
+    def is_logs_count_suspicious(self) -> bool:
+        return len(self._logs) > 10
 
 
 class LogsPrinter:
@@ -52,25 +80,22 @@ class LogsPrinter:
 
     def print_logs_group_by_remote_addr(self):
         for index, row in self._analyze_logs.get_remote_addr_count().iterrows():
-            logs_analyzer = LogsAnalyzer(
+            ip_logs_analyzer = LogsAnalyzer(
                 self._analyze_logs.get_logs_of_remote_addr(row["remote_addr"])
             )
-            logs = logs_analyzer.get_logs_remove_not_malicious_requests()
+            ip_suspicious_logs_analyzer = LogsAnalyzer(
+                ip_logs_analyzer.get_logs_remove_not_suspicious_requests()
+            )
+            if (
+                len(ip_suspicious_logs_analyzer) == 0
+                and not ip_logs_analyzer.is_logs_count_suspicious()
+            ):
+                continue
             print(
-                "## {ip} ({count})\n{logs}\n".format(
+                "## {ip} ({count_suspicious}/{count_total})\n{logs}\n".format(
                     ip=row["remote_addr"],
-                    count=row["count"],
-                    logs=""
-                    if logs.empty
-                    else repr(
-                        LogsAnalyzer(
-                            logs[
-                                [
-                                    "request",
-                                    "status",
-                                ]
-                            ]
-                        )
-                    ),
+                    count_suspicious=len(ip_suspicious_logs_analyzer),
+                    count_total=len(ip_logs_analyzer),
+                    logs=ip_suspicious_logs_analyzer.get_repr_summary(),
                 )
             )
