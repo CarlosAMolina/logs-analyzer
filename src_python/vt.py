@@ -1,11 +1,12 @@
 """Module to work with Virus Total
 """
 
-from typing import Iterator
 import datetime
 import os
 
 import requests
+
+from . import file_extractor
 
 
 API_KEY = os.environ["VT_KEY"]
@@ -49,21 +50,16 @@ class ResponseParserIp:
 
 class FileIpAnalyzer:
     def __init__(self, file: str):
-        self._file = file
+        self._file_reader = file_extractor.FileExtractor(file)
         self._ip_analyzer = RequestIp()
-        self._response_parser_reference = ResponseParserIp
-
-    def _get_ip_in_file(self) -> Iterator[str]:
-        with open(self._file, "r") as f:
-            for ip in f.read().splitlines():
-                yield (ip)
+        self._parse_response = ResponseParserIp
 
     def print_analysis_of_each_ip(self):
-        for ip in self._get_ip_in_file():
+        for ip in self._file_reader.get_lines_in_file():
             print(
                 "## {ip}: {analysis}".format(
                     ip=ip,
-                    analysis=self._response_parser_reference(
+                    analysis=self._parse_response(
                         self._ip_analyzer.get_analysis(ip)
                     ).get_summary(),
                 )

@@ -1,8 +1,9 @@
 import datetime as datetime
 import re
-from typing import Iterator
 
 import pandas as pd
+
+from . import file_extractor
 
 
 class LogParser:
@@ -63,30 +64,19 @@ class LogParser:
         return self._match.group(9)
 
 
-class FileParser:
-    def __init__(self):
+class PandasParser:
+    def __init__(self, file: str):
+        self._file_extractor = file_extractor.FileExtractor(file)
         self._parse_log = LogParser
 
-    def __call__(self, file: str):
-        return self._get_file_parsed(file)
-
-    def _get_file_parsed(self, file: str) -> Iterator[LogParser]:
-        with open(file, "r") as f:
-            for line in f.read().splitlines():
-                yield LogParser(line)
-
-
-class PandasParser:
-    def __init__(self):
-        self._get_logs_from_file = FileParser()
-
-    def __call__(self, file: str):
-        result = self._get_file_as_df(file)
+    def __call__(self):
+        result = self._get_file_as_df()
         return self._get_df_cast_values(result)
 
-    def _get_file_as_df(self, file: str) -> pd.DataFrame:
+    def _get_file_as_df(self) -> pd.DataFrame:
         result = pd.DataFrame()
-        for log in self._get_logs_from_file(file):
+        for log in self._file_extractor.get_lines_in_file():
+            log = self._parse_log(log)
             result = result.append(
                 {
                     "remote_addr": log.remote_addr,
