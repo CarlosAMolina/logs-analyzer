@@ -14,6 +14,7 @@ setuptools.setup(
     include_package_data=True,
     install_requires=[
         "pandas",
+        "requests>=2.26.0",
     ],
     long_description_content_type="text/markdown",
     long_description=long_description,
