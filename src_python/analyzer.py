@@ -6,6 +6,15 @@ class LogsAnalyzer:
     def __init__(self, logs: pd.DataFrame):
         self._logs = logs
 
+    def __repr__(self) -> str:
+        with pd.option_context(
+            "display.max_rows",
+            None,
+            "display.max_columns",
+            None,
+        ):
+            return self._logs.to_string(header=False, index=False)
+
     def get_remote_addr(self) -> List[str]:
         return self._logs["remote_addr"].drop_duplicates().tolist()
 
@@ -17,11 +26,11 @@ class LogsAnalyzer:
     def _get_column_count(self, column) -> pd.DataFrame:
         return self._logs.groupby([column])[column].count().reset_index(name="count")
 
-    def get_logs_repr(self) -> str:
-        return self._logs.to_string(header=False, index=False)
-
     def get_logs_columns(self, columns: List[str]) -> pd.DataFrame:
         return self._logs[columns]
+
+    def get_logs_of_remote_addr(self, ip: str) -> pd.DataFrame:
+        return self._logs.loc[self._logs["remote_addr"] == ip]
 
 
 class LogsPrinter:
@@ -36,19 +45,23 @@ class LogsPrinter:
         with pd.option_context("display.max_rows", None):
             print(self._analyze_logs.get_remote_addr_count())
 
-    def print_full_logs(self):
-        with pd.option_context(
-            "display.max_rows",
-            None,
-            "display.max_columns",
-            None,
-        ):
-            print(self._logs.to_string())
-
-    def print_logs_group_by_ip(self):
-        for indes, row in self._analyze_log.get_remote_addr_count().iterrows():
-            print(f"## {row['remote_addr']} ({row['count']})")
-            logs = self._logs.loc[self._logs["remote_addr"] == row["remote_addr"]]
-            analyze_logs = LogsAnalyzer(logs)
-            print(analyze_logs.get_log_repr())
-            print("\n")
+    def print_logs_group_by_remote_addr(self):
+        for index, row in self._analyze_logs.get_remote_addr_count().iterrows():
+            print(
+                "## {ip} ({count})\n{logs}\n".format(
+                    ip=row["remote_addr"],
+                    count=row["count"],
+                    logs=repr(
+                        LogsAnalyzer(
+                            self._analyze_logs.get_logs_of_remote_addr(
+                                row["remote_addr"]
+                            )[
+                                [
+                                    "request",
+                                    "status",
+                                ]
+                            ]
+                        )
+                    ),
+                )
+            )
