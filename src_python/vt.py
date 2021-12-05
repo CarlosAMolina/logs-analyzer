@@ -1,6 +1,7 @@
 """Module to work with Virus Total
 """
 
+from typing import Iterator
 import datetime
 import os
 
@@ -44,3 +45,26 @@ class ResponseParserIp:
     def _get_last_modification_date(self) -> datetime.datetime:
         epoch = self._response["data"]["attributes"]["last_modification_date"]
         return datetime.datetime.utcfromtimestamp(epoch)
+
+
+class FileIpAnalyzer:
+    def __init__(self, file: str):
+        self._file = file
+        self._ip_analyzer = RequestIp()
+        self._response_parser_reference = ResponseParserIp
+
+    def _get_ip_in_file(self) -> Iterator[str]:
+        with open(self._file, "r") as f:
+            for ip in f.read().splitlines():
+                yield (ip)
+
+    def print_analysis_of_each_ip(self):
+        for ip in self._get_ip_in_file():
+            print(
+                "## {ip}: {analysis}".format(
+                    ip=ip,
+                    analysis=self._response_parser_reference(
+                        self._ip_analyzer.get_analysis(ip)
+                    ).get_summary(),
+                )
+            )

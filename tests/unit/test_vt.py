@@ -46,5 +46,16 @@ class TestResponseParserIp(unittest.TestCase):
         )
 
 
+class TestFileAnalyzer(unittest.TestCase):
+    @mock.patch("src_python.vt.ResponseParserIp")
+    @mock.patch("src_python.vt.RequestIp")
+    def test_print_analysis_of_each_ip(self, mock_request_ip, mock_response_parser):
+        mock_request_ip().get_analysis.return_value = "foo"
+        mock_response_parser().get_summary.return_value = "bar"
+        vt.FileIpAnalyzer(
+            os.path.join(os.path.dirname(__file__), "files/ip-addresses.txt")
+        ).print_analysis_of_each_ip()
+
+
 if __name__ == "__main__":
     unittest.main()
