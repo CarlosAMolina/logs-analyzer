@@ -57,7 +57,7 @@ class LogsSummarize:
         self._logs = logs
         self._remove_not_required_columns()
         self._remove_not_suspcicious_requests()
-        return self._logs.reset_index(drop=True)
+        return self._logs.sort_values(by="remote_addr").reset_index(drop=True)
 
     def _remove_not_required_columns(self):
         columns = [
