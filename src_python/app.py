@@ -13,6 +13,4 @@ def show_logs():
     logs = get_file_as_df()
     get_logs_summarized = analyzer.LogsSummarize()
     logs_summarized = get_logs_summarized(logs)
-    return flask.render_template(
-        "view.html", tables=[logs_summarized.to_html(justify="left")]
-    )
+    return flask.render_template("view.html", tables=[logs_summarized.to_html()])
