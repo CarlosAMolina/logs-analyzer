@@ -68,7 +68,7 @@ class LogsSummarize:
         self._logs = self._logs[columns]
 
     def _remove_not_suspcicious_requests(self):
-        regex = r"GET /(index.css|agallas.png)? HTTP/1.[0|1]"
+        regex = r"GET /(index.css|agallas.png|robots.txt|favicon.ico)? HTTP/1.[0|1]"
         exp = self._logs["request"].str.match(regex, na=False)
         self._logs = self._logs.loc[~exp]
 

@@ -43,6 +43,8 @@ class TestLogsSummarize(unittest.TestCase):
             "GET foo",
             "GET /index.css HTTP/1.1",
             "GET /agallas.png HTTP/1.1",
+            "GET /favicon.ico HTTP/1.1",
+            "GET /robots.txt HTTP/1.1",
         ]
         logs = pd.DataFrame(
             {
