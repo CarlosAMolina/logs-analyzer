@@ -54,11 +54,11 @@ class TestLogsSummarize(unittest.TestCase):
             }
         )
         get_logs_summarized = analyzer.LogsSummarize()
-        self.assertTrue(
-            pd.DataFrame(
-                {"remote_addr": ["1.1.1.1"], "request": ["GET foo"], "status": [200]}
-            ).equals(get_logs_summarized(logs))
+        expected_result = pd.DataFrame(
+            data={"request": ["GET foo"], "status": [200]},
+            index=["1.1.1.1"],
         )
+        self.assertTrue(expected_result.equals(get_logs_summarized(logs)))
 
 
 class TestLogsPrinter(unittest.TestCase):
