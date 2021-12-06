@@ -5,17 +5,19 @@ import pandas as pd
 from src_python import analyzer
 
 
-class TestLogsAnalyzer(unittest.TestCase):
+class TestLogsRepr(unittest.TestCase):
     def test_repr(self):
         logs = pd.DataFrame({"a": ["foo"], "b": [1]})
-        analyze_logs = analyzer.LogsAnalyzer(logs)
-        self.assertEqual("foo 1", repr(analyze_logs))
+        repr_logs = analyzer.LogsRepr(logs)
+        self.assertEqual("foo 1", repr(repr_logs))
 
     def test_repr_empty(self):
         logs = pd.DataFrame()
-        analyze_logs = analyzer.LogsAnalyzer(logs)
-        self.assertEqual("", repr(analyze_logs))
+        repr_logs = analyzer.LogsRepr(logs)
+        self.assertEqual("", repr(repr_logs))
 
+
+class TestLogsAnalyzer(unittest.TestCase):
     def test_remote_addr(self):
         logs = pd.DataFrame({"remote_addr": ["1.1.1.1", "1.1.1.1", "2.2.2.2"]})
         analyze_logs = analyzer.LogsAnalyzer(logs)
@@ -33,13 +35,8 @@ class TestLogsAnalyzer(unittest.TestCase):
             ).equals(analyze_logs.get_remote_addr_count())
         )
 
-    def test_get_logs_columns(self):
-        logs = pd.DataFrame({"a": ["foo"], "b": [1]})
-        analyze_logs = analyzer.LogsAnalyzer(logs)
-        self.assertTrue(
-            pd.DataFrame({"a": ["foo"]}).equals(analyze_logs.get_logs_columns(["a"]))
-        )
 
+class TestLogsSummarize(unittest.TestCase):
     def test_get_logs_remove_not_suspicious_requests(self):
         requests = [
             "GET / HTTP/1.0",
@@ -49,22 +46,16 @@ class TestLogsAnalyzer(unittest.TestCase):
         ]
         logs = pd.DataFrame(
             {
-                "remote_addr": ["1"] * len(requests),
+                "remote_addr": ["1.1.1.1"] * len(requests),
                 "request": requests,
+                "status": [200] * len(requests),
             }
         )
-        analyze_logs = analyzer.LogsAnalyzer(logs)
-        print(
-            analyze_logs.get_logs_remove_not_suspicious_requests().reset_index(
-                drop=True
-            )
-        )
+        get_logs_summarized = analyzer.LogsSummarize()
         self.assertTrue(
-            pd.DataFrame({"remote_addr": ["1"], "request": ["GET foo"]}).equals(
-                analyze_logs.get_logs_remove_not_suspicious_requests().reset_index(
-                    drop=True
-                )
-            )
+            pd.DataFrame(
+                {"remote_addr": ["1.1.1.1"], "request": ["GET foo"], "status": [200]}
+            ).equals(get_logs_summarized(logs))
         )
 
 

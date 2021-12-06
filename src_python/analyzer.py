@@ -2,12 +2,9 @@ from typing import List
 import pandas as pd
 
 
-class LogsAnalyzer:
+class LogsRepr:
     def __init__(self, logs: pd.DataFrame):
         self._logs = logs
-
-    def __len__(self) -> int:
-        return len(self._logs)
 
     def __repr__(self) -> str:
         with pd.option_context(*self._repr_option_content):
@@ -29,16 +26,10 @@ class LogsAnalyzer:
     def _repr_args(self) -> dict:
         return {"header": False, "index": False}
 
-    def get_repr_summary(self) -> str:
-        with pd.option_context(*self._repr_option_content):
-            return self._get_repr(
-                self._logs[
-                    [
-                        "request",
-                        "status",
-                    ]
-                ]
-            )
+
+class LogsAnalyzer:
+    def __init__(self, logs: pd.DataFrame):
+        self._logs = logs
 
     def get_remote_addr(self) -> List[str]:
         return self._logs["remote_addr"].drop_duplicates().tolist()
@@ -51,51 +42,66 @@ class LogsAnalyzer:
     def _get_column_count(self, column) -> pd.DataFrame:
         return self._logs.groupby([column])[column].count().reset_index(name="count")
 
-    def get_logs_columns(self, columns: List[str]) -> pd.DataFrame:
-        return self._logs[columns]
-
     def get_logs_of_remote_addr(self, ip: str) -> pd.DataFrame:
         return self._logs.loc[self._logs["remote_addr"] == ip]
-
-    def get_logs_remove_not_suspicious_requests(self) -> pd.DataFrame:
-        regex = r"GET /(index.css|agallas.png)? HTTP/1.[0|1]"
-        exp = self._logs["request"].str.match(regex, na=False)
-        return self._logs.loc[~exp]
 
     def is_logs_count_suspicious(self) -> bool:
         return len(self._logs) > 10
 
 
+class LogsSummarize:
+    def __init__(self):
+        self._logs = None
+
+    def __call__(self, logs: pd.DataFrame) -> pd.DataFrame:
+        self._logs = logs
+        self._remove_not_required_columns()
+        self._remove_not_suspcicious_requests()
+        return self._logs.reset_index(drop=True)
+
+    def _remove_not_required_columns(self):
+        columns = [
+            "remote_addr",
+            "request",
+            "status",
+        ]
+        self._logs = self._logs[columns]
+
+    def _remove_not_suspcicious_requests(self):
+        regex = r"GET /(index.css|agallas.png)? HTTP/1.[0|1]"
+        exp = self._logs["request"].str.match(regex, na=False)
+        self._logs = self._logs.loc[~exp]
+
+
 class LogsPrinter:
     def __init__(self, logs: pd.DataFrame):
         self._logs = logs
-        self._analyze_logs = LogsAnalyzer(logs)
+        self._get_logs_analizer = LogsAnalyzer
+        self._get_logs_summarized = LogsSummarize()
+        self._logs_analizer = self._get_logs_analizer(logs)
+        self._logs_repr = LogsRepr
 
     def print_remote_addr(self):
-        print(*self._analyze_logs.get_remote_addr(), sep="\n")
+        print(*self._logs_analizer.get_remote_addr(), sep="\n")
 
     def print_remote_addr_count(self):
         with pd.option_context("display.max_rows", None):
-            print(self._analyze_logs.get_remote_addr_count())
+            print(self._logs_analizer.get_remote_addr_count())
 
     def print_logs_group_by_remote_addr(self):
-        for index, row in self._analyze_logs.get_remote_addr_count().iterrows():
-            ip_logs_analyzer = LogsAnalyzer(
-                self._analyze_logs.get_logs_of_remote_addr(row["remote_addr"])
-            )
-            ip_suspicious_logs_analyzer = LogsAnalyzer(
-                ip_logs_analyzer.get_logs_remove_not_suspicious_requests()
-            )
+        for index, row in self._logs_analizer.get_remote_addr_count().iterrows():
+            ip_logs = self._logs_analizer.get_logs_of_remote_addr(row["remote_addr"])
+            ip_logs_suspicious = self._get_logs_summarized(ip_logs)
             if (
-                len(ip_suspicious_logs_analyzer) == 0
-                and not ip_logs_analyzer.is_logs_count_suspicious()
+                len(ip_logs_suspicious) == 0
+                and not self._get_logs_analizer(ip_logs).is_logs_count_suspicious()
             ):
                 continue
             print(
                 "## {ip} ({count_suspicious}/{count_total})\n{logs}\n".format(
                     ip=row["remote_addr"],
-                    count_suspicious=len(ip_suspicious_logs_analyzer),
-                    count_total=len(ip_logs_analyzer),
-                    logs=ip_suspicious_logs_analyzer.get_repr_summary(),
+                    count_suspicious=len(ip_logs_suspicious),
+                    count_total=len(ip_logs),
+                    logs=repr(self._logs_repr(ip_logs_suspicious)),
                 )
             )
