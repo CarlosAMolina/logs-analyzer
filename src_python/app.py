@@ -47,9 +47,9 @@ def show_logs():
 @app.route("/logs", methods=["POST"])
 def analyze_ip():
     ips = flask.request.form["ips"].split("\r\n")
-    get_ip_analysis = vt.IpAnalyzer()
-    # get_ip_analysis = lambda x: "bad"
-    vt_results_html = "<br>".join([f"{ip} {get_ip_analysis(ip)}" for ip in ips])
+    get_vt_analysis_as_df_of_ips = vt.IPsAnalyzerAsDf()
+    vt_results = get_vt_analysis_as_df_of_ips(ips)
+    vt_results_html = vt_results.to_html()
     logs_data = LogsData()
     return flask.render_template(
         "logs.html",

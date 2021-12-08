@@ -3,6 +3,7 @@ import json
 import unittest
 import os
 
+import pandas as pd
 
 from src_python import vt
 
@@ -62,6 +63,39 @@ class TestFileAnalyzer(unittest.TestCase):
         vt.FileIpAnalyzer(
             os.path.join(os.path.dirname(__file__), "files/ip-addresses.txt")
         ).print_analysis_of_each_ip()
+
+
+class TestIPsAnalyzerAsDf(unittest.TestCase):
+    @mock.patch("src_python.vt.RequestIp")
+    @mock.patch("src_python.vt.IpResults")
+    def test_get_analysis_of_ips_as_df(self, mock_ip_results, mock_request_ip):
+        class MockIPResults:
+            malicious = 4
+            suspicious = 3
+            harmless = 10
+
+            def __init__(self, *args):
+                pass
+
+        class MockIPResultsA(MockIPResults):
+            last_modification_date = "2021-01"
+
+        class MockIPResultsB(MockIPResults):
+            last_modification_date = "2021-02"
+
+        mock_ip_results.side_effect = [MockIPResultsA, MockIPResultsB]
+        expected_result = pd.DataFrame(
+            data={
+                "malicious": [4, 4],
+                "suspicious": [3, 3],
+                "harmless": [10, 10],
+                "last_modification_date": ["2021-01", "2021-02"],
+            },
+            index=["1.1.1.1", "2.2.2.2"],
+        )
+        get_vt_analysis_as_df_of_ips = vt.IPsAnalyzerAsDf()
+        result = get_vt_analysis_as_df_of_ips(["1.1.1.1", "2.2.2.2"])
+        self.assertTrue(expected_result.equals(result))
 
 
 if __name__ == "__main__":

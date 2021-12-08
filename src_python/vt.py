@@ -1,9 +1,11 @@
 """Module to work with Virus Total
 """
 
+from typing import List
 import datetime
 import os
 
+import pandas as pd
 import requests
 
 from . import file_extractor
@@ -100,3 +102,53 @@ class FileIpAnalyzer:
                     analysis=self._get_ip_analysis(ip),
                 )
             )
+
+
+class IPsAnalyzerAsDf:
+    def __init__(self):
+        self._get_vt_info_of_ip = RequestIp().get_analysis
+        self._get_ip_info_parsed = IpResults
+
+    def __call__(self, ips: List[str]):
+        return self._get_analysis_of_ips_as_df(ips)
+
+    def __get_analysis_of_ips_as_df(self, ips: List[str]) -> pd.DataFrame:
+        data = {
+            "remote_addr": [],
+            "malicious": [],
+            "suspicious": [],
+            "harmless": [],
+            "last_modification_date": [],
+        }
+        for ip in ips:
+            ip_info = self._get_ip_info_parsed(self._get_vt_info_of_ip(ip))
+            data["remote_addr"].append(ip)
+            data["malicious"].append(ip_info.malicious)
+            data["suspicious"].append(ip_info.suspicious)
+            data["harmless"].append(ip_info.harmless)
+            data["last_modification_date"].append(ip_info.last_modification_date)
+        return pd.DataFrame(data)
+
+    def _get_analysis_of_ips_as_df(self, ips: List[str]) -> pd.DataFrame:
+        data = {
+            "remote_addr": [],
+            "malicious": [],
+            "suspicious": [],
+            "harmless": [],
+            "last_modification_date": [],
+        }
+        for ip in ips:
+            ip_info = self._get_ip_info_parsed(self._get_vt_info_of_ip(ip))
+            data["remote_addr"].append(ip)
+            data["malicious"].append(ip_info.malicious)
+            data["suspicious"].append(ip_info.suspicious)
+            data["harmless"].append(ip_info.harmless)
+            data["last_modification_date"].append(ip_info.last_modification_date)
+        result = pd.DataFrame(data)
+        return self._format_dataframe(result)
+
+    def _format_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        df.set_index("remote_addr", inplace=True)
+        df.sort_index(inplace=True)
+        df.index.name = None
+        return df
