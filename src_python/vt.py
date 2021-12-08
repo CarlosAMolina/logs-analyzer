@@ -55,19 +55,25 @@ class ResponseParserIp:
         return datetime.datetime.utcfromtimestamp(epoch)
 
 
+class IpAnalyzer:
+    def __init__(self):
+        self._ip_analyzer = RequestIp()
+        self._parse_response = ResponseParserIp
+
+    def __call__(self, ip: str):
+        return self._parse_response(self._ip_analyzer.get_analysis(ip)).get_summary()
+
+
 class FileIpAnalyzer:
     def __init__(self, file: str):
         self._file_reader = file_extractor.FileExtractor(file)
-        self._ip_analyzer = RequestIp()
-        self._parse_response = ResponseParserIp
+        self._get_ip_analysis = IpAnalyzer()
 
     def print_analysis_of_each_ip(self):
         for ip in self._file_reader.get_lines_in_file():
             print(
                 "## {ip}: {analysis}".format(
                     ip=ip,
-                    analysis=self._parse_response(
-                        self._ip_analyzer.get_analysis(ip)
-                    ).get_summary(),
+                    analysis=self._get_ip_analysis(ip),
                 )
             )

@@ -1,6 +1,6 @@
 body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
 
-table.dataframe, .dataframe th, .dataframe td {
+table.logs, .logs th, .logs td {
   border-collapse: collapse;
   text-align:left;
   padding: 10px;
@@ -8,12 +8,12 @@ table.dataframe, .dataframe th, .dataframe td {
   font-size: 0.9em;
 }
 
-th {
+.logs th {
     background-color: #add8e6;
     color: black;
 }
 
-tr:nth-child(odd)	{ background-color:#eee; }
-tr:nth-child(even)	{ background-color:#fff; }
+.logs tr:nth-child(odd)	{ background-color:#eee; }
+.logs tr:nth-child(even)	{ background-color:#fff; }
 
-tr:hover            { background-color: #ffff99;}
+.logs tr:hover            { background-color: #ffff99;}

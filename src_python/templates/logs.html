@@ -1,0 +1,19 @@
+<!doctype html>
+<title>Logs</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div>
+  {{ tables[0]|safe }}
+</div>
+<div>
+  {{ tables[1]|safe }}
+</div>
+<form method="POST">
+    <p>IPs to analyze:</p>
+    <textarea
+  type="text"
+  name="ips"
+  rows="10"
+  cols="20"
+    ></textarea>
+    <input type="submit">
+</form>
