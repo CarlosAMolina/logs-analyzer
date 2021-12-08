@@ -4,12 +4,17 @@
 
 <body>
 
-<h2>IPs requests count</h2>
+<h2>Table of contents</h2>
+<p><a href="#ips-requests-count">IPs requests count</a></p>
+<p><a href="#ips-to-analyze">IPs to analyze</a></p>
+<p><a href="#suspicious-logs">Suspicious logs</a></p>
+
+<h2 id="ips-requests-count">IPs requests count</h2>
 <div>
   {{ ips_count|safe }}
 </div>
 
-<h2>IPs to analyze</h2>
+<h2 id="ips-to-analyze">IPs to analyze</h2>
 <p>Only the IPs with suspicious requests are shown</p>
 <form method="POST">
 <textarea class="ips-vt" name="ips">{% for ip in ips_suspicious %}
@@ -18,7 +23,7 @@
 </form>
 {{ vt_results|safe }}
 
-<h2>Suspicious logs</h2>
+<h2 id="suspicious-logs">Suspicious logs</h2>
 <div>
   {{ logs|safe }}
 </div>
