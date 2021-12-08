@@ -70,9 +70,9 @@ class TestIPsAnalyzerAsDf(unittest.TestCase):
     @mock.patch("src_python.vt.IpResults")
     def test_get_analysis_of_ips_as_df(self, mock_ip_results, mock_request_ip):
         class MockIPResults:
-            malicious = 4
-            suspicious = 3
-            harmless = 10
+            malicious = 4.0
+            suspicious = 3.0
+            harmless = 10.0
 
             def __init__(self, *args):
                 pass

@@ -148,6 +148,9 @@ class IPsAnalyzerAsDf:
         return self._format_dataframe(result)
 
     def _format_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.astype(
+            {"malicious": "int64", "suspicious": "int64", "harmless": "int64"}
+        )
         df.set_index("remote_addr", inplace=True)
         df.sort_index(inplace=True)
         df.index.name = None
