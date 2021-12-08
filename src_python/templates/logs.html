@@ -16,6 +16,9 @@
 {{ ip }}{% endfor %}</textarea>
 <input type="submit" id="input-vt" value="Check in VT">
 </form>
+<u><p>Virus Total results</p></u>
+{{ vt_results|safe }}
+
 
 <h2>Suspicious logs</h2>
 <div>
