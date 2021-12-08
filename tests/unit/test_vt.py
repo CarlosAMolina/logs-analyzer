@@ -33,21 +33,28 @@ class TestRequestIp(unittest.TestCase):
         self.assertEqual({"data": "foo"}, response)
 
 
-class TestResponseParserIp(unittest.TestCase):
+class TestIpSummary(unittest.TestCase):
     def test_get_summary(self):
         with open(
             os.path.join(os.path.dirname(__file__), "files/ip-response.json"), "r"
         ) as f:
             response = json.load(f)
-        vt_parser = vt.ResponseParserIp(response)
+        vt_parser = vt.IpSummary(response)
         self.assertEqual(
             "1/0/79 (malicious/suspicious/harmless) 2021-12-05 11:49:41 UTC",
             vt_parser.get_summary(),
         )
 
+    def test_get_summary_error(self):
+        response = {"error": "bar"}
+        vt_parser = vt.IpSummary(response)
+        self.assertEqual(
+            "-/-/- (malicious/suspicious/harmless) - UTC", vt_parser.get_summary()
+        )
+
 
 class TestFileAnalyzer(unittest.TestCase):
-    @mock.patch("src_python.vt.ResponseParserIp")
+    @mock.patch("src_python.vt.IpSummary")
     @mock.patch("src_python.vt.RequestIp")
     def test_print_analysis_of_each_ip(self, mock_request_ip, mock_response_parser):
         mock_request_ip().get_analysis.return_value = "foo"

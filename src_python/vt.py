@@ -23,45 +23,68 @@ class RequestIp:
         return response.json()
 
 
-class ResponseParserIp:
+class IpResults:
     def __init__(self, response: dict):
         self._response = response
+        self._is_error = "error" in self._response.keys()
+
+    @property
+    def _attributes(self) -> dict:
+        if not self._is_error:
+            return self._response["data"]["attributes"]
+
+    @property
+    def _stats(self) -> dict:
+        if not self._is_error:
+            return self._attributes["last_analysis_stats"]
+
+    @property
+    def malicious(self):
+        if not self._is_error:
+            return self._stats["malicious"]
+
+    @property
+    def suspicious(self):
+        if not self._is_error:
+            return self._stats["suspicious"]
+
+    @property
+    def harmless(self):
+        if not self._is_error:
+            return self._stats["harmless"]
+
+    @property
+    def last_modification_date(self) -> datetime.datetime:
+        if not self._is_error:
+            epoch = self._attributes["last_modification_date"]
+            return datetime.datetime.utcfromtimestamp(epoch)
+
+
+class IpSummary:
+    def __init__(self, response: dict):
+        self._analysis = IpResults(response)
 
     def get_summary(self) -> str:
-        return (
-            "{analysis} {date} UTC".format(
-                analysis=self._get_last_analysis_stats(),
-                date=self._get_last_modification_date(),
-            )
-            if self._is_ip_analyzed()
-            else "-"
+        result = (
+            "{malicious}/{suspicious}/{harmless}"
+            " (malicious/suspicious/harmless) {date} UTC"
         )
-
-    def _is_ip_analyzed(self) -> bool:
-        return "error" not in self._response.keys()
-
-    def _get_last_analysis_stats(self) -> str:
-        analysis = self._response["data"]["attributes"]["last_analysis_stats"]
-        return (
-            "{malicious}/{suspicious}/{harmless} (malicious/suspicious/harmless)"
-        ).format(
-            malicious=analysis["malicious"],
-            suspicious=analysis["suspicious"],
-            harmless=analysis["harmless"],
+        result = result.format(
+            malicious=self._analysis.malicious,
+            suspicious=self._analysis.suspicious,
+            harmless=self._analysis.harmless,
+            date=self._analysis.last_modification_date,
         )
-
-    def _get_last_modification_date(self) -> datetime.datetime:
-        epoch = self._response["data"]["attributes"]["last_modification_date"]
-        return datetime.datetime.utcfromtimestamp(epoch)
+        return result.replace("None", "-")
 
 
 class IpAnalyzer:
     def __init__(self):
         self._ip_analyzer = RequestIp()
-        self._parse_response = ResponseParserIp
+        self._get_ip_summary = IpSummary
 
     def __call__(self, ip: str):
-        return self._parse_response(self._ip_analyzer.get_analysis(ip)).get_summary()
+        return self._get_ip_summary(self._ip_analyzer.get_analysis(ip)).get_summary()
 
 
 class FileIpAnalyzer:
