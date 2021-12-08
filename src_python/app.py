@@ -12,16 +12,17 @@ app = flask.Flask(__name__, template_folder="templates")
 def show_logs():
     get_file_as_df = parser.PandasParser("../logs-parser-results/access.log")
     logs = get_file_as_df()
+    ips_count_html = analyzer.LogsAnalyzer(logs).get_remote_addr_count().to_html()
     get_logs_summarized = analyzer.LogsSummarize()
     logs_summarized = get_logs_summarized(logs)
-    logs_html = logs_summarized.to_html(classes="logs")
-    ips_html = (
-        logs_summarized[[]]
-        .reset_index()
-        .drop_duplicates()
-        .to_html(header=False, index=False)
+    logs_html = logs_summarized.to_html()
+    ips_suspicious = logs_summarized.index.drop_duplicates().tolist()
+    return flask.render_template(
+        "logs.html",
+        ips_count=ips_count_html,
+        ips_suspicious=ips_suspicious,
+        logs=logs_html,
     )
-    return flask.render_template("logs.html", tables=[logs_html, ips_html])
 
 
 @app.route("/logs", methods=["POST"])

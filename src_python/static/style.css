@@ -1,19 +1,36 @@
-body            { font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
+body {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
 
-table.logs, .logs th, .logs td {
+textarea.ips-vt {
+  type: text;
+  height: 15em;
+  width: 15em;
+  border: 3px solid #cccccc;
+  padding: 5px;
+  font-family: inherit;
+}
+
+input#input-vt {
+  padding: 0.25em 0.5em;
+  border: 2px solid;
+  border-radius: 4px;
+}
+
+
+table, th, td {
   border-collapse: collapse;
   text-align:left;
   padding: 10px;
   margin-bottom: 40px;
-  font-size: 0.9em;
 }
 
-.logs th {
+th {
     background-color: #add8e6;
     color: black;
 }
 
-.logs tr:nth-child(odd)	{ background-color:#eee; }
-.logs tr:nth-child(even)	{ background-color:#fff; }
+tr:nth-child(odd)	{ background-color:#eee; }
+tr:nth-child(even)	{ background-color:#fff; }
 
-.logs tr:hover            { background-color: #ffff99;}
+tr:hover { background-color: #ffff99;}
