@@ -1,19 +1,21 @@
 <!doctype html>
+<h2>Unique IPs</h2>
+<div>
+  {{ tables[1]|safe }}
+</div>
+<h2>Logs</h2>
 <title>Logs</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div>
   {{ tables[0]|safe }}
 </div>
-<div>
-  {{ tables[1]|safe }}
-</div>
+<h2>IPs to analyze</h2>
 <form method="POST">
-    <p>IPs to analyze:</p>
     <textarea
   type="text"
   name="ips"
   rows="10"
   cols="20"
     ></textarea>
-    <input type="submit">
+    <input type="submit" value="Check in VT">
 </form>
