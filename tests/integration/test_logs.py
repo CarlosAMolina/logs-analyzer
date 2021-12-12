@@ -2,7 +2,7 @@ import datetime
 import os
 import unittest
 
-from src_python import parser as m_parser
+from src_python.logs import transformer
 from src_python.logs import extractor
 
 
@@ -11,7 +11,7 @@ class TestFileLogParser(unittest.TestCase):
         extract_file = extractor.FileExtractor(
             os.path.join(os.path.dirname(__file__), "../files/access.log")
         )
-        parse_log = m_parser.LogParser
+        parse_log = transformer.LogParser
         logs = [parse_log(log) for log in extract_file.get_lines_in_file()]
         self.assertEqual("8.8.8.8", logs[0].remote_addr)
         self.assertEqual("111.222.33.4", logs[1].remote_addr)

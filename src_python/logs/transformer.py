@@ -3,7 +3,7 @@ import re
 
 import pandas as pd
 
-from .logs import extractor
+from . import extractor
 
 
 class LogParser:

@@ -1,12 +1,12 @@
 import unittest
 
 from src_python import analyzer
-from src_python import parser
+from src_python.logs import transformer
 
 
 class TestMain(unittest.TestCase):
     def _test_main(self):
-        get_file_as_df = parser.PandasParser("../logs-parser-results/access.log")
+        get_file_as_df = transformer.PandasParser("../logs-parser-results/access.log")
         logs = get_file_as_df()
         get_logs_summarized = analyzer.LogsSummarize()
         logs_summarized = get_logs_summarized(logs)

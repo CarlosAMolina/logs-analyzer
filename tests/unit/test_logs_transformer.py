@@ -4,7 +4,7 @@ import unittest
 
 import pandas as pd
 
-from src_python import parser as m_parser
+from src_python.logs import transformer
 
 
 class TestLogParser(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestLogParser(unittest.TestCase):
             ' "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36'
             ' (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"'
         )
-        self.parser = m_parser.LogParser(line)
+        self.parser = transformer.LogParser(line)
 
     def test_remote_addr(self):
         self.assertEqual("8.8.8.8", self.parser.remote_addr)
@@ -96,7 +96,7 @@ class TestPandasParser(unittest.TestCase):
                 "http_user_agent": ["foo bar 1", "foo bar 2"],
             }
         )
-        parse_file = m_parser.PandasParser(
+        parse_file = transformer.PandasParser(
             os.path.join(os.path.dirname(__file__), "../files/access.log")
         )
         self.assertTrue(result_expected.equals(parse_file()))
