@@ -1,3 +1,4 @@
+from typing import List
 import datetime as datetime
 import re
 
@@ -97,3 +98,55 @@ class PandasParser:
         result["status"] = result["status"].astype(int)
         result["body_bytes_sent"] = result["body_bytes_sent"].astype(int)
         return result
+
+
+class LogsAnalyzer:
+    def __init__(self, logs: pd.DataFrame):
+        self._logs = logs
+
+    def get_remote_addr(self) -> List[str]:
+        return self._logs["remote_addr"].drop_duplicates().tolist()
+
+    def get_remote_addr_count(self) -> pd.DataFrame:
+        column = "remote_addr"
+        result = self._get_column_count(column)
+        return result.sort_values(["count"], ascending=False).reset_index(drop=True)
+
+    def _get_column_count(self, column) -> pd.DataFrame:
+        return self._logs.groupby([column])[column].count().reset_index(name="count")
+
+    def get_logs_of_remote_addr(self, ip: str) -> pd.DataFrame:
+        return self._logs.loc[self._logs["remote_addr"] == ip]
+
+    def is_logs_count_suspicious(self) -> bool:
+        return len(self._logs) > 10
+
+
+class LogsSummarize:
+    def __init__(self):
+        self._logs = None
+
+    def __call__(self, logs: pd.DataFrame) -> pd.DataFrame:
+        self._logs = logs
+        self._remove_not_required_columns()
+        self._remove_not_suspcicious_requests()
+        self._format_dataframe()
+        return self._logs
+
+    def _remove_not_required_columns(self):
+        columns = [
+            "remote_addr",
+            "request",
+            "status",
+        ]
+        self._logs = self._logs[columns]
+
+    def _remove_not_suspcicious_requests(self):
+        regex = r"GET /(index.css|agallas.png|robots.txt|favicon.ico)? HTTP/1.[0|1]"
+        exp = self._logs["request"].str.match(regex, na=False)
+        self._logs = self._logs.loc[~exp]
+
+    def _format_dataframe(self):
+        self._logs.set_index("remote_addr", inplace=True)
+        self._logs.sort_index(inplace=True)
+        self._logs.index.name = None
