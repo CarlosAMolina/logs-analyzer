@@ -1,4 +1,4 @@
-from .logs import extractor
+from ..logs import extractor
 
 
 class RuleGenerator:

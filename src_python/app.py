@@ -1,8 +1,7 @@
 import flask
 
-from . import analyzer
-from . import parser
-from . import vt
+from .logs import transformer as logs_transformer
+from .vt import transformer as vt_transformer
 
 
 app = flask.Flask(__name__, template_folder="templates")
@@ -10,12 +9,14 @@ app = flask.Flask(__name__, template_folder="templates")
 
 class LogsData:
     def __init__(self):
-        get_file_as_df = parser.PandasParser("../logs-parser-results/access.log")
+        get_file_as_df = logs_transformer.PandasParser(
+            "../logs-parser-results/access.log"
+        )
         logs = get_file_as_df()
         self._ips_count_html = (
-            analyzer.LogsAnalyzer(logs).get_remote_addr_count().to_html()
+            logs_transformer.LogsAnalyzer(logs).get_remote_addr_count().to_html()
         )
-        get_logs_summarized = analyzer.LogsSummarize()
+        get_logs_summarized = logs_transformer.LogsSummarize()
         logs_summarized = get_logs_summarized(logs)
         self._logs_suspicious_html = logs_summarized.to_html()
         self._ips_suspicious = logs_summarized.index.drop_duplicates().tolist()
@@ -48,7 +49,7 @@ def show_logs():
 def analyze_ip():
     ips = flask.request.form["ips"].split("\r\n")
     ips = [ip for ip in ips if len(ip)]
-    get_vt_analysis_as_df_of_ips = vt.IPsAnalyzerAsDf()
+    get_vt_analysis_as_df_of_ips = vt_transformer.IPsAnalyzerAsDf()
     vt_results = get_vt_analysis_as_df_of_ips(ips)
     vt_results_html = vt_results.to_html()
     logs_data = LogsData()
