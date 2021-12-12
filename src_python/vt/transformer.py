@@ -1,28 +1,14 @@
-"""Module to work with Virus Total
-"""
-
 from typing import List
 import datetime
 import os
 
 import pandas as pd
-import requests
 
-from .logs import extractor
+from ..logs import extractor as logs_extractor
+from . import extractor as vt_extractor
 
 
 API_KEY = os.environ["VT_KEY"]
-
-
-class RequestIp:
-    URL = "https://www.virustotal.com/api/v3/ip_addresses/{ip}"
-
-    def get_analysis(self, ip: str) -> dict:
-        response = requests.get(
-            self.URL.format(ip=ip),
-            headers={"x-apikey": API_KEY},
-        )
-        return response.json()
 
 
 class IpResults:
@@ -82,7 +68,7 @@ class IpSummary:
 
 class IpAnalyzer:
     def __init__(self):
-        self._ip_analyzer = RequestIp()
+        self._ip_analyzer = vt_extractor.RequestIp()
         self._get_ip_summary = IpSummary
 
     def __call__(self, ip: str):
@@ -91,7 +77,7 @@ class IpAnalyzer:
 
 class FileIpAnalyzer:
     def __init__(self, file: str):
-        self._file_reader = extractor.FileExtractor(file)
+        self._file_reader = logs_extractor.FileExtractor(file)
         self._get_ip_analysis = IpAnalyzer()
 
     def print_analysis_of_each_ip(self):
@@ -106,7 +92,7 @@ class FileIpAnalyzer:
 
 class IPsAnalyzerAsDf:
     def __init__(self):
-        self._get_vt_info_of_ip = RequestIp().get_analysis
+        self._get_vt_info_of_ip = vt_extractor.RequestIp().get_analysis
         self._get_ip_info_parsed = IpResults
 
     def __call__(self, ips: List[str]):
