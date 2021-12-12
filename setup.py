@@ -3,6 +3,9 @@ import setuptools
 with open("README.md", "r") as f:
     long_description = f.read()
 
+with open("requirements.txt", "r") as f:
+    requires = f.read()
+
 setuptools.setup(
     author="Carlos A Molina",
     classifiers=[
@@ -12,10 +15,7 @@ setuptools.setup(
     ],
     description="Python's logs parser",
     include_package_data=True,
-    install_requires=[
-        "pandas",
-        "requests>=2.26.0",
-    ],
+    install_requires=requires,
     long_description_content_type="text/markdown",
     long_description=long_description,
     name="logs_parser",
