@@ -1,6 +1,6 @@
 import pandas as pd
 
-from .logs import transformer
+from . import transformer
 
 
 class LogsRepr:

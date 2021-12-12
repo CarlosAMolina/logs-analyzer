@@ -2,19 +2,18 @@ import unittest
 
 import pandas as pd
 
-# from src_python.logs import loader
-from src_python import analyzer
+from src_python.logs import loader
 
 
 class TestLogsRepr(unittest.TestCase):
     def test_repr(self):
         logs = pd.DataFrame({"a": ["foo"], "b": [1]})
-        repr_logs = analyzer.LogsRepr(logs)
+        repr_logs = loader.LogsRepr(logs)
         self.assertEqual("foo 1", repr(repr_logs))
 
     def test_repr_empty(self):
         logs = pd.DataFrame()
-        repr_logs = analyzer.LogsRepr(logs)
+        repr_logs = loader.LogsRepr(logs)
         self.assertEqual("", repr(repr_logs))
 
 
@@ -27,7 +26,7 @@ class TestLogsPrinter(unittest.TestCase):
                 "status": [None] * 3,
             }
         )
-        self.printer = analyzer.LogsPrinter(logs)
+        self.printer = loader.LogsPrinter(logs)
 
     def test_methods_do_not_raise_exception(self):
         self.printer.print_remote_addr()

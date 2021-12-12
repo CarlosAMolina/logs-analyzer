@@ -1,6 +1,6 @@
 import unittest
 
-from src_python import analyzer
+# from src_python.logs import loader
 from src_python.logs import transformer
 
 
@@ -8,14 +8,14 @@ class TestMain(unittest.TestCase):
     def _test_main(self):
         get_file_as_df = transformer.PandasParser("../logs-parser-results/access.log")
         logs = get_file_as_df()
-        get_logs_summarized = analyzer.LogsSummarize()
+        get_logs_summarized = transformer.LogsSummarize()
         logs_summarized = get_logs_summarized(logs)
         # breakpoint()
         # logs.to_html("../logs-parser-results/logs.hml", justify="left")
         logs_summarized.to_html(
             "../logs-parser-results/logs_summarized.html", justify="left"
         )
-        # printer = analyzer.LogsPrinter(logs)
+        # printer = loader.LogsPrinter(logs)
         # printer.print_logs_group_by_remote_addr()
         # logs.to_csv('access.log.csv')
         # from src_python import vt
