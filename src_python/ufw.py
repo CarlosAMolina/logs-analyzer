@@ -1,4 +1,4 @@
-from . import file_extractor
+from .logs import extractor
 
 
 class RuleGenerator:
@@ -8,9 +8,9 @@ class RuleGenerator:
 
 class FileIpAnalyzer:
     def __init__(self, file: str):
-        self._file_reader = file_extractor.FileExtractor(file)
+        self._file_extractor = extractor.FileExtractor(file)
         self._generate_rule = RuleGenerator()
 
     def print_rule_drop_ip_addresses(self):
-        for ip in self._file_reader.get_lines_in_file():
+        for ip in self._file_extractor.get_lines_in_file():
             print(self._generate_rule.get_drop_ip(ip))

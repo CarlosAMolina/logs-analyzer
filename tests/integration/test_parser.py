@@ -3,12 +3,12 @@ import os
 import unittest
 
 from src_python import parser as m_parser
-from src_python import file_extractor
+from src_python.logs import extractor
 
 
 class TestFileLogParser(unittest.TestCase):
     def test_get_file_parsed(self):
-        extract_file = file_extractor.FileExtractor(
+        extract_file = extractor.FileExtractor(
             os.path.join(os.path.dirname(__file__), "../files/access.log")
         )
         parse_log = m_parser.LogParser

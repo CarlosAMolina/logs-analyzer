@@ -8,7 +8,7 @@ import os
 import pandas as pd
 import requests
 
-from . import file_extractor
+from .logs import extractor
 
 
 API_KEY = os.environ["VT_KEY"]
@@ -91,7 +91,7 @@ class IpAnalyzer:
 
 class FileIpAnalyzer:
     def __init__(self, file: str):
-        self._file_reader = file_extractor.FileExtractor(file)
+        self._file_reader = extractor.FileExtractor(file)
         self._get_ip_analysis = IpAnalyzer()
 
     def print_analysis_of_each_ip(self):

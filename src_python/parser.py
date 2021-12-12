@@ -3,7 +3,7 @@ import re
 
 import pandas as pd
 
-from . import file_extractor
+from .logs import extractor
 
 
 class LogParser:
@@ -66,7 +66,7 @@ class LogParser:
 
 class PandasParser:
     def __init__(self, file: str):
-        self._file_extractor = file_extractor.FileExtractor(file)
+        self._file_extractor = extractor.FileExtractor(file)
         self._parse_log = LogParser
 
     def __call__(self):
