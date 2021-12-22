@@ -5,7 +5,7 @@ from . import extractor
 from . import transformer
 
 
-def get_logs_from_file(file: str) -> List[Log]:
+def get_logs_from_file(file: str = extractor.LOG_FILE) -> List[Log]:
     result = []
     for line in extractor.FileExtractor(file).get_lines_in_file():
         line_parsed = transformer.FileLineParser(line)

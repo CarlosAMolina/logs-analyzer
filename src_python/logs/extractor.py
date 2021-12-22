@@ -1,4 +1,11 @@
 from typing import Iterator
+import os
+
+
+LOG_FILE = os.path.join(
+    os.path.dirname(__file__),
+    "../../../logs-parser-results/access.log",
+)
 
 
 class FileExtractor:

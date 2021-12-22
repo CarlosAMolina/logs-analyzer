@@ -1,6 +1,7 @@
 import flask
 
 from .logs import transformer as logs_transformer
+from .logs import extractor
 from .vt import transformer as vt_transformer
 
 
@@ -9,9 +10,7 @@ app = flask.Flask(__name__, template_folder="templates")
 
 class LogsData:
     def __init__(self):
-        get_file_as_df = logs_transformer.PandasParser(
-            "../logs-parser-results/access.log"
-        )
+        get_file_as_df = logs_transformer.PandasParser(extractor.LOG_FILE)
         logs = get_file_as_df()
         self._ips_count_html = (
             logs_transformer.LogsAnalyzer(logs).get_remote_addr_count().to_html()
