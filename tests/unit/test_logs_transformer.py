@@ -4,7 +4,7 @@ import unittest
 import pandas as pd
 
 from src_python.logs import transformer
-from tests import log_file
+from tests import LOG_FILE
 
 
 class TestFileLineParser(unittest.TestCase):
@@ -96,7 +96,7 @@ class TestPandasParser(unittest.TestCase):
                 "http_user_agent": ["foo bar 1", "foo bar 2"],
             }
         )
-        parse_file = transformer.PandasParser(log_file)
+        parse_file = transformer.PandasParser(LOG_FILE)
         self.assertTrue(result_expected.equals(parse_file()))
 
 

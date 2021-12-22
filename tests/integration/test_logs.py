@@ -3,12 +3,12 @@ import unittest
 
 from src_python.logs import transformer
 from src_python.logs import extractor
-from tests import log_file
+from tests import LOG_FILE
 
 
 class TestFileFileLineParser(unittest.TestCase):
     def test_get_file_parsed(self):
-        extract_file = extractor.FileExtractor(log_file)
+        extract_file = extractor.FileExtractor(LOG_FILE)
         parse_log = transformer.FileLineParser
         logs = [parse_log(log) for log in extract_file.get_lines_in_file()]
         self.assertEqual("8.8.8.8", logs[0].remote_addr)
