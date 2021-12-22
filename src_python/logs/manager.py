@@ -5,7 +5,8 @@ from . import extractor
 from . import transformer
 
 
-def get_logs_from_file(file: str = extractor.LOG_FILE) -> List[Log]:
+def get_logs_from_file(file: str = None) -> List[Log]:
+    file = extractor.LOG_FILE if file is None else file
     result = []
     for line in extractor.FileExtractor(file).get_lines_in_file():
         line_parsed = transformer.FileLineParser(line)
