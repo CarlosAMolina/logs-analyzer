@@ -1,10 +1,10 @@
 import datetime
-import os
 import unittest
 
 import pandas as pd
 
 from src_python.logs import transformer
+from tests import log_file
 
 
 class TestFileLineParser(unittest.TestCase):
@@ -96,9 +96,7 @@ class TestPandasParser(unittest.TestCase):
                 "http_user_agent": ["foo bar 1", "foo bar 2"],
             }
         )
-        parse_file = transformer.PandasParser(
-            os.path.join(os.path.dirname(__file__), "../files/access.log")
-        )
+        parse_file = transformer.PandasParser(log_file)
         self.assertTrue(result_expected.equals(parse_file()))
 
 

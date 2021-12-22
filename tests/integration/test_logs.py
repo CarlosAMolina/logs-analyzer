@@ -1,16 +1,14 @@
 import datetime
-import os
 import unittest
 
 from src_python.logs import transformer
 from src_python.logs import extractor
+from tests import log_file
 
 
 class TestFileFileLineParser(unittest.TestCase):
     def test_get_file_parsed(self):
-        extract_file = extractor.FileExtractor(
-            os.path.join(os.path.dirname(__file__), "../files/access.log")
-        )
+        extract_file = extractor.FileExtractor(log_file)
         parse_log = transformer.FileLineParser
         logs = [parse_log(log) for log in extract_file.get_lines_in_file()]
         self.assertEqual("8.8.8.8", logs[0].remote_addr)

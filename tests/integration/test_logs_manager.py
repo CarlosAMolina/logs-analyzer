@@ -1,13 +1,12 @@
-import os
 import unittest
 
 from src_python.logs import manager
+from tests import log_file
 
 
 class TestFunctions(unittest.TestCase):
     def test_get_logs_from_file(self):
-        file = os.path.join(os.path.dirname(__file__), "../files/access.log")
-        result = manager.get_logs_from_file(file)
+        result = manager.get_logs_from_file(log_file)
         self.assertEqual(2, len(result))
 
 
