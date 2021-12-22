@@ -7,7 +7,7 @@ import pandas as pd
 from . import extractor
 
 
-class LogParser:
+class FileLineParser:
     """
     https://docs.nginx.com/nginx/admin-guide/monitoring/logging/
     """
@@ -68,7 +68,7 @@ class LogParser:
 class PandasParser:
     def __init__(self, file: str):
         self._file_extractor = extractor.FileExtractor(file)
-        self._parse_log = LogParser
+        self._parse_log = FileLineParser
 
     def __call__(self):
         result = self._get_file_as_df()
