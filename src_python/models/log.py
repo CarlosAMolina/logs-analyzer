@@ -15,7 +15,7 @@ class Log:
     ):
         self.remote_addr = remote_addr
         self.remote_user = remote_user
-        self.time_local = time_local
+        self._time_local = time_local
         self.request = request
         self.status = status
         self.body_bytes_sent = body_bytes_sent
@@ -34,3 +34,7 @@ class Log:
             "http_referer": self.http_referer,
             "http_user_agent": self.http_user_agent,
         }
+
+    @property
+    def time_local(self) -> str:
+        return str(self._time_local)

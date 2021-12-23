@@ -4,6 +4,7 @@ import re
 
 import pandas as pd
 
+from . import exception
 from . import extractor
 
 
@@ -18,6 +19,9 @@ class FileLineParser:
             r'\s(\d+)\s"(.*)"\s"(.*)"'
         )
         self._match = re.search(regex, line)
+        if self._match is None:
+            print(f"[ERROR] Log not parsed: {line}")
+            raise exception.LogInFileNotParsedError(line)
 
     @property
     def remote_addr(self) -> str:
@@ -79,21 +83,21 @@ class PandasParser:
         for line in self._file_extractor.get_lines_in_file():
             try:
                 log = self._parse_log(line)
-                result = result.append(
-                    {
-                        "remote_addr": log.remote_addr,
-                        "remote_user": log.remote_user,
-                        "time_local": log.time_local,
-                        "request": log.request,
-                        "status": log.status,
-                        "body_bytes_sent": log.body_bytes_sent,
-                        "http_referer": log.http_referer,
-                        "http_user_agent": log.http_user_agent,
-                    },
-                    ignore_index=True,
-                )
-            except AttributeError:
-                print(f"[ERROR] Log not parsed: {line}")
+            except exception.LogInFileNotParsedError:
+                continue
+            result = result.append(
+                {
+                    "remote_addr": log.remote_addr,
+                    "remote_user": log.remote_user,
+                    "time_local": log.time_local,
+                    "request": log.request,
+                    "status": log.status,
+                    "body_bytes_sent": log.body_bytes_sent,
+                    "http_referer": log.http_referer,
+                    "http_user_agent": log.http_user_agent,
+                },
+                ignore_index=True,
+            )
         return result
 
     def _get_df_cast_values(self, df: pd.DataFrame) -> pd.DataFrame:
