@@ -43,9 +43,14 @@
     <tbody>
       {% for log in logs_all %}
         <tr>
-          {% for key, value in log.items() %}
-            <td> {{ value }} </td>
-          {% endfor %}
+          <td> {{ log["remote_addr"] }} </td>
+          <td> {{ log["remote_user"] }} </td>
+          <td> {{ log["time_local"] }} </td>
+          <td> {{ log["request"][:50] }} </td>
+          <td> {{ log["status"] }} </td>
+          <td> {{ log["body_bytes_sent"] }} </td>
+          <td> {{ log["http_referer"] }} </td>
+          <td> {{ log["http_user_agent"] }} </td>
         </tr>
       {% endfor %}
     <tbody>
