@@ -8,6 +8,7 @@
 <p><a href="#ips-requests-count">IPs requests count</a></p>
 <p><a href="#ips-to-analyze">IPs to analyze</a></p>
 <p><a href="#suspicious-logs">Suspicious logs</a></p>
+<p><a href="#all-logs">All logs</a></p>
 
 <h2 id="ips-requests-count">IPs requests count</h2>
 <div>
@@ -25,6 +26,29 @@
 
 <h2 id="suspicious-logs">Suspicious logs</h2>
 <div>
-  {{ logs|safe }}
+  {{ logs_suspicious|safe }}
+</div>
+</body>
+
+<h2 id="all-logs">All logs</h2>
+<div>
+  <table>
+    <thead>
+      <tr>
+        {% for key in logs_all_keys %}
+          <th> {{ key }} </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for log in logs_all %}
+        <tr>
+          {% for key, value in log.items() %}
+            <td> {{ value }} </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    <tbody>
+  </table>
 </div>
 </body>

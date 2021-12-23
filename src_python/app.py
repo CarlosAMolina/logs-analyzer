@@ -1,3 +1,5 @@
+from typing import List
+
 import flask
 import flask_restful
 
@@ -37,6 +39,14 @@ class LogsData:
     def logs_suspicious_html(self):
         return self._logs_suspicious_html
 
+    @property
+    def logs_all(self) -> dict:
+        return log_resources.LogListResource().get()[0]["data"]
+
+    @property
+    def logs_all_keys(self) -> List[str]:
+        return list(self.logs_all[0].keys())
+
 
 @app.route("/logs")
 def show_logs():
@@ -45,7 +55,9 @@ def show_logs():
         "logs.html",
         ips_count=logs_data.ips_count_html,
         ips_suspicious=logs_data.ips_suspicious,
-        logs=logs_data.logs_suspicious_html,
+        logs_suspicious=logs_data.logs_suspicious_html,
+        logs_all_keys=logs_data.logs_all_keys,
+        logs_all=logs_data.logs_all,
     )
 
 
@@ -61,6 +73,8 @@ def analyze_ip():
         "logs.html",
         ips_count=logs_data.ips_count_html,
         ips_suspicious=logs_data.ips_suspicious,
-        logs=logs_data.logs_suspicious_html,
+        logs_suspicious=logs_data.logs_suspicious_html,
         vt_results=vt_results_html,
+        logs_all_keys=logs_data.logs_all_keys,
+        logs_all=logs_data.logs_all,
     )
