@@ -3,13 +3,21 @@
 - [Introduction](#introduction)
 - [Configuration](#configuration)
   - [VirusTotal credentials](#virustotal-credentials)
-- [How this works](#how-this-works)
-  - [Bash](#bash)
-  - [Python](#python)
+  - [External libraries](#external-libraries)
+    - [Bash requirements](#bash-requirements)
+    - [Python requirements](#python-requirements)
+- [How it works](#how-it-works)
+  - [Work with Bash scripts](#work-with-bash-scripts)
+    - [Analyze an IP with VT](#analyze-an-ip-with-vt)
+  - [Work with Python](#work-with-python)
+- [Tests](#tests)
+  - [Test Python code](#test-python-code)
 
 ## Introduction
 
 Project to facilitate the analysis of logs.
+
+The main program works with Python but you have some Bash scripts too.
 
 ## Configuration
 
@@ -24,11 +32,27 @@ vi ~/.bashrc
 source ~/.bashrc
 ```
 
-## How this works
+### External libraries
 
-The main program works with Python but you have some bash scripts too.
+External software must be installed.
 
-### Bash
+The Python code does not need the Bash scripts, you can work with Python without installing the Bash requirements.
+
+#### Bash requirements
+
+Some Bash scripts require `jq`:
+
+```bash
+sudo apt-get install jq
+```
+
+#### Python requirements
+
+Create a virtual environment, activate it and install the `requirements.txt` file.
+
+## How it works
+
+### Work with Bash scripts
 
 See the scripts in the `src_bash` folder.
 
@@ -36,21 +60,13 @@ Run each script with the required arguments.
 
 #### Analyze an IP with VT
 
-Install `jq`:
-
-```bash
-sudo apt-get install jq
-```
-
 Example:
 
 ```bash
 ./src_bash/get-analysis-of-ip 8.8.8.8
 ```
 
-### Python
-
-Create a virtual environment and install the `requirements.txt` file.
+### Work with Python
 
 Run the app:
 
@@ -62,3 +78,10 @@ Open the following link:
 
 <http://127.0.0.1:5000/logs>
 
+## Tests
+
+### Test Python code
+
+```bash
+tox
+```
