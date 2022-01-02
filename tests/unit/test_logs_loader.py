@@ -2,7 +2,7 @@ import unittest
 
 import pandas as pd
 
-from src_python.logs import loader
+from src.logs import loader
 
 
 class TestLogsRepr(unittest.TestCase):

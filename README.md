@@ -54,7 +54,7 @@ Create a virtual environment, activate it and install the `requirements.txt` fil
 
 ### Work with Bash scripts
 
-See the scripts in the `src_bash` folder.
+See the scripts in the `src/bash_scripts` folder.
 
 Run each script with the required arguments.
 
@@ -63,7 +63,7 @@ Run each script with the required arguments.
 Example:
 
 ```bash
-./src_bash/get-analysis-of-ip 8.8.8.8
+./src/bash_scripts/get-analysis-of-ip 8.8.8.8
 ```
 
 ### Work with Python
@@ -71,7 +71,7 @@ Example:
 Run the app:
 
 ```bash
-python -m src_python
+python -m src
 ```
 
 Open the following link:

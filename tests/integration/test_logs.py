@@ -1,8 +1,8 @@
 import datetime
 import unittest
 
-from src_python.logs import transformer
-from src_python.logs import extractor
+from src.logs import transformer
+from src.logs import extractor
 from tests import LOG_FILE
 
 

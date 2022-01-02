@@ -1,6 +1,6 @@
 import unittest
 
-from src_python.logs import manager
+from src.logs import manager
 from tests import LOG_FILE
 
 

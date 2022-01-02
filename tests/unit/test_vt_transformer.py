@@ -5,7 +5,7 @@ import os
 
 import pandas as pd
 
-from src_python.vt import transformer
+from src.vt import transformer
 
 
 class TestIpSummary(unittest.TestCase):
@@ -29,8 +29,8 @@ class TestIpSummary(unittest.TestCase):
 
 
 class TestFileAnalyzer(unittest.TestCase):
-    @mock.patch("src_python.vt.transformer.IpSummary")
-    @mock.patch("src_python.vt.extractor.RequestIp")
+    @mock.patch("src.vt.transformer.IpSummary")
+    @mock.patch("src.vt.extractor.RequestIp")
     def test_print_analysis_of_each_ip(self, mock_request_ip, mock_response_parser):
         mock_request_ip().get_analysis.return_value = "foo"
         mock_response_parser().get_summary.return_value = "bar"
@@ -40,8 +40,8 @@ class TestFileAnalyzer(unittest.TestCase):
 
 
 class TestIPsAnalyzerAsDf(unittest.TestCase):
-    @mock.patch("src_python.vt.extractor.RequestIp")
-    @mock.patch("src_python.vt.transformer.IpResults")
+    @mock.patch("src.vt.extractor.RequestIp")
+    @mock.patch("src.vt.transformer.IpResults")
     def test_get_analysis_of_ips_as_df(self, mock_ip_results, mock_request_ip):
         class MockIPResults:
             malicious = 4.0

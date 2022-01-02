@@ -3,7 +3,7 @@ import unittest
 
 import pandas as pd
 
-from src_python.logs import transformer
+from src.logs import transformer
 from tests import LOG_FILE
 
 

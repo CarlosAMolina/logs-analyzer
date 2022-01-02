@@ -2,13 +2,13 @@ from http import HTTPStatus
 import unittest
 import mock
 
-from src_python.resources import log
+from src.resources import log
 from tests import LOG_FILE
 
 
 class TestLogListResource(unittest.TestCase):
     def test_get(self):
-        with mock.patch("src_python.logs.manager.extractor.LOG_FILE", LOG_FILE):
+        with mock.patch("src.logs.manager.extractor.LOG_FILE", LOG_FILE):
             class_ = log.LogListResource()
             result = class_.get()
             self.assertEqual(2, len(result[0]["data"]))
