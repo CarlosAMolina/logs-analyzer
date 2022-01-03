@@ -4,7 +4,6 @@ import flask
 import flask_restful
 
 from .logs import transformer as logs_transformer
-from .logs import extractor
 from .resources import log as log_resources
 from .vt import transformer as vt_transformer
 
@@ -15,8 +14,9 @@ api = flask_restful.Api(app)
 
 
 class LogsData:
-    def __init__(self):
-        get_file_as_df = logs_transformer.PandasParser(extractor.LOG_FILE)
+    def __init__(self, logs_path: str):
+        self._logs_path = logs_path
+        get_file_as_df = logs_transformer.PandasParser(logs_path)
         logs = get_file_as_df()
         self._ips_count_html = (
             logs_transformer.LogsAnalyzer(logs).get_remote_addr_count().to_html()
@@ -40,7 +40,7 @@ class LogsData:
 
     @property
     def logs_all(self) -> dict:
-        return log_resources.LogListResource().get()[0]["data"]
+        return log_resources.LogListResource().get(self._logs_path)[0]["data"]
 
     @property
     def logs_all_keys(self) -> List[str]:
@@ -49,26 +49,25 @@ class LogsData:
 
 @app.route("/")
 def main_path():
-    return flask.redirect("/logs-file")
+    return flask.redirect("/logs-path")
 
 
-@app.route("/logs-file")
+@app.route("/logs-path")
 def logs_file_get():
-    return flask.render_template("logs-file.html")
+    return flask.render_template("logs-path.html")
 
 
-@app.route("/logs-file", methods=["POST"])
+@app.route("/logs-path", methods=["POST"])
 def logs_file_post():
-    logs_file = flask.request.form["logs-file"].split("\r\n")[0]
-    flask.session["logs_file"] = logs_file
+    logs_path = flask.request.form["logs-path"].split("\r\n")[0]
+    flask.session["logs_path"] = logs_path
     return flask.redirect("/logs")
 
 
 @app.route("/logs")
 def show_logs():
-    logs_file = flask.session["logs_file"]
-    print(logs_file)
-    logs_data = LogsData()
+    logs_path = flask.session["logs_path"]
+    logs_data = LogsData(logs_path)
     return flask.render_template(
         "logs.html",
         ips_count=logs_data.ips_count_html,
@@ -86,7 +85,8 @@ def analyze_ip():
     get_vt_analysis_as_df_of_ips = vt_transformer.IPsAnalyzerAsDf()
     vt_results = get_vt_analysis_as_df_of_ips(ips)
     vt_results_html = vt_results.to_html()
-    logs_data = LogsData()
+    logs_path = flask.session["logs_path"]
+    logs_data = LogsData(logs_path)
     return flask.render_template(
         "logs.html",
         ips_count=logs_data.ips_count_html,

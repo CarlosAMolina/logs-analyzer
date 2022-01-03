@@ -1,10 +1,9 @@
 from http import HTTPStatus
 import unittest
 import mock
-import os
 
 from src.resources import log
-from tests import LOG_FILE
+from tests import LOGS_PATH
 
 
 class TestLogListResource(unittest.TestCase):
@@ -12,26 +11,20 @@ class TestLogListResource(unittest.TestCase):
         self.class_ = log.LogListResource()
 
     def test_get(self):
-        with mock.patch("src.logs.manager.extractor.LOG_FILE", LOG_FILE):
-            result = self.class_.get()
-            self.assertEqual(2, len(result[0]["data"]))
-            self.assertEqual(HTTPStatus.OK, result[1])
+        result = self.class_.get(LOGS_PATH)
+        self.assertEqual(2, len(result[0]["data"]))
+        self.assertEqual(HTTPStatus.OK, result[1])
 
     def test_post_with_file_that_exits(self):
         class FakeRequest:
             @staticmethod
             def get_json():
-                return {
-                    "file": os.path.join(
-                        os.path.dirname(__file__), "../files/access.log"
-                    )
-                }
+                return {"file": LOGS_PATH}
 
-        with mock.patch("src.logs.manager.extractor.LOG_FILE", LOG_FILE):
-            with mock.patch("src.resources.log.request", FakeRequest):
-                result = self.class_.post()
-                self.assertEqual(2, len(result[0]["data"]))
-                self.assertEqual(HTTPStatus.OK, result[1])
+        with mock.patch("src.resources.log.request", FakeRequest):
+            result = self.class_.post()
+            self.assertEqual(2, len(result[0]["data"]))
+            self.assertEqual(HTTPStatus.OK, result[1])
 
     def test_post_with_file_that_does_not_exit(self):
         class FakeRequest:
@@ -40,9 +33,8 @@ class TestLogListResource(unittest.TestCase):
                 return {"file": "/foo/bar"}
 
         with self.assertRaises(FileNotFoundError) as cm:
-            with mock.patch("src.logs.manager.extractor.LOG_FILE", LOG_FILE):
-                with mock.patch("src.resources.log.request", FakeRequest):
-                    self.class_.post()
+            with mock.patch("src.resources.log.request", FakeRequest):
+                self.class_.post()
         the_exception = cm.exception
         self.assertIsInstance(the_exception, FileNotFoundError)
 

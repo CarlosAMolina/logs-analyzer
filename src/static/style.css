@@ -9,7 +9,7 @@ textarea {
 }
 
 
-textarea.logs-file {
+textarea.logs-path {
   height: 1em;
   width: 50em;
 }
