@@ -47,6 +47,11 @@ class LogsData:
         return list(self.logs_all[0].keys())
 
 
+@app.route("/")
+def main_path():
+    return flask.redirect("/logs-file")
+
+
 @app.route("/logs-file")
 def logs_file_get():
     return flask.render_template("logs-file.html")
