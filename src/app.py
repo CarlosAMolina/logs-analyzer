@@ -13,8 +13,6 @@ app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = b"foo"
 api = flask_restful.Api(app)
 
-api.add_resource(log_resources.LogListResource, "/logs-all")
-
 
 class LogsData:
     def __init__(self):
