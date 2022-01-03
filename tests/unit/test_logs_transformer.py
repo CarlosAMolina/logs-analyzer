@@ -3,7 +3,7 @@ import unittest
 
 import pandas as pd
 
-from src.logs import transformer
+from src.backend.logs_etl import transformer
 from tests import LOGS_PATH
 
 

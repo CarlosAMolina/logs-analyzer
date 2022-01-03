@@ -1,4 +1,4 @@
-from ..logs import extractor
+from ..backend.logs_etl import extractor
 
 
 class RuleGenerator:

@@ -1,6 +1,6 @@
 import unittest
 
-from src.logs import manager
+from src.backend.logs_etl import manager
 from tests import LOGS_PATH
 
 

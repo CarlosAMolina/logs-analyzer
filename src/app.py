@@ -5,10 +5,10 @@ import flask
 import flask_restful
 import requests
 
-from .logs import transformer as logs_transformer
-from .resources import log as log_resources
-from .vt import transformer as vt_transformer
 from . import config
+from .backend.logs_etl import transformer as logs_transformer
+from .backend.vt import transformer as vt_transformer
+from .resources import log as log_resources
 
 app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = b"foo"

@@ -4,7 +4,7 @@ import os
 
 import pandas as pd
 
-from ..logs import extractor as logs_extractor
+from ..logs_etl import extractor as logs_extractor
 from . import extractor as vt_extractor
 
 

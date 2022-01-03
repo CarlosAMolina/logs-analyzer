@@ -1,8 +1,8 @@
 import datetime
 import unittest
 
-from src.logs import transformer
-from src.logs import extractor
+from src.backend.logs_etl import transformer
+from src.backend.logs_etl import extractor
 from tests import LOGS_PATH
 
 

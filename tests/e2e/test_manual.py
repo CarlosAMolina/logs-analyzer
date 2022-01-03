@@ -1,7 +1,7 @@
 import unittest
 
-# from src.logs import loader
-from src.logs import transformer
+# from src.backend.logs_etl import loader
+from src.backend.logs_etl import transformer
 
 
 class TestMain(unittest.TestCase):

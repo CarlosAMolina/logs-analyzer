@@ -1,6 +1,6 @@
 import unittest
 
-from src.logs import exception
+from src.backend.logs_etl import exception
 
 
 class TestLogInFileNotParsedError(unittest.TestCase):

@@ -1,7 +1,7 @@
 from unittest import mock
 import unittest
 
-from src.vt import extractor
+from src.backend.vt import extractor
 
 
 def mocked_requests_get(*args, **kwargs):
