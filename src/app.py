@@ -1,7 +1,9 @@
 from typing import List
+import json
 
 import flask
 import flask_restful
+import requests
 
 from .logs import transformer as logs_transformer
 from .resources import log as log_resources
@@ -11,6 +13,8 @@ from .vt import transformer as vt_transformer
 app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = b"foo"
 api = flask_restful.Api(app)
+
+api.add_resource(log_resources.LogListResource, "/logs-all")
 
 
 class LogsData:
@@ -39,8 +43,16 @@ class LogsData:
         return self._logs_suspicious_html
 
     @property
-    def logs_all(self) -> dict:
-        return log_resources.LogListResource().get(self._logs_path)[0]["data"]
+    def logs_all(self) -> List[dict]:
+        url = "http://localhost:5000/logs-all"
+        data = {"file": self._logs_path}
+        headers = {"Content-type": "application/json", "Accept": "text/plain"}
+        response = requests.post(
+            url,
+            data=json.dumps(data),
+            headers=headers,
+        )
+        return response.json()["data"]
 
     @property
     def logs_all_keys(self) -> List[str]:

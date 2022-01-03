@@ -10,11 +10,6 @@ class TestLogListResource(unittest.TestCase):
     def setUp(self):
         self.class_ = log.LogListResource()
 
-    def test_get(self):
-        result = self.class_.get(LOGS_PATH)
-        self.assertEqual(2, len(result[0]["data"]))
-        self.assertEqual(HTTPStatus.OK, result[1])
-
     def test_post_with_file_that_exits(self):
         class FakeRequest:
             @staticmethod
