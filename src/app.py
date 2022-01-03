@@ -8,7 +8,7 @@ import requests
 from .logs import transformer as logs_transformer
 from .resources import log as log_resources
 from .vt import transformer as vt_transformer
-
+from . import config
 
 app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = b"foo"
@@ -44,7 +44,7 @@ class LogsData:
 
     @property
     def logs_all(self) -> List[dict]:
-        url = "http://localhost:5000/logs-all"
+        url = f"http://localhost:{config.PORT}/logs-all"
         data = {"logs-path": self._logs_path}
         headers = {"Content-type": "application/json", "Accept": "text/plain"}
         response = requests.post(
