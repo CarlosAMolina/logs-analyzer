@@ -1,0 +1,16 @@
+<!doctype html>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<title>Logs</title>
+
+<body>
+
+<h2>Table of contents</h2>
+<p><a href="#logs-file">Logs file</a></p>
+
+<h2 id="logs-file">Logs file</h2>
+<p>Write the path of the file with logs</p>
+<form method="POST">
+<textarea class="logs-file" name="logs-file">/tmp/access.log</textarea>
+<input type="submit" value="Analyze file">
+</form>
+</body>

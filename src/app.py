@@ -10,6 +10,7 @@ from .vt import transformer as vt_transformer
 
 
 app = flask.Flask(__name__, template_folder="templates")
+app.secret_key = b"foo"
 api = flask_restful.Api(app)
 
 api.add_resource(log_resources.LogListResource, "/logs-all")
@@ -48,8 +49,22 @@ class LogsData:
         return list(self.logs_all[0].keys())
 
 
+@app.route("/logs-file")
+def logs_file_get():
+    return flask.render_template("logs-file.html")
+
+
+@app.route("/logs-file", methods=["POST"])
+def logs_file_post():
+    logs_file = flask.request.form["logs-file"].split("\r\n")[0]
+    flask.session["logs_file"] = logs_file
+    return flask.redirect("/logs")
+
+
 @app.route("/logs")
 def show_logs():
+    logs_file = flask.session["logs_file"]
+    print(logs_file)
     logs_data = LogsData()
     return flask.render_template(
         "logs.html",
