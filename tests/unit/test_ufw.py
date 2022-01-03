@@ -1,7 +1,7 @@
 import unittest
 import os
 
-from src.ufw import ufw
+from src.backend.ufw import ufw
 
 
 class TestRuleGenerator(unittest.TestCase):
