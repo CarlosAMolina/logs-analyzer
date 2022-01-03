@@ -45,7 +45,7 @@ class LogsData:
     @property
     def logs_all(self) -> List[dict]:
         url = "http://localhost:5000/logs-all"
-        data = {"file": self._logs_path}
+        data = {"logs-path": self._logs_path}
         headers = {"Content-type": "application/json", "Accept": "text/plain"}
         response = requests.post(
             url,
@@ -72,13 +72,13 @@ def logs_file_get():
 @app.route("/logs-path", methods=["POST"])
 def logs_file_post():
     logs_path = flask.request.form["logs-path"].split("\r\n")[0]
-    flask.session["logs_path"] = logs_path
+    flask.session["logs-path"] = logs_path
     return flask.redirect("/logs")
 
 
 @app.route("/logs")
 def show_logs():
-    logs_path = flask.session["logs_path"]
+    logs_path = flask.session["logs-path"]
     logs_data = LogsData(logs_path)
     return flask.render_template(
         "logs.html",
@@ -97,7 +97,7 @@ def analyze_ip():
     get_vt_analysis_as_df_of_ips = vt_transformer.IPsAnalyzerAsDf()
     vt_results = get_vt_analysis_as_df_of_ips(ips)
     vt_results_html = vt_results.to_html()
-    logs_path = flask.session["logs_path"]
+    logs_path = flask.session["logs-path"]
     logs_data = LogsData(logs_path)
     return flask.render_template(
         "logs.html",

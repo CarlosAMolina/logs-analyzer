@@ -14,7 +14,7 @@ class TestLogListResource(unittest.TestCase):
         class FakeRequest:
             @staticmethod
             def get_json():
-                return {"file": LOGS_PATH}
+                return {"logs-path": LOGS_PATH}
 
         with mock.patch("src.resources.log.request", FakeRequest):
             result = self.class_.post()
@@ -25,7 +25,7 @@ class TestLogListResource(unittest.TestCase):
         class FakeRequest:
             @staticmethod
             def get_json():
-                return {"file": "/foo/bar"}
+                return {"logs-path": "/foo/bar"}
 
         with self.assertRaises(FileNotFoundError) as cm:
             with mock.patch("src.resources.log.request", FakeRequest):
