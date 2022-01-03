@@ -6,8 +6,8 @@ import flask_restful
 import requests
 
 from . import config
-from .backend.logs_etl import transformer as logs_transformer
-from .backend.vt import transformer as vt_transformer
+from ..backend.logs_etl import transformer as logs_transformer
+from ..backend.vt import transformer as vt_transformer
 from .resources import log as log_resources
 
 app = flask.Flask(__name__, template_folder="templates")

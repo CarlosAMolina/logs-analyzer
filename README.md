@@ -71,7 +71,7 @@ Example:
 Run the app:
 
 ```bash
-python -m src
+python -m src.api
 ```
 
 Open the following link:

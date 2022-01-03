@@ -1,6 +1,6 @@
 from typing import List
 
-from ...models.log import Log
+from ...api.models.log import Log
 from . import exception
 from . import extractor
 from . import transformer
