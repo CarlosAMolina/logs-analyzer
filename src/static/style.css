@@ -2,25 +2,24 @@ body {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-textarea.logs-file {
-  type: text;
-  height: 1em;
-  width: 50em;
+textarea {
   border: 3px solid #cccccc;
   padding: 5px;
   font-family: inherit;
+}
+
+
+textarea.logs-file {
+  height: 1em;
+  width: 50em;
 }
 
 textarea.ips-vt {
-  type: text;
   height: 15em;
   width: 15em;
-  border: 3px solid #cccccc;
-  padding: 5px;
-  font-family: inherit;
 }
 
-input#input-vt {
+input {
   padding: 0.25em 0.5em;
   border: 2px solid;
   border-radius: 4px;

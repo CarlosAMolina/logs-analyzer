@@ -20,7 +20,7 @@
 <form method="POST">
 <textarea class="ips-vt" name="ips">{% for ip in ips_suspicious %}
 {{ ip }}{% endfor %}</textarea>
-<input type="submit" id="input-vt" value="Check in VT">
+<input type="submit" value="Check in VT">
 </form>
 {{ vt_results|safe }}
 
