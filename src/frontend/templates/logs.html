@@ -14,9 +14,7 @@
 <p><a href="#all-logs">All logs</a></p>
 
 <h2 id="ips-requests-count">IPs requests count</h2>
-<div>
-Remote addresses ({{ remote_addrs_count|length }}):
-</div>
+<p>Remote addresses ({{ remote_addrs_count|length }}):</p>
 <br>
 <div>
   <table>
@@ -39,14 +37,35 @@ Remote addresses ({{ remote_addrs_count|length }}):
 </div>
 
 <h2 id="ips-to-analyze">IPs to analyze</h2>
-<p>Only the IPs with suspicious requests are shown</p>
+<p>The remote addresses in the logs are shown</p>
 <form method="POST">
 <textarea class="ips-vt" name="ips">{% for remote_addr_count in remote_addrs_count %}
 {{ remote_addr_count["remote_addr"] }}{% endfor %}</textarea>
 <input type="submit" value="Check in VT">
 </form>
 {% if vt_results is not none %}
-    {{ vt_results|safe }}
+  <div>
+    <table>
+      <thead>
+        <tr>
+          {% for key in vt_results[0].keys() %}
+            <th> {{ key }} </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for vt_result in vt_results %}
+          <tr>
+            <td> {{ vt_result["ip"] }} </td>
+            <td> {{ vt_result["malicious"] }} </td>
+            <td> {{ vt_result["suspicious"] }} </td>
+            <td> {{ vt_result["harmless"] }} </td>
+            <td> {{ vt_result["last_modification_date"] }} </td>
+          </tr>
+        {% endfor %}
+      <tbody>
+    </table>
+  </div>
 {% endif %}
 
 <h2 id="all-logs">All logs</h2>

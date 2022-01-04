@@ -15,7 +15,7 @@ class IPVTAnalysis:
         self.malicious = malicious
         self.suspicious = suspicious
         self.harmless = harmless
-        self.last_modification_date = last_modification_date
+        self._last_modification_date = last_modification_date
 
     @property
     def data(self):
@@ -26,3 +26,7 @@ class IPVTAnalysis:
             "harmless": self.harmless,
             "last_modification_date": self.last_modification_date,
         }
+
+    @property
+    def last_modification_date(self) -> str:
+        return str(self._last_modification_date)

@@ -1,5 +1,4 @@
 from unittest import mock
-import datetime
 import json
 import unittest
 
@@ -21,7 +20,7 @@ class TestFunctions(unittest.TestCase):
                 "malicious": 1,
                 "suspicious": 0,
                 "harmless": 79,
-                "last_modification_date": datetime.datetime(2021, 12, 5, 11, 49, 41),
+                "last_modification_date": "2021-12-05 11:49:41",
             },
             result.data,
         )

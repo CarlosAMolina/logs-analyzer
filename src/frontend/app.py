@@ -6,36 +6,10 @@ import flask_restful
 import requests
 
 from ..api import config as config_api
-from ..backend.vt import transformer as vt_transformer
 
 app = flask.Flask(__name__, template_folder="templates")
 app.secret_key = b"foo"
 api = flask_restful.Api(app)
-
-
-class LogsData:
-    def __init__(self, logs_path: str):
-        self._logs_path = logs_path
-
-    @property
-    def logs_all(self) -> List[dict]:
-        url = f"http://localhost:{config_api.PORT}/logs-all"
-        return self._get_post_request_results(url)
-
-    def _get_post_request_results(self, url) -> List[dict]:
-        data = {"logs-path": self._logs_path}
-        headers = {"Content-type": "application/json", "Accept": "text/plain"}
-        response = requests.post(
-            url,
-            data=json.dumps(data),
-            headers=headers,
-        )
-        return response.json()["data"]
-
-    @property
-    def remote_addrs_count(self) -> List[dict]:
-        url = f"http://localhost:{config_api.PORT}/remote-addrs-count"
-        return self._get_post_request_results(url)
 
 
 @app.route("/")
@@ -50,7 +24,7 @@ def logs_file_get():
 
 @app.route("/logs-path", methods=["POST"])
 def logs_file_post():
-    logs_path = flask.request.form["logs-path"].split("\r\n")[0]
+    logs_path = flask.request.form["logs-path"].split("\r\n")[0].strip()
     flask.session["logs-path"] = logs_path
     return flask.redirect("/logs")
 
@@ -59,16 +33,51 @@ def logs_file_post():
 def show_logs():
     logs_path = flask.session["logs-path"]
     logs_data = LogsData(logs_path)
-    vt_results_html = None
+    vt_results = None
     if flask.request.method == "POST":
-        ips = flask.request.form["ips"].split("\r\n")
-        ips = [ip for ip in ips if len(ip)]
-        get_vt_analysis_as_df_of_ips = vt_transformer.IPsAnalyzerAsDf()
-        vt_results = get_vt_analysis_as_df_of_ips(ips)
-        vt_results_html = vt_results.to_html()
+        ips = flask.request.form["ips"].replace(" ", "").split("\r\n")
+        ips = [ip for ip in set(ips) if len(ip)]
+        vt_results = logs_data.get_vt_analysis_of_ips(ips)
     return flask.render_template(
         "logs.html",
-        vt_results=vt_results_html,
+        vt_results=vt_results,
         logs_all=logs_data.logs_all,
         remote_addrs_count=logs_data.remote_addrs_count,
     )
+
+
+class LogsData:
+    def __init__(
+        self,
+        logs_path: str,
+    ):
+        self._logs_path = logs_path
+
+    @property
+    def logs_all(self) -> List[dict]:
+        return self._get_post_request_results(
+            data={"logs-path": self._logs_path},
+            url=f"http://localhost:{config_api.PORT}/logs-all",
+        )
+
+    def _get_post_request_results(self, data: dict, url: str) -> List[dict]:
+        headers = {"Content-type": "application/json", "Accept": "text/plain"}
+        response = requests.post(
+            url,
+            data=json.dumps(data),
+            headers=headers,
+        )
+        return response.json()["data"]
+
+    @property
+    def remote_addrs_count(self) -> List[dict]:
+        return self._get_post_request_results(
+            data={"logs-path": self._logs_path},
+            url=f"http://localhost:{config_api.PORT}/remote-addrs-count",
+        )
+
+    def get_vt_analysis_of_ips(self, ips: List[str]) -> List[dict]:
+        return self._get_post_request_results(
+            data={"ips": ips},
+            url=f"http://localhost:{config_api.PORT}/ips-vt",
+        )
