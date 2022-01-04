@@ -18,7 +18,7 @@ class TestLogListResource(unittest.TestCase):
 
         with mock.patch("src.api.resources.log.request", FakeRequest):
             result = self.class_.post()
-            self.assertEqual(2, len(result[0]["data"]))
+            self.assertEqual(3, len(result[0]["data"]))
             self.assertEqual(HTTPStatus.OK, result[1])
 
     def test_post_with_file_that_does_not_exit(self):

@@ -38,3 +38,20 @@ class Log:
     @property
     def time_local(self) -> str:
         return str(self._time_local)
+
+
+class RemoteAddrCount:
+    def __init__(
+        self,
+        remote_addr: str,
+        count: int,
+    ):
+        self.remote_addr = remote_addr
+        self.count = count
+
+    @property
+    def data(self):
+        return {
+            "remote_addr": self.remote_addr,
+            "count": self.count,
+        }

@@ -7,3 +7,4 @@ app = flask.Flask(__name__)
 api = flask_restful.Api(app)
 
 api.add_resource(log_resources.LogListResource, "/logs-all")
+api.add_resource(log_resources.RemoteAddrCountListResource, "/remote-addrs-count")

@@ -67,8 +67,8 @@ class TestPandasParser(unittest.TestCase):
     def test_get_file_as_df(self):
         result_expected = pd.DataFrame(
             {
-                "remote_addr": ["8.8.8.8", "111.222.33.4"],
-                "remote_user": ["-", "abc"],
+                "remote_addr": ["8.8.8.8", "111.222.33.4", "8.8.8.8"],
+                "remote_user": ["-", "abc", "-"],
                 "time_local": [
                     datetime.datetime(
                         2021,
@@ -88,12 +88,25 @@ class TestPandasParser(unittest.TestCase):
                         15,
                         tzinfo=datetime.timezone(datetime.timedelta(seconds=3600)),
                     ),
+                    datetime.datetime(
+                        2021,
+                        10,
+                        28,
+                        10,
+                        0,
+                        1,
+                        tzinfo=datetime.timezone(datetime.timedelta(seconds=3600)),
+                    ),
                 ],
-                "request": ["GET / HTTP/1.1", "GET /foo/bar HTTP/1.1"],
-                "status": [200, 404],
-                "body_bytes_sent": [77, 118],
-                "http_referer": ["-", "-"],
-                "http_user_agent": ["foo bar 1", "foo bar 2"],
+                "request": [
+                    "GET / HTTP/1.1",
+                    "GET /foo/bar HTTP/1.1",
+                    "GET / HTTP/1.1",
+                ],
+                "status": [200, 404, 200],
+                "body_bytes_sent": [77, 118, 77],
+                "http_referer": ["-", "-", "-"],
+                "http_user_agent": ["foo bar 1", "foo bar 2", "foo bar 1"],
             }
         )
         parse_file = transformer.PandasParser(LOGS_PATH)
