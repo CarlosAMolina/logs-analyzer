@@ -70,28 +70,18 @@ def logs_file_post():
     return flask.redirect("/logs")
 
 
-@app.route("/logs")
+@app.route("/logs", methods=["GET", "POST"])
 def show_logs():
     logs_path = flask.session["logs-path"]
     logs_data = LogsData(logs_path)
-    return flask.render_template(
-        "logs.html",
-        ips_suspicious=logs_data.ips_suspicious,
-        logs_suspicious=logs_data.logs_suspicious_html,
-        logs_all=logs_data.logs_all,
-        remote_addrs_count=logs_data.remote_addrs_count,
-    )
-
-
-@app.route("/logs", methods=["POST"])
-def analyze_ip():
-    ips = flask.request.form["ips"].split("\r\n")
-    ips = [ip for ip in ips if len(ip)]
-    get_vt_analysis_as_df_of_ips = vt_transformer.IPsAnalyzerAsDf()
-    vt_results = get_vt_analysis_as_df_of_ips(ips)
-    vt_results_html = vt_results.to_html()
-    logs_path = flask.session["logs-path"]
-    logs_data = LogsData(logs_path)
+    if flask.request.method == "GET":
+        vt_results_html = None
+    else:
+        ips = flask.request.form["ips"].split("\r\n")
+        ips = [ip for ip in ips if len(ip)]
+        get_vt_analysis_as_df_of_ips = vt_transformer.IPsAnalyzerAsDf()
+        vt_results = get_vt_analysis_as_df_of_ips(ips)
+        vt_results_html = vt_results.to_html()
     return flask.render_template(
         "logs.html",
         ips_suspicious=logs_data.ips_suspicious,

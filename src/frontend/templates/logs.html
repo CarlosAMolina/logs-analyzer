@@ -46,7 +46,9 @@ Remote addresses ({{ remote_addrs_count|length }}):
 {{ ip }}{% endfor %}</textarea>
 <input type="submit" value="Check in VT">
 </form>
-{{ vt_results|safe }}
+{% if vt_results is not none %}
+    {{ vt_results|safe }}
+{% endif %}
 
 <h2 id="suspicious-logs">Suspicious logs</h2>
 <div>
