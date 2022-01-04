@@ -23,7 +23,7 @@ Remote addresses ({{ remote_addrs_count|length }}):
   <table>
     <thead>
       <tr>
-        {% for key in remote_addrs_count_keys %}
+        {% for key in remote_addrs_count[0].keys() %}
           <th> {{ key }} </th>
         {% endfor %}
       </tr>
@@ -59,7 +59,7 @@ Remote addresses ({{ remote_addrs_count|length }}):
   <table>
     <thead>
       <tr>
-        {% for key in logs_all_keys %}
+        {% for key in logs_all[0].keys() %}
           <th> {{ key }} </th>
         {% endfor %}
       </tr>

@@ -48,17 +48,9 @@ class LogsData:
         return response.json()["data"]
 
     @property
-    def logs_all_keys(self) -> List[str]:
-        return list(self.logs_all[0].keys())
-
-    @property
     def remote_addrs_count(self) -> List[dict]:
         url = f"http://localhost:{config_api.PORT}/remote-addrs-count"
         return self._get_post_request_results(url)
-
-    @property
-    def remote_addrs_count_keys(self) -> List[dict]:
-        return list(self.remote_addrs_count[0].keys())
 
 
 @app.route("/")
@@ -86,9 +78,7 @@ def show_logs():
         "logs.html",
         ips_suspicious=logs_data.ips_suspicious,
         logs_suspicious=logs_data.logs_suspicious_html,
-        logs_all_keys=logs_data.logs_all_keys,
         logs_all=logs_data.logs_all,
-        remote_addrs_count_keys=logs_data.remote_addrs_count_keys,
         remote_addrs_count=logs_data.remote_addrs_count,
     )
 
@@ -107,8 +97,6 @@ def analyze_ip():
         ips_suspicious=logs_data.ips_suspicious,
         logs_suspicious=logs_data.logs_suspicious_html,
         vt_results=vt_results_html,
-        logs_all_keys=logs_data.logs_all_keys,
         logs_all=logs_data.logs_all,
-        remote_addrs_count_keys=logs_data.remote_addrs_count_keys,
         remote_addrs_count=logs_data.remote_addrs_count,
     )
