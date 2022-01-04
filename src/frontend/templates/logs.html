@@ -28,8 +28,9 @@
     <tbody>
       {% for remote_addr_count in remote_addrs_count %}
         <tr>
-          <td> {{ remote_addr_count["remote_addr"] }} </td>
-          <td> {{ remote_addr_count["count"] }} </td>
+          {% for value in remote_addr_count.values() %}
+            <td> {{ value }} </td>
+          {% endfor %}
         </tr>
       {% endfor %}
     <tbody>
@@ -56,11 +57,9 @@
       <tbody>
         {% for vt_result in vt_results %}
           <tr>
-            <td> {{ vt_result["ip"] }} </td>
-            <td> {{ vt_result["malicious"] }} </td>
-            <td> {{ vt_result["suspicious"] }} </td>
-            <td> {{ vt_result["harmless"] }} </td>
-            <td> {{ vt_result["last_modification_date"] }} </td>
+            {% for value in vt_result.values() %}
+              <td> {{ value }} </td>
+            {% endfor %}
           </tr>
         {% endfor %}
       <tbody>
