@@ -31,36 +31,32 @@ def logs_file_post():
 
 @app.route("/logs", methods=["GET", "POST"])
 def show_logs():
-    logs_path = flask.session["logs-path"]
-    logs_data = LogsData(logs_path)
     vt_results = None
     if flask.request.method == "POST":
         ips = flask.request.form["ips"].replace(" ", "").split("\r\n")
         ips = [ip for ip in set(ips) if len(ip)]
-        vt_results = logs_data.get_vt_analysis_of_ips(ips)
+        vt_results = ApiRequests.get_vt_analysis_of_ips(ips)
+    logs_path = flask.session["logs-path"]
     return flask.render_template(
         "logs.html",
         vt_results=vt_results,
-        logs_all=logs_data.logs_all,
-        remote_addrs_count=logs_data.remote_addrs_count,
+        logs_all=ApiRequests.get_all_logs(logs_path),
+        remote_addrs_count=ApiRequests.get_remote_addrs_count(logs_path),
     )
 
 
-class LogsData:
-    def __init__(
-        self,
-        logs_path: str,
-    ):
-        self._logs_path = logs_path
+class ApiRequests:
+    API_URL = f"http://localhost:{config_api.PORT}"
 
-    @property
-    def logs_all(self) -> List[dict]:
-        return self._get_post_request_results(
-            data={"logs-path": self._logs_path},
-            url=f"http://localhost:{config_api.PORT}/logs-all",
+    @classmethod
+    def get_all_logs(cls, logs_path: str) -> List[dict]:
+        return cls._get_post_request_results(
+            data={"logs-path": logs_path},
+            url=f"{cls.API_URL}/logs-all",
         )
 
-    def _get_post_request_results(self, data: dict, url: str) -> List[dict]:
+    @classmethod
+    def _get_post_request_results(cls, data: dict, url: str) -> List[dict]:
         headers = {"Content-type": "application/json", "Accept": "text/plain"}
         response = requests.post(
             url,
@@ -69,15 +65,16 @@ class LogsData:
         )
         return response.json()["data"]
 
-    @property
-    def remote_addrs_count(self) -> List[dict]:
-        return self._get_post_request_results(
-            data={"logs-path": self._logs_path},
-            url=f"http://localhost:{config_api.PORT}/remote-addrs-count",
+    @classmethod
+    def get_remote_addrs_count(cls, logs_path: str) -> List[dict]:
+        return cls._get_post_request_results(
+            data={"logs-path": logs_path},
+            url=f"{cls.API_URL}/remote-addrs-count",
         )
 
-    def get_vt_analysis_of_ips(self, ips: List[str]) -> List[dict]:
-        return self._get_post_request_results(
+    @classmethod
+    def get_vt_analysis_of_ips(cls, ips: List[str]) -> List[dict]:
+        return cls._get_post_request_results(
             data={"ips": ips},
-            url=f"http://localhost:{config_api.PORT}/ips-vt",
+            url=f"{cls.API_URL}/ips-vt",
         )
