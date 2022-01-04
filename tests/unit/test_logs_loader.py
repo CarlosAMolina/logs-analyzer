@@ -30,7 +30,7 @@ class TestLogsPrinter(unittest.TestCase):
 
     def test_methods_do_not_raise_exception(self):
         self.printer.print_remote_addr()
-        self.printer.print_remote_addr_count()
+        self.printer.print_remote_addrs_count()
         self.printer.print_logs_group_by_remote_addr()
 
 

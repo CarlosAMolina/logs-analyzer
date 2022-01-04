@@ -39,12 +39,12 @@ class LogsPrinter:
     def print_remote_addr(self):
         print(*self._logs_analizer.get_remote_addr(), sep="\n")
 
-    def print_remote_addr_count(self):
+    def print_remote_addrs_count(self):
         with pd.option_context("display.max_rows", None):
-            print(self._logs_analizer.get_remote_addr_count())
+            print(self._logs_analizer.get_remote_addrs_count())
 
     def print_logs_group_by_remote_addr(self):
-        for index, row in self._logs_analizer.get_remote_addr_count().iterrows():
+        for index, row in self._logs_analizer.get_remote_addrs_count().iterrows():
             ip_logs = self._logs_analizer.get_logs_of_remote_addr(row["remote_addr"])
             ip_logs_suspicious = self._get_logs_summarized(ip_logs)
             if (

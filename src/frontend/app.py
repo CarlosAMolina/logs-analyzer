@@ -20,7 +20,7 @@ class LogsData:
         get_file_as_df = logs_transformer.PandasParser(logs_path)
         logs = get_file_as_df()
         self._ips_count_html = (
-            logs_transformer.LogsAnalyzer(logs).get_remote_addr_count().to_html()
+            logs_transformer.LogsAnalyzer(logs).get_remote_addrs_count().to_html()
         )
         get_logs_summarized = logs_transformer.LogsSummarize()
         logs_summarized = get_logs_summarized(logs)

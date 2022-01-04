@@ -119,7 +119,7 @@ class TestLogsAnalyzer(unittest.TestCase):
         analyze_logs = transformer.LogsAnalyzer(logs)
         self.assertEqual(["1.1.1.1", "2.2.2.2"], analyze_logs.get_remote_addr())
 
-    def test_remote_addr_count(self):
+    def test_remote_addrs_count(self):
         logs = pd.DataFrame({"remote_addr": ["2.2.2.2", "1.1.1.1", "1.1.1.1"]})
         analyze_logs = transformer.LogsAnalyzer(logs)
         self.assertTrue(
@@ -128,7 +128,7 @@ class TestLogsAnalyzer(unittest.TestCase):
                     "remote_addr": ["1.1.1.1", "2.2.2.2"],
                     "count": [2, 1],
                 }
-            ).equals(analyze_logs.get_remote_addr_count())
+            ).equals(analyze_logs.get_remote_addrs_count())
         )
 
 
