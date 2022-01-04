@@ -32,8 +32,7 @@ def get_remote_addrs_count_from_file(logs_path: str) -> List[log_model.RemoteAdd
     logs_df = get_file_as_df()
     result = []
     remote_addrs_count_df = transformer.LogsAnalyzer(logs_df).get_remote_addrs_count()
-    for row in remote_addrs_count_df.iterrows():
-        remote_addr_count_df = row[1]
+    for index, remote_addr_count_df in remote_addrs_count_df.iterrows():
         remote_addr_count = log_model.RemoteAddrCount(
             remote_addr=remote_addr_count_df["remote_addr"],
             count=remote_addr_count_df["count"],
