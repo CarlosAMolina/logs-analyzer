@@ -6,7 +6,6 @@ import flask_restful
 import requests
 
 from ..api import config as config_api
-from ..backend.logs_etl import transformer as logs_transformer
 from ..backend.vt import transformer as vt_transformer
 
 app = flask.Flask(__name__, template_folder="templates")
@@ -17,20 +16,6 @@ api = flask_restful.Api(app)
 class LogsData:
     def __init__(self, logs_path: str):
         self._logs_path = logs_path
-        get_file_as_df = logs_transformer.PandasParser(logs_path)
-        logs = get_file_as_df()
-        get_logs_summarized = logs_transformer.LogsSummarize()
-        logs_summarized = get_logs_summarized(logs)
-        self._logs_suspicious_html = logs_summarized.to_html()
-        self._ips_suspicious = logs_summarized.index.drop_duplicates().tolist()
-
-    @property
-    def ips_suspicious(self):
-        return self._ips_suspicious
-
-    @property
-    def logs_suspicious_html(self):
-        return self._logs_suspicious_html
 
     @property
     def logs_all(self) -> List[dict]:
@@ -74,9 +59,8 @@ def logs_file_post():
 def show_logs():
     logs_path = flask.session["logs-path"]
     logs_data = LogsData(logs_path)
-    if flask.request.method == "GET":
-        vt_results_html = None
-    else:
+    vt_results_html = None
+    if flask.request.method == "POST":
         ips = flask.request.form["ips"].split("\r\n")
         ips = [ip for ip in ips if len(ip)]
         get_vt_analysis_as_df_of_ips = vt_transformer.IPsAnalyzerAsDf()
@@ -84,8 +68,6 @@ def show_logs():
         vt_results_html = vt_results.to_html()
     return flask.render_template(
         "logs.html",
-        ips_suspicious=logs_data.ips_suspicious,
-        logs_suspicious=logs_data.logs_suspicious_html,
         vt_results=vt_results_html,
         logs_all=logs_data.logs_all,
         remote_addrs_count=logs_data.remote_addrs_count,

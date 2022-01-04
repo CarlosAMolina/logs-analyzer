@@ -11,7 +11,6 @@
 <h2>Table of contents</h2>
 <p><a href="#ips-requests-count">IPs requests count</a></p>
 <p><a href="#ips-to-analyze">IPs to analyze</a></p>
-<p><a href="#suspicious-logs">Suspicious logs</a></p>
 <p><a href="#all-logs">All logs</a></p>
 
 <h2 id="ips-requests-count">IPs requests count</h2>
@@ -42,19 +41,13 @@ Remote addresses ({{ remote_addrs_count|length }}):
 <h2 id="ips-to-analyze">IPs to analyze</h2>
 <p>Only the IPs with suspicious requests are shown</p>
 <form method="POST">
-<textarea class="ips-vt" name="ips">{% for ip in ips_suspicious %}
-{{ ip }}{% endfor %}</textarea>
+<textarea class="ips-vt" name="ips">{% for remote_addr_count in remote_addrs_count %}
+{{ remote_addr_count["remote_addr"] }}{% endfor %}</textarea>
 <input type="submit" value="Check in VT">
 </form>
 {% if vt_results is not none %}
     {{ vt_results|safe }}
 {% endif %}
-
-<h2 id="suspicious-logs">Suspicious logs</h2>
-<div>
-  {{ logs_suspicious|safe }}
-</div>
-</body>
 
 <h2 id="all-logs">All logs</h2>
 <div>

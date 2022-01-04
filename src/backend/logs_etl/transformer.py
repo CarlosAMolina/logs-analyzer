@@ -127,33 +127,3 @@ class LogsAnalyzer:
 
     def is_logs_count_suspicious(self) -> bool:
         return len(self._logs) > 10
-
-
-class LogsSummarize:
-    def __init__(self):
-        self._logs = None
-
-    def __call__(self, logs: pd.DataFrame) -> pd.DataFrame:
-        self._logs = logs
-        self._remove_not_required_columns()
-        self._remove_not_suspcicious_requests()
-        self._format_dataframe()
-        return self._logs
-
-    def _remove_not_required_columns(self):
-        columns = [
-            "remote_addr",
-            "request",
-            "status",
-        ]
-        self._logs = self._logs[columns]
-
-    def _remove_not_suspcicious_requests(self):
-        regex = r"GET /(index.css|agallas.png|robots.txt|favicon.ico)? HTTP/1.[0|1]"
-        exp = self._logs["request"].str.match(regex, na=False)
-        self._logs = self._logs.loc[~exp]
-
-    def _format_dataframe(self):
-        self._logs.set_index("remote_addr", inplace=True)
-        self._logs.sort_index(inplace=True)
-        self._logs.index.name = None

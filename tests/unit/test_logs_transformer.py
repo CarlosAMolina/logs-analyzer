@@ -132,30 +132,5 @@ class TestLogsAnalyzer(unittest.TestCase):
         )
 
 
-class TestLogsSummarize(unittest.TestCase):
-    def test_get_logs_remove_not_suspicious_requests(self):
-        requests = [
-            "GET / HTTP/1.0",
-            "GET foo",
-            "GET /index.css HTTP/1.1",
-            "GET /agallas.png HTTP/1.1",
-            "GET /favicon.ico HTTP/1.1",
-            "GET /robots.txt HTTP/1.1",
-        ]
-        logs = pd.DataFrame(
-            {
-                "remote_addr": ["1.1.1.1"] * len(requests),
-                "request": requests,
-                "status": [200] * len(requests),
-            }
-        )
-        get_logs_summarized = transformer.LogsSummarize()
-        expected_result = pd.DataFrame(
-            data={"request": ["GET foo"], "status": [200]},
-            index=["1.1.1.1"],
-        )
-        self.assertTrue(expected_result.equals(get_logs_summarized(logs)))
-
-
 if __name__ == "__main__":
     unittest.main()
