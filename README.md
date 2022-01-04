@@ -68,15 +68,21 @@ Example:
 
 ### Work with Python
 
-Run the app:
+Run the api:
 
 ```bash
 python -m src.api
 ```
 
+Run the frontend:
+
+```bash
+python -m src.frontend
+```
+
 Open the following link:
 
-<http://127.0.0.1:5000/logs>
+<http://127.0.0.1:4200>
 
 ## Tests
 
