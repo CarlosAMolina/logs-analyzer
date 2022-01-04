@@ -19,17 +19,10 @@ class LogsData:
         self._logs_path = logs_path
         get_file_as_df = logs_transformer.PandasParser(logs_path)
         logs = get_file_as_df()
-        self._ips_count_html = (
-            logs_transformer.LogsAnalyzer(logs).get_remote_addrs_count().to_html()
-        )
         get_logs_summarized = logs_transformer.LogsSummarize()
         logs_summarized = get_logs_summarized(logs)
         self._logs_suspicious_html = logs_summarized.to_html()
         self._ips_suspicious = logs_summarized.index.drop_duplicates().tolist()
-
-    @property
-    def ips_count_html(self):
-        return self._ips_count_html
 
     @property
     def ips_suspicious(self):
@@ -42,6 +35,9 @@ class LogsData:
     @property
     def logs_all(self) -> List[dict]:
         url = f"http://localhost:{config_api.PORT}/logs-all"
+        return self._get_post_request_results(url)
+
+    def _get_post_request_results(self, url) -> List[dict]:
         data = {"logs-path": self._logs_path}
         headers = {"Content-type": "application/json", "Accept": "text/plain"}
         response = requests.post(
@@ -54,6 +50,15 @@ class LogsData:
     @property
     def logs_all_keys(self) -> List[str]:
         return list(self.logs_all[0].keys())
+
+    @property
+    def remote_addrs_count(self) -> List[dict]:
+        url = f"http://localhost:{config_api.PORT}/remote-addrs-count"
+        return self._get_post_request_results(url)
+
+    @property
+    def remote_addrs_count_keys(self) -> List[dict]:
+        return list(self.remote_addrs_count[0].keys())
 
 
 @app.route("/")
@@ -79,11 +84,12 @@ def show_logs():
     logs_data = LogsData(logs_path)
     return flask.render_template(
         "logs.html",
-        ips_count=logs_data.ips_count_html,
         ips_suspicious=logs_data.ips_suspicious,
         logs_suspicious=logs_data.logs_suspicious_html,
         logs_all_keys=logs_data.logs_all_keys,
         logs_all=logs_data.logs_all,
+        remote_addrs_count_keys=logs_data.remote_addrs_count_keys,
+        remote_addrs_count=logs_data.remote_addrs_count,
     )
 
 
@@ -98,10 +104,11 @@ def analyze_ip():
     logs_data = LogsData(logs_path)
     return flask.render_template(
         "logs.html",
-        ips_count=logs_data.ips_count_html,
         ips_suspicious=logs_data.ips_suspicious,
         logs_suspicious=logs_data.logs_suspicious_html,
         vt_results=vt_results_html,
         logs_all_keys=logs_data.logs_all_keys,
         logs_all=logs_data.logs_all,
+        remote_addrs_count_keys=logs_data.remote_addrs_count_keys,
+        remote_addrs_count=logs_data.remote_addrs_count,
     )

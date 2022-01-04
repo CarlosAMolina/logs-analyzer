@@ -16,7 +16,27 @@
 
 <h2 id="ips-requests-count">IPs requests count</h2>
 <div>
-  {{ ips_count|safe }}
+Remote addresses ({{ remote_addrs_count|length }}):
+</div>
+<br>
+<div>
+  <table>
+    <thead>
+      <tr>
+        {% for key in remote_addrs_count_keys %}
+          <th> {{ key }} </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for remote_addr_count in remote_addrs_count %}
+        <tr>
+          <td> {{ remote_addr_count["remote_addr"] }} </td>
+          <td> {{ remote_addr_count["count"] }} </td>
+        </tr>
+      {% endfor %}
+    <tbody>
+  </table>
 </div>
 
 <h2 id="ips-to-analyze">IPs to analyze</h2>
