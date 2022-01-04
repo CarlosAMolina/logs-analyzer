@@ -6,13 +6,12 @@ import os
 import pandas as pd
 
 from src.backend.vt import transformer
+import tests
 
 
 class TestIpSummary(unittest.TestCase):
     def test_get_summary(self):
-        with open(
-            os.path.join(os.path.dirname(__file__), "files/ip-response.json"), "r"
-        ) as f:
+        with open(tests.IP_RESPONSE_PATH, "r") as f:
             response = json.load(f)
         vt_parser = transformer.IpSummary(response)
         self.assertEqual(
