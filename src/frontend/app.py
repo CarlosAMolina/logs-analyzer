@@ -14,33 +14,31 @@ api = flask_restful.Api(app)
 
 
 @app.route("/")
-def main_path():
+def root():
     return flask.redirect("/logs-path")
 
 
-@app.route("/logs-path")
-def logs_file_get():
-    return flask.render_template("logs-path.html")
-
-
-@app.route("/logs-path", methods=["POST"])
-def logs_file_post():
-    logs_path = flask.request.form["logs-path"].split("\r\n")[0].strip()
-    flask.session["logs-path"] = logs_path
-    return flask.redirect("/logs")
+@app.route("/logs-path", methods=["GET", "POST"])
+def logs_path():
+    if flask.request.method == "GET":
+        return flask.render_template("logs-path.html")
+    else:
+        logs_path = flask.request.form["logs-path"].split("\r\n")[0].strip()
+        flask.session["logs-path"] = logs_path
+        return flask.redirect("/logs")
 
 
 @app.route("/logs", methods=["GET", "POST"])
-def show_logs():
+def logs():
     vt_results = None
     if flask.request.method == "POST":
         ips = flask.request.form["ips"].replace(" ", "").split("\r\n")
         ips = [ip for ip in set(ips) if len(ip)]
-        vt_results = ApiRequests.get_vt_analysis_of_ips(ips)
+        vt_results = ApiRequests.get_ips_vt(ips)
     logs_path = flask.session["logs-path"]
     return flask.render_template(
         "logs.html",
-        logs_all=ApiRequests.get_all_logs(logs_path),
+        logs_all=ApiRequests.get_logs_path(logs_path),
         remote_addrs_count=ApiRequests.get_remote_addrs_count(logs_path),
         url_logs_path=f"http://127.0.0.1:{config_frontend.PORT}/logs-path",
         vt_results=vt_results,
@@ -51,7 +49,7 @@ class ApiRequests:
     API_URL = f"http://localhost:{config_api.PORT}"
 
     @classmethod
-    def get_all_logs(cls, logs_path: str) -> List[dict]:
+    def get_logs_path(cls, logs_path: str) -> List[dict]:
         return cls._get_post_request_results(
             data={"logs-path": logs_path},
             url=f"{cls.API_URL}/logs-all",
@@ -75,7 +73,7 @@ class ApiRequests:
         )
 
     @classmethod
-    def get_vt_analysis_of_ips(cls, ips: List[str]) -> List[dict]:
+    def get_ips_vt(cls, ips: List[str]) -> List[dict]:
         return cls._get_post_request_results(
             data={"ips": ips},
             url=f"{cls.API_URL}/ips-vt",
