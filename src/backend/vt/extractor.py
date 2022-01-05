@@ -6,7 +6,7 @@ import requests
 API_KEY = os.environ["VT_KEY"]
 
 
-class RequestIp:
+class RequestIP:
     URL = "https://www.virustotal.com/api/v3/ip_addresses/{ip}"
 
     def get_analysis(self, ip: str) -> dict:

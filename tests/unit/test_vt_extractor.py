@@ -22,10 +22,10 @@ def mocked_requests_get(*args, **kwargs):
     return MockResponse({"data": "foo"}, 200)
 
 
-class TestRequestIp(unittest.TestCase):
+class TestRequestIP(unittest.TestCase):
     @mock.patch("requests.get", side_effect=mocked_requests_get)
     def test_get_analysis(self, mock_get):
-        vt_ip = extractor.RequestIp()
+        vt_ip = extractor.RequestIP()
         response = vt_ip.get_analysis("8.8.8.8")
         self.assertEqual({"data": "foo"}, response)
 

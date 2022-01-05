@@ -6,6 +6,3 @@
 
 - src.frontend.app
 renombrar metodos a algo parecido a los paths
-
-- renombrar
-Clases con nombre Ip... cambiarlo a IP...

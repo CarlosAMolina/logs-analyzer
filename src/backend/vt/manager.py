@@ -4,9 +4,9 @@ from . import extractor
 
 
 def get_analysis_of_ip(ip: str) -> vt_model.IPVTAnalysis:
-    ip_analyzer = extractor.RequestIp()
+    ip_analyzer = extractor.RequestIP()
     response_analysis = ip_analyzer.get_analysis(ip)
-    ip_results = transformer.IpResults(response_analysis)
+    ip_results = transformer.IPResults(response_analysis)
     return vt_model.IPVTAnalysis(
         ip=ip,
         malicious=ip_results.malicious,

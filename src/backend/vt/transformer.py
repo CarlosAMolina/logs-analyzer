@@ -5,7 +5,7 @@ import os
 API_KEY = os.environ["VT_KEY"]
 
 
-class IpResults:
+class IPResults:
     def __init__(self, response: dict):
         self._response = response
         self._is_error = "error" in self._response.keys()
@@ -42,9 +42,9 @@ class IpResults:
             return datetime.datetime.utcfromtimestamp(epoch)
 
 
-class IpSummary:
+class IPSummary:
     def __init__(self, response: dict):
-        self._analysis = IpResults(response)
+        self._analysis = IPResults(response)
 
     def get_summary(self) -> str:
         result = (
