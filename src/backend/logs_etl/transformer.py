@@ -121,9 +121,3 @@ class LogsAnalyzer:
 
     def _get_column_count(self, column) -> pd.DataFrame:
         return self._logs.groupby([column])[column].count().reset_index(name="count")
-
-    def get_logs_of_remote_addr(self, ip: str) -> pd.DataFrame:
-        return self._logs.loc[self._logs["remote_addr"] == ip]
-
-    def is_logs_count_suspicious(self) -> bool:
-        return len(self._logs) > 10
