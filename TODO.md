@@ -7,10 +7,5 @@
 - src.frontend.app
 renombrar metodos a algo parecido a los paths
 
-- borrar codigo ya no usado
-  - src.backend.logs_etl.transformer:
-    - PandasParser (comprobar)
-    - LogsAnalyzer (comprobar)
-
 - renombrar
 Clases con nombre Ip... cambiarlo a IP...
