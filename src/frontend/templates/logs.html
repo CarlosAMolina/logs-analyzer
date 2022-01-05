@@ -80,9 +80,9 @@
     <tbody>
       {% for log in logs_all %}
         <tr>
-          {% for key, value in log.items() %}
-            {% if key == "request" %}
-              <td> {{ value[:50] }} </td>
+          {% for value in log.values() %}
+            {% if value is string and value | length >= 50 %}
+              <td> {{ value[:50] }} <a href="{{ value }}" title="{{ value }}">(the log continues...)</a> </td>
             {% else %}
               <td> {{ value }} </td>
             {% endif %}
