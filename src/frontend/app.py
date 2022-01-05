@@ -5,6 +5,7 @@ import flask
 import flask_restful
 import requests
 
+from . import config as config_frontend
 from ..api import config as config_api
 
 app = flask.Flask(__name__, template_folder="templates")
@@ -39,9 +40,10 @@ def show_logs():
     logs_path = flask.session["logs-path"]
     return flask.render_template(
         "logs.html",
-        vt_results=vt_results,
         logs_all=ApiRequests.get_all_logs(logs_path),
         remote_addrs_count=ApiRequests.get_remote_addrs_count(logs_path),
+        url_logs_path=f"http://127.0.0.1:{config_frontend.PORT}/logs-path",
+        vt_results=vt_results,
     )
 
 
