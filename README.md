@@ -15,9 +15,9 @@
 
 ## Introduction
 
-Project to facilitate the analysis of logs with a user interface.
+Project that facilitates logs analysis with an user interface.
 
-Although the main program works with Python, there are some Bash scripts to run directly against a log file.
+Although the main program runs on Python, there are some Bash scripts to analyze a log file.
 
 ## Configuration
 
