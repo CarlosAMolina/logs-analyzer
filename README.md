@@ -57,7 +57,12 @@ Create a virtual environment, activate it and install the `requirements.txt` fil
 
 #### Angular requirements
 
-Install the Angular requirements.
+Install the Angular requirements:
+
+```bash
+cd src/frontend-angular/
+npm install
+```
 
 ## How it works
 
@@ -67,7 +72,6 @@ To work with the user interface, you must run:
 
 - API
 - Frontend
-
 
 ### Work with Bash scripts
 
