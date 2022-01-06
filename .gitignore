@@ -1,3 +1,9 @@
+# Angular
+.angular/
+
+# Dependencies
+node_modules
+
 # Python
 /build/
 /env/
@@ -10,3 +16,4 @@
 
 # Vim
 *.swp
+

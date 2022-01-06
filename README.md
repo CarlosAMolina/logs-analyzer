@@ -6,10 +6,15 @@
   - [External libraries](#external-libraries)
     - [Bash requirements](#bash-requirements)
     - [Python requirements](#python-requirements)
+    - [Angular requirements](#angular-requirements)
 - [How it works](#how-it-works)
   - [Work with Bash scripts](#work-with-bash-scripts)
     - [Analyze an IP with VT](#analyze-an-ip-with-vt)
-  - [Work with Python](#work-with-python)
+  - [Work with the user interface](#work-with-the-user-interface)
+    - [Run the API](#run-the-api)
+    - [Run the Frontend](#run-the-frontend)
+      - [Run the Frontend with Flask](#run-the-frontend-with-flask)
+      - [Run the Frontend with Angular](#run-the-frontend-with-angular)
 - [Tests](#tests)
   - [Test Python code](#test-python-code)
 
@@ -50,7 +55,19 @@ sudo apt-get install jq
 
 Create a virtual environment, activate it and install the `requirements.txt` file.
 
+#### Angular requirements
+
+Install the Angular requirements.
+
 ## How it works
+
+There are some Bash scripts to analyze a log file, the main project that provides the user interface runs on Python and does not need the Bash scripts.
+
+To work with the user interface, you must run:
+
+- API
+- Frontend
+
 
 ### Work with Bash scripts
 
@@ -66,15 +83,19 @@ Example:
 ./src/bash_scripts/get-analysis-of-ip 8.8.8.8
 ```
 
-### Work with Python
+### Work with the user interface
 
-Run the api:
+#### Run the API
 
 ```bash
 python -m src.api
 ```
 
-Run the frontend:
+#### Run the Frontend
+
+You can use Flask or Angular.
+
+##### Run the Frontend with Flask
 
 ```bash
 python -m src.frontend
@@ -83,6 +104,17 @@ python -m src.frontend
 Open the following link:
 
 <http://127.0.0.1:4200>
+
+##### Run the Frontend with Angular
+
+```bash
+cd src/frontend-angular/
+ng serve --port 4201 --open
+```
+
+Open the following link:
+
+<http://127.0.0.1:4201>
 
 ## Tests
 
