@@ -2,6 +2,11 @@ body {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
+p.error-msg {
+  color: red;
+  font-weight: bold;
+}
+
 textarea {
   border: 3px solid #cccccc;
   padding: 5px;

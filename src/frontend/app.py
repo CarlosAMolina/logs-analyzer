@@ -1,3 +1,4 @@
+from os.path import exists
 from typing import List
 import json
 
@@ -20,12 +21,20 @@ def root():
 
 @app.route("/logs-path", methods=["GET", "POST"])
 def logs_path():
-    if flask.request.method == "GET":
-        return flask.render_template("logs-path.html")
-    else:
+    error_msg = None
+    logs_path = "/tmp/access.log"
+    if flask.request.method == "POST":
         logs_path = flask.request.form["logs-path"].split("\r\n")[0].strip()
-        flask.session["logs-path"] = logs_path
-        return flask.redirect("/logs")
+        if exists(logs_path):
+            flask.session["logs-path"] = logs_path
+            return flask.redirect("/logs")
+        else:
+            error_msg = f"ERROR. File not found: {logs_path}"
+    return flask.render_template(
+        "logs-path.html",
+        error_msg=error_msg,
+        logs_path=logs_path,
+    )
 
 
 @app.route("/logs", methods=["GET", "POST"])
