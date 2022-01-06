@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LogsPath } from '../logs-path';
+import { LogsFile } from '../logs-file';
 
 @Component({
   selector: 'app-logs-path',
@@ -9,7 +9,7 @@ import { LogsPath } from '../logs-path';
 })
 export class LogsPathComponent implements OnInit {
   errorMsg = 'Foo';
-  logsPath: LogsPath = {value: '/tmp/access.log'};
+  logsFile: LogsFile = {path: '/tmp/access.log'};
 
   constructor() { }
 
