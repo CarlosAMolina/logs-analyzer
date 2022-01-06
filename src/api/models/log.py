@@ -15,7 +15,7 @@ class Log:
     ):
         self.remote_addr = remote_addr
         self.remote_user = remote_user
-        self._time_local = time_local
+        self.time_local = time_local
         self.request = request
         self.status = status
         self.body_bytes_sent = body_bytes_sent
@@ -27,7 +27,7 @@ class Log:
         return {
             "remote_addr": self.remote_addr,
             "remote_user": self.remote_user,
-            "time_local": self.time_local,
+            "time_local": self._time_local_str,
             "request": self.request,
             "status": self.status,
             "body_bytes_sent": self.body_bytes_sent,
@@ -36,8 +36,8 @@ class Log:
         }
 
     @property
-    def time_local(self) -> str:
-        return str(self._time_local)
+    def _time_local_str(self) -> str:
+        return str(self.time_local)
 
 
 class RemoteAddrCount:
