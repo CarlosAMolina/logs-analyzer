@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { IPS } from '../mock-ips';
-import { IPS_VT_ANALYSIS } from '../mock-ips-vt-analysis';
+import { IpVtAnalysis } from '../ip-vt-analysis';
+import { IpVtAnalysisService } from '../ip-vt-analysis.service';
 
 @Component({
   selector: 'app-ips-vt',
@@ -10,11 +11,18 @@ import { IPS_VT_ANALYSIS } from '../mock-ips-vt-analysis';
 })
 export class IpsVtComponent implements OnInit {
   ips = IPS;
-  ipsVTAnalysis = IPS_VT_ANALYSIS;
+  ipsVtAnalysis: IpVtAnalysis[] = [];
 
-  constructor() { }
+  constructor(
+    private ipVtAnalysisService: IpVtAnalysisService
+  ) { }
 
   ngOnInit(): void {
+    this.getIpsVtAnalysis();
+  }
+
+  getIpsVtAnalysis(): void {
+    this.ipsVtAnalysis = this.ipVtAnalysisService.getIpsVtAnalysis();
   }
 
 }

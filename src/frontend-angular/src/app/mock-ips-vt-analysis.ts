@@ -1,6 +1,6 @@
-import { IPVTAnalysis } from './ip-vt-analysis';
+import { IpVtAnalysis } from './ip-vt-analysis';
 
-export const IPS_VT_ANALYSIS: IPVTAnalysis[] = [
+export const IPS_VT_ANALYSIS: IpVtAnalysis[] = [
   {
     ip: "8.8.8.8",
     malicious: "1",

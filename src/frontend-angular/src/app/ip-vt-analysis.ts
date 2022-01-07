@@ -1,4 +1,4 @@
-export interface IPVTAnalysis {
+export interface IpVtAnalysis {
   ip: string,
   malicious: string,
   suspicious: string,
