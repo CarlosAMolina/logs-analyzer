@@ -5,9 +5,9 @@ import { IpVtAnalysis } from '../ip-vt-analysis';
 import { IpVtAnalysisService } from '../ip-vt-analysis.service';
 
 @Component({
-  selector: 'app-ips-vt',
-  templateUrl: './ips-vt.component.html',
-  styleUrls: ['./ips-vt.component.css']
+  selector: 'app-ips-vt-analysis',
+  templateUrl: './ips-vt-analysis.component.html',
+  styleUrls: ['./ips-vt-analysis.component.css']
 })
 export class IpsVtComponent implements OnInit {
   ips = IPS;

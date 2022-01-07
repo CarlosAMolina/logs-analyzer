@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IpsVtComponent } from './ips-vt.component';
+import { IpsVtComponent } from './ips-vt-analysis.component';
 
 describe('IpsVtComponent', () => {
   let component: IpsVtComponent;
