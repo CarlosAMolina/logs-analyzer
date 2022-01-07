@@ -7,5 +7,7 @@
 <textarea class="logs-path" name="logs-path">{{ logsFile.path }}</textarea>
 <input type="submit" value="Analyze file">
 </form>
-<p class="error-msg"> {{ errorMsg }} </p>
+<div *ngIf="errorMsg">
+  <p class="error-msg"> {{ errorMsg }} </p>
+</div>
 
