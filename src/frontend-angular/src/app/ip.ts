@@ -1,3 +1,3 @@
-export interface IP {
+export interface Ip {
   value: string;
 }
