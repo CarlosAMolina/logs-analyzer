@@ -1,0 +1,32 @@
+<h2 id="all-logs">All logs</h2>
+<p>Logs ({{ logsAll.length }}):</p>
+<br>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>remoteAddr</th>
+        <th>remoteUser</th>
+        <th>timeLocal</th>
+        <th>request</th>
+        <th>status</th>
+        <th>bodyBytesSent</th>
+        <th>httpReferer</th>
+        <th>httpUserAgent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logsAll">
+        <td>{{ log.remoteAddr }}</td>
+        <td>{{ log.remoteUser }}</td>
+        <td>{{ log.timeLocal }}</td>
+        <td>{{ log.request }}</td>
+        <td>{{ log.status }}</td>
+        <td>{{ log.bodyBytesSent }}</td>
+        <td>{{ log.httpReferer }}</td>
+        <td>{{ log.httpUserAgent }}</td>
+      </tr>
+    <tbody>
+  </table>
+</div>
+

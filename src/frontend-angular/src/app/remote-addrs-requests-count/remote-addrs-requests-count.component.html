@@ -1,0 +1,19 @@
+<h2 id="remote-addrs-requests-count">Remote Addrs requests count</h2>
+<p>Remote addresses ({{ remoteAddrsRequestsCount.length }}):</p>
+<br>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Remote Addr</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let remoteAddrRequestsCount of remoteAddrsRequestsCount">
+        <td>{{ remoteAddrRequestsCount.remoteAddr }}</td>
+        <td>{{ remoteAddrRequestsCount.count }}</td>
+      </tr>
+    <tbody>
+  </table>
+</div>

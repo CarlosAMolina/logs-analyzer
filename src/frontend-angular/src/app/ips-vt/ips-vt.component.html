@@ -1,0 +1,36 @@
+<h2 id="ips-to-analyze">IPs to analyze</h2>
+<p>The remote addresses in the logs are shown</p>
+<li *ngFor="let ip of ips">
+  {{ip.value}}
+</li>
+<form method="POST">
+<textarea class="ips-vt" name="ips">
+</textarea>
+<input type="submit" value="Check in VT">
+</form>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>ip</th>
+        <th>malicious</th>
+        <th>suspicious</th>
+        <th>harmless</th>
+        <th>last_modification_date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ipVTAnalysis of ipsVTAnalysis">
+        <td>{{ipVTAnalysis.ip}}</td>
+        <td>{{ipVTAnalysis.malicious}}</td>
+        <td>{{ipVTAnalysis.suspicious}}</td>
+        <td>{{ipVTAnalysis.harmless}}</td>
+        <td>{{ipVTAnalysis.lastModificationDate}}</td>
+      </tr>
+    <tbody>
+  </table>
+</div>
+
+
+
+

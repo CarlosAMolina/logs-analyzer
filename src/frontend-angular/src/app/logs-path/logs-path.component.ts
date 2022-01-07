@@ -8,7 +8,7 @@ import { LogsFile } from '../logs-file';
   styleUrls: ['./logs-path.component.css']
 })
 export class LogsPathComponent implements OnInit {
-  errorMsg = 'Foo';
+  errorMsg = 'ERROR. File not found: foo.log';
   logsFile: LogsFile = {path: '/tmp/access.log'};
 
   constructor() { }
