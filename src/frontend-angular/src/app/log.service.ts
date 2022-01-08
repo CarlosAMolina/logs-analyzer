@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Log } from './log';
-import { LOGS_ALL } from './mock-logs-all';
+import { LOGS } from './mock-logs';
 
 
 @Injectable({
@@ -12,7 +12,7 @@ export class LogService {
   constructor() { }
 
   getLogs(): Log[] {
-    return LOGS_ALL;
+    return LOGS;
   }
 
 }

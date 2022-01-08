@@ -1,6 +1,6 @@
 import { Log } from './log';
 
-export const LOGS_ALL: Log[] = [
+export const LOGS: Log[] = [
   {
     remoteAddr: "8.8.8.8",
     remoteUser: "user 1",
