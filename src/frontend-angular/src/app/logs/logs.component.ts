@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Log } from '../log';
 import { LogService } from '../log.service';
-import { LOGS } from '../mock-logs';
 
 @Component({
   selector: 'app-logs',

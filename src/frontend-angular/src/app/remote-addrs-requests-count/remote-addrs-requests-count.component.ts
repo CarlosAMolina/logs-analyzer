@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { REMOTE_ADDRS_REQUESTS_COUNT } from '../mock-remote-addrs-requests-count';
+import { RemoteAddrRequestsCount } from '../remote-addr-requests-count';
+import { RemoteAddrRequestsCountService } from '../remote-addr-requests-count.service';
 
 @Component({
   selector: 'app-remote-addrs-requests-count',
@@ -9,11 +10,16 @@ import { REMOTE_ADDRS_REQUESTS_COUNT } from '../mock-remote-addrs-requests-count
 })
 export class RemoteAddrsRequestsCountComponent implements OnInit {
 
-  remoteAddrsRequestsCount = REMOTE_ADDRS_REQUESTS_COUNT
+  remoteAddrsRequestsCount: RemoteAddrRequestsCount[] = [];
 
-  constructor() { }
+  constructor(private remoteAddrRequestsCountService: RemoteAddrRequestsCountService) { }
 
   ngOnInit(): void {
+    this.getRemoteAddrsRequestsCountService();
+  }
+
+  getRemoteAddrsRequestsCountService(): void {
+      this.remoteAddrsRequestsCount = this.remoteAddrRequestsCountService.getRemoteAddrsRequestsCountService();
   }
 
 }
