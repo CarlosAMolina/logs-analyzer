@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Log } from '../log';
+import { LogService } from '../log.service';
 import { LOGS_ALL } from '../mock-logs-all';
 
 @Component({
@@ -8,11 +10,16 @@ import { LOGS_ALL } from '../mock-logs-all';
   styleUrls: ['./logs-all.component.css']
 })
 export class LogsAllComponent implements OnInit {
-  logsAll = LOGS_ALL;
+  logs: Log[] = [];
 
-  constructor() { }
+  constructor(private logService: LogService) { }
 
   ngOnInit(): void {
+    this.getLogs();
+  }
+
+  getLogs(): void {
+    this.logs = this.logService.getLogs();
   }
 
 }

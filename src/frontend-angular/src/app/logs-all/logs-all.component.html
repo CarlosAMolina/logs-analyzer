@@ -1,5 +1,5 @@
 <h2 id="all-logs">All logs</h2>
-<p>Logs ({{ logsAll.length }}):</p>
+<p>Logs ({{ logs.length }}):</p>
 <div>
   <table>
     <thead>
@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let log of logsAll">
+      <tr *ngFor="let log of logs">
         <td>{{ log.remoteAddr }}</td>
         <td>{{ log.remoteUser }}</td>
         <td>{{ log.timeLocal }}</td>
