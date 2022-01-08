@@ -18,7 +18,8 @@ export class LogsComponent implements OnInit {
   }
 
   getLogs(): void {
-    this.logs = this.logService.getLogs();
+    this.logService.getLogs()
+        .subscribe(logs => this.logs = logs);
   }
 
 }

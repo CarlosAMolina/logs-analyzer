@@ -22,7 +22,8 @@ export class IpsVtComponent implements OnInit {
   }
 
   getIpsVtAnalysis(): void {
-    this.ipsVtAnalysis = this.ipVtAnalysisService.getIpsVtAnalysis();
+    this.ipVtAnalysisService.getIpsVtAnalysis()
+        .subscribe(ipsVtAnalysis => this.ipsVtAnalysis = ipsVtAnalysis);
   }
 
 }

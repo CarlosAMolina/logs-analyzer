@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 import { Log } from './log';
 import { LOGS } from './mock-logs';
@@ -11,8 +12,9 @@ export class LogService {
 
   constructor() { }
 
-  getLogs(): Log[] {
-    return LOGS;
+  getLogs(): Observable<Log[]> {
+    const logs = of(LOGS);
+    return logs;
   }
 
 }

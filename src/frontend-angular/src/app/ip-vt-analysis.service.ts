@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 import { IpVtAnalysis } from './ip-vt-analysis';
 import { IPS_VT_ANALYSIS } from './mock-ips-vt-analysis';
@@ -7,8 +8,9 @@ import { IPS_VT_ANALYSIS } from './mock-ips-vt-analysis';
   providedIn: 'root'
 })
 export class IpVtAnalysisService {
-  getIpsVtAnalysis(): IpVtAnalysis[] {
-    return IPS_VT_ANALYSIS;
+  getIpsVtAnalysis(): Observable<IpVtAnalysis[]> {
+    const ipsVtAnalysis = of(IPS_VT_ANALYSIS);
+    return ipsVtAnalysis;
   }
 
   constructor() { }

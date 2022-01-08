@@ -9,7 +9,6 @@ import { RemoteAddrRequestsCountService } from '../remote-addr-requests-count.se
   styleUrls: ['./remote-addrs-requests-count.component.css']
 })
 export class RemoteAddrsRequestsCountComponent implements OnInit {
-
   remoteAddrsRequestsCount: RemoteAddrRequestsCount[] = [];
 
   constructor(private remoteAddrRequestsCountService: RemoteAddrRequestsCountService) { }
@@ -19,7 +18,8 @@ export class RemoteAddrsRequestsCountComponent implements OnInit {
   }
 
   getRemoteAddrsRequestsCountService(): void {
-      this.remoteAddrsRequestsCount = this.remoteAddrRequestsCountService.getRemoteAddrsRequestsCountService();
+      this.remoteAddrRequestsCountService.getRemoteAddrsRequestsCount()
+          .subscribe(remoteAddrsRequestsCount => this.remoteAddrsRequestsCount = remoteAddrsRequestsCount);
   }
 
 }
