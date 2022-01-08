@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LogsPathComponent } from './logs-path/logs-path.component';
 import { IpsVtComponent } from './ips-vt-analysis/ips-vt-analysis.component';
 import { RemoteAddrsRequestsCountComponent } from './remote-addrs-requests-count/remote-addrs-requests-count.component';
-import { LogsAllComponent } from './logs-all/logs-all.component';
+import { LogsComponent } from './logs/logs.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +13,7 @@ import { LogsAllComponent } from './logs-all/logs-all.component';
     LogsPathComponent,
     IpsVtComponent,
     RemoteAddrsRequestsCountComponent,
-    LogsAllComponent
+    LogsComponent
   ],
   imports: [
     BrowserModule

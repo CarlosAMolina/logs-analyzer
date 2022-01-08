@@ -5,11 +5,11 @@ import { LogService } from '../log.service';
 import { LOGS } from '../mock-logs';
 
 @Component({
-  selector: 'app-logs-all',
-  templateUrl: './logs-all.component.html',
-  styleUrls: ['./logs-all.component.css']
+  selector: 'app-logs',
+  templateUrl: './logs.component.html',
+  styleUrls: ['./logs.component.css']
 })
-export class LogsAllComponent implements OnInit {
+export class LogsComponent implements OnInit {
   logs: Log[] = [];
 
   constructor(private logService: LogService) { }
