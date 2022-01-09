@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { LogsPathComponent } from './logs-path/logs-path.component';
-import { IpsVtComponent } from './ips-vt-analysis/ips-vt-analysis.component';
+import { IpsVtAnalysisComponent } from './ips-vt-analysis/ips-vt-analysis.component';
 import { RemoteAddrsRequestsCountComponent } from './remote-addrs-requests-count/remote-addrs-requests-count.component';
 import { LogsComponent } from './logs/logs.component';
 import { MessagesComponent } from './messages/messages.component';
@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [
     AppComponent,
     LogsPathComponent,
-    IpsVtComponent,
+    IpsVtAnalysisComponent,
     RemoteAddrsRequestsCountComponent,
     LogsComponent,
     MessagesComponent

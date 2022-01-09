@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IpsVtComponent } from './ips-vt-analysis.component';
+import { IpsVtAnalysisComponent } from './ips-vt-analysis.component';
 
-describe('IpsVtComponent', () => {
-  let component: IpsVtComponent;
-  let fixture: ComponentFixture<IpsVtComponent>;
+describe('IpsVtAnalysisComponent', () => {
+  let component: IpsVtAnalysisComponent;
+  let fixture: ComponentFixture<IpsVtAnalysisComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IpsVtComponent ]
+      declarations: [ IpsVtAnalysisComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IpsVtComponent);
+    fixture = TestBed.createComponent(IpsVtAnalysisComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

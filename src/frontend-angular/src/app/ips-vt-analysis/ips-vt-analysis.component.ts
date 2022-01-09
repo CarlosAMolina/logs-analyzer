@@ -9,7 +9,7 @@ import { IpVtAnalysisService } from '../ip-vt-analysis.service';
   templateUrl: './ips-vt-analysis.component.html',
   styleUrls: ['./ips-vt-analysis.component.css']
 })
-export class IpsVtComponent implements OnInit {
+export class IpsVtAnalysisComponent implements OnInit {
   ips = IPS;
   ipsVtAnalysis: IpVtAnalysis[] = [];
 
