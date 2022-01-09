@@ -19,3 +19,8 @@ nav a:hover {
 nav a.active {
   background-color: black;
 }
+
+/* https://stackoverflow.com/questions/8184958/add-space-between-html-elements-only-using-css */
+a + a {
+  margin-left: 3px;
+}
