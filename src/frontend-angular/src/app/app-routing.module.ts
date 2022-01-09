@@ -6,6 +6,7 @@ import { IpsVtAnalysisComponent } from './ips-vt-analysis/ips-vt-analysis.compon
 import { LogsComponent } from './logs/logs.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: '/logs-path', pathMatch: 'full' },
   { path: 'ips-vt-analysis', component: IpsVtAnalysisComponent },
   { path: 'logs', component: LogsComponent },
   { path: 'logs-path', component: LogsPathComponent },
