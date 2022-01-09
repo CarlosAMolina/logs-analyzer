@@ -52,6 +52,6 @@ class RemoteAddrCount:
     @property
     def data(self):
         return {
-            "remote_addr": self.remote_addr,
+            "remoteAddr": self.remote_addr,
             "count": self.count,
         }

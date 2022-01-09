@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Response, json, make_response
 from flask_restful import Resource
 from http import HTTPStatus
 
@@ -29,4 +29,25 @@ class RemoteAddrCountListResource(Resource):
             remote_addr_count.data
             for remote_addr_count in get_remote_addrs_count(get_logs_path())
         ]
-        return {"data": data}, HTTPStatus.OK
+        # Fix CORS errors with Angular
+        # https://werkzeug.palletsprojects.com/en/2.0.x/wrappers/#werkzeug.wrappers.Response
+        resp = Response(
+            response=json.dumps(data),
+            content_type="application/json",
+            headers=[('Access-Control-Allow-Origin', '*')],
+            )
+        return resp
+
+    def options(self):
+        def build_preflight_response():
+            """ Fix CORS errors with Angular
+            https://medium.com/@eric.hung0404/deal-with-cors-without-flask-cors-an-example-of-react-and-flask-5832c44108a7
+            """
+            response = make_response()
+            response.headers.add("Access-Control-Allow-Origin", "*")
+            response.headers.add('Access-Control-Allow-Headers', "*")
+            response.headers.add('Access-Control-Allow-Methods', "*")
+            return response
+
+        return build_preflight_response()
+

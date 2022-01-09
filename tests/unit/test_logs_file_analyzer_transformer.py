@@ -15,8 +15,8 @@ class TestLogsAnalyzer(unittest.TestCase):
             FakeLog("2.2.2.2"),
         ]
         expected_result = [
-            {"remote_addr": "2.2.2.2", "count": 2},
-            {"remote_addr": "1.1.1.1", "count": 1},
+            {"remoteAddr": "2.2.2.2", "count": 2},
+            {"remoteAddr": "1.1.1.1", "count": 1},
         ]
         result = [
             remote_addr_count.data

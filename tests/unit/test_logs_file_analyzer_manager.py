@@ -10,8 +10,8 @@ class TestFunctions(unittest.TestCase):
         result = [remote_addr_count.data for remote_addr_count in remote_addrs_count]
         self.assertEqual(
             [
-                {"count": 2, "remote_addr": "8.8.8.8"},
-                {"count": 1, "remote_addr": "111.222.33.4"},
+                {"count": 2, "remoteAddr": "8.8.8.8"},
+                {"count": 1, "remoteAddr": "111.222.33.4"},
             ],
             result,
         )
