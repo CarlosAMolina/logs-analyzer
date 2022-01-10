@@ -1,9 +1,17 @@
+from os.path import exists
+
 from flask import request, Response, json, make_response
 from flask_restful import Resource
 from http import HTTPStatus
 
 from ...backend.logs_file_parser import manager as logs_file_parser_manager
 from ...backend.logs_file_analyzer import manager as logs_file_analyzer_manager
+
+
+class LogFileResource(Resource):
+    def post(self):
+        data = exists(get_logs_path())
+        return {"data": data}, HTTPStatus.OK
 
 
 class LogListResource(Resource):
