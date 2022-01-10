@@ -4,7 +4,7 @@
 <h2>Logs file</h2>
 <p>Write the path of the file with logs</p>
 <form method="POST">
-<textarea class="logs-path" name="logs-path">{{ logsFile.path }}</textarea>
+<textarea class="logs-file" name="logs-file">{{ logFileDefault.path }}</textarea>
 <input type="submit" value="Analyze file">
 </form>
 <div *ngIf="errorMsg">

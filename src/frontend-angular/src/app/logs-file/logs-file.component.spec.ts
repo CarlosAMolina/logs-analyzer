@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LogsPathComponent } from './logs-path.component';
+import { LogsFileComponent } from './logs-file.component';
 
-describe('LogsPathComponent', () => {
-  let component: LogsPathComponent;
-  let fixture: ComponentFixture<LogsPathComponent>;
+describe('LogsFileComponent', () => {
+  let component: LogsFileComponent;
+  let fixture: ComponentFixture<LogsFileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LogsPathComponent ]
+      declarations: [ LogsFileComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LogsPathComponent);
+    fixture = TestBed.createComponent(LogsFileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
