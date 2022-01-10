@@ -29,7 +29,7 @@ button, input {
   border-radius: 4px;
   font-size: 1rem;
 }
-button:hover, input:hover {
+button:hover {
   color: white;
   background-color: #42545C;
 }
@@ -47,9 +47,10 @@ textarea {
 }
 
 
-textarea.logs-file {
-  height: 1em;
-  width: 50em;
+input.logs-file {
+  width: 90%;
+  background-color: #fff;
+  padding: 0.5rem;
 }
 
 textarea.ips-vt-analysis {

@@ -10,18 +10,22 @@ import { LOG_FILE } from '../mock-log-file';
   styleUrls: ['./logs-file.component.css']
 })
 export class LogsFileComponent implements OnInit {
-  errorMsg = 'ERROR. File not found: foo.log';
-  logFileDefault: LogFile = LOG_FILE;
-  logFile: string = '';
+  errorMsg = '';
+  logFile: LogFile = LOG_FILE;
 
   constructor(private logFileService: LogFileService) { }
 
   ngOnInit(): void {
-    this.getLogsFile();
   }
 
-  getLogsFile(): void {
-    this.logFileService.getLogsFile();
+  setLogsFile(logFileNew: string): void {
+    const exists = this.logFileService.isFile(logFileNew);
+    if (exists) {
+      this.logFile = { path: logFileNew };
+    }
+    else {
+      this.errorMsg = `ERROR. File not found: ${logFileNew}`;
+    }
   }
 
 }
