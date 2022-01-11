@@ -1,6 +1,23 @@
 import datetime as datetime
 
 
+class LogFile:
+    def __init__(
+        self,
+        is_file: bool,
+        path: str,
+    ):
+        self.is_file = is_file
+        self.path = path
+
+    @property
+    def data(self):
+        return {
+            "isFile": self.is_file,
+            "path": self.path,
+        }
+
+
 class Log:
     def __init__(
         self,
@@ -55,3 +72,5 @@ class RemoteAddrCount:
             "remoteAddr": self.remote_addr,
             "count": self.count,
         }
+
+

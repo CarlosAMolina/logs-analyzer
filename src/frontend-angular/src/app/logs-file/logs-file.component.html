@@ -4,10 +4,10 @@
 <h2>Logs file</h2>
 <p>Write the path of the file with logs</p>
 <div>
-  <input type="text" class="logs-file" value="{{ logFile.path }}" #logsFileInput>
+  <input type="text" class="logs-file" value="/tmp/access.log" #logsFileInput>
   <button type="submit" (click) = 'setLogsFile(logsFileInput.value)'>Analyze file</button>
 </div>
-<div *ngIf="errorMsg">
-  <p class="error-msg"> {{ errorMsg }} </p>
+<div *ngIf="logFile.isFile === false && logFile.path">
+  <p class="error-msg"> ERROR. File not found: {{ logFile.path }} </p>
 </div>
 

@@ -4,7 +4,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { RemoteAddrRequestsCount } from './remote-addr-requests-count';
-import { REMOTE_ADDRS_REQUESTS_COUNT } from './mock-remote-addrs-requests-count';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -12,7 +11,6 @@ import { MessageService } from './message.service';
 })
 export class RemoteAddrRequestsCountService {
   private remoteAddrRequestsCountUrl = 'http://127.0.0.1:5000/remote-addrs-count';
-
 
   httpOptions = {
     headers: new HttpHeaders(
@@ -28,7 +26,7 @@ export class RemoteAddrRequestsCountService {
   ) { }
 
   private log(message: string) {
-    this.messageService.add(`HeroService: ${message}`);
+    this.messageService.add(`RemoteAddrRequestsCountService: ${message}`);
   }
 
   getRemoteAddrsRequestsCount(): Observable<RemoteAddrRequestsCount[]> {
@@ -39,7 +37,7 @@ export class RemoteAddrRequestsCountService {
     const body = JSON.stringify(bodyObject);
     return this.http.post<RemoteAddrRequestsCount[]>(this.remoteAddrRequestsCountUrl, body, this.httpOptions)
       .pipe(
-        tap((newData: RemoteAddrRequestsCount[]) => this.log(`RemoteAddrRequestsCountService: fetched remoteAddrRequestsCount. Value=${newData}`)),
+        tap((newData: RemoteAddrRequestsCount[]) => this.log(`fetched remoteAddrRequestsCount. Value=${newData}`)),
         catchError(this.handleError<RemoteAddrRequestsCount[]>('getRemoteAddrsRequestsCount', []))
     );
   }
