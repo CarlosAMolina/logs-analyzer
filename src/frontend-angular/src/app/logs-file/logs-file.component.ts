@@ -10,6 +10,7 @@ import { LogFileService } from '../log-file.service';
 })
 export class LogsFileComponent implements OnInit {
   logFile: LogFile = {isFile: false, path: ''};
+  logFileInput: any; // todo replace to str
 
   constructor(private logFileService: LogFileService) { }
 
@@ -17,6 +18,8 @@ export class LogsFileComponent implements OnInit {
   }
 
   setLogsFile(logFileInput: string): void {
+    this.logFileInput = (<HTMLInputElement>document.getElementById("log-file")).value;
+    this.logFileService.logPath={value:this.logFileInput}
     this.logFileService.isFile(logFileInput)
           .subscribe(isFileResult => {
                 this.logFile = isFileResult;

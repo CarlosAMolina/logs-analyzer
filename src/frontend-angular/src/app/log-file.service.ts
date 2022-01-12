@@ -22,6 +22,8 @@ export class LogFileService {
     )
   };
 
+  logPath: any; // TODO replace anys to str
+
   constructor(
     private http: HttpClient,
     private messageService: MessageService
