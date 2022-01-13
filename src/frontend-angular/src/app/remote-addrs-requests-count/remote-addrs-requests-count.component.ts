@@ -20,7 +20,8 @@ export class RemoteAddrsRequestsCountComponent implements OnInit {
   }
 
   getRemoteAddrsRequestsCountService(): void {
-      this.remoteAddrRequestsCountService.getRemoteAddrsRequestsCount()
+      // TODO use logFile.path
+      this.remoteAddrRequestsCountService.getRemoteAddrsRequestsCount("a")
           .subscribe(remoteAddrsRequestsCount => this.remoteAddrsRequestsCount = remoteAddrsRequestsCount);
   }
 

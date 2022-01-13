@@ -29,10 +29,9 @@ export class RemoteAddrRequestsCountService {
     this.messageService.add(`RemoteAddrRequestsCountService: ${message}`);
   }
 
-  getRemoteAddrsRequestsCount(): Observable<RemoteAddrRequestsCount[]> {
-    // TODO not use mocked value
+  getRemoteAddrsRequestsCount(logsFile: string): Observable<RemoteAddrRequestsCount[]> {
     const bodyObject = {  
-      "logs-file": "/tmp/access.log"
+      "logs-file": logsFile 
     };  
     const body = JSON.stringify(bodyObject);
     return this.http.post<RemoteAddrRequestsCount[]>(this.remoteAddrRequestsCountUrl, body, this.httpOptions)
