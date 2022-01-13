@@ -26,7 +26,7 @@ class LogListResource(Resource):
 
 def get_logs_path() -> str:
     request_data = request.get_json()
-    return request_data["path"]
+    return request_data["logs-file"]
 
 
 class RemoteAddrCountListResource(Resource):

@@ -36,7 +36,7 @@ export class LogFileService {
 
   isFile(logPath: string): Observable<LogFile> {
     const bodyObject = {  
-      path: logPath
+      "logs-file": logPath,
     };  
     const body = JSON.stringify(bodyObject);
     return this.http.post<LogFile>(this.isFileUrl, body, this.httpOptions)

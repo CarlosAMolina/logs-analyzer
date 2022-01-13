@@ -36,7 +36,7 @@ export class RemoteAddrRequestsCountService {
     const body = JSON.stringify(bodyObject);
     return this.http.post<RemoteAddrRequestsCount[]>(this.remoteAddrRequestsCountUrl, body, this.httpOptions)
       .pipe(
-        tap((newData: RemoteAddrRequestsCount[]) => this.log(`fetched remoteAddrRequestsCount. Value=${newData}`)),
+        tap((newData: RemoteAddrRequestsCount[]) => this.log(`fetched remoteAddrRequestsCount. Total elements fetched = ${Object.keys(newData).length}`)),
         catchError(this.handleError<RemoteAddrRequestsCount[]>('getRemoteAddrsRequestsCount', []))
     );
   }
