@@ -9,20 +9,24 @@ import { LogFileService } from '../log-file.service';
   styleUrls: ['./logs-file.component.css']
 })
 export class LogsFileComponent implements OnInit {
-  logFile: LogFile = {isFile: false, path: ''};
-  logFileInput: any; // todo replace to str
+  logsPathInput = '/tmp/access.log';
 
-  constructor(private logFileService: LogFileService) { }
+  constructor(public logFileService: LogFileService) { }
 
   ngOnInit(): void {
+    this.setLogPathForInput();
   }
 
+  setLogPathForInput(): void {
+    if (this.logFileService.logFile.path.length != 0 ) {
+      this.logsPathInput = this.logFileService.logFile.path;
+    }
+  };
+
   setLogsFile(logFileInput: string): void {
-    this.logFileInput = (<HTMLInputElement>document.getElementById("log-file")).value;
-    this.logFileService.logPath={value:this.logFileInput}
     this.logFileService.isFile(logFileInput)
           .subscribe(isFileResult => {
-                this.logFile = isFileResult;
+              this.logFileService.logFile=isFileResult;
           }
     );
   }

@@ -12,6 +12,9 @@ import { MessageService } from './message.service';
 export class LogFileService {
   private isFileUrl = 'http://127.0.0.1:5000/log-file-is-file';
 
+  logFile: LogFile = {isFile: false, path: ''};
+
+
   // TODO refactor extract HTTP code used by other modules too code to a common module
 
   httpOptions = {
@@ -21,8 +24,6 @@ export class LogFileService {
       }
     )
   };
-
-  logPath: any; // TODO replace anys to str
 
   constructor(
     private http: HttpClient,

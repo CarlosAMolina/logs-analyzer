@@ -1,6 +1,8 @@
 <h2>Remote Addrs requests count</h2>
 
-<p>Logs file: {{ logPath.value }}</p>
+<p>Logs file from service: {{ this.logFileService.logFile.path }}</p>
+<p>Is file: {{ this.logFileService.logFile.isFile }}</p>
+
 
 <p>Remote addresses ({{ remoteAddrsRequestsCount.length }}):</p>
 <div>
