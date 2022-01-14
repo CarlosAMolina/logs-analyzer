@@ -15,11 +15,10 @@ export class LogsFileComponent implements OnInit {
   constructor(private logFileService: LogFileService, public logFileStorageService: LogFileStorageService) { }
 
   ngOnInit(): void {
-    this.setLogPathForInput();
+    this.setLogPathInput();
   }
 
-  // TODO rename to setLogPathInput
-  setLogPathForInput(): void {
+  setLogPathInput(): void {
     if ( this.logFileStorageService.hasPath() ) {
       this.logsPathInput = this.logFileStorageService.logFile.path;
     }
