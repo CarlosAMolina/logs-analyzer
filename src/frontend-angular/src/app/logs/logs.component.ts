@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Log } from '../log';
+import { LogFileStorageService } from '../log-file-storage.service';
 import { LogService } from '../log.service';
 
 @Component({
@@ -11,14 +12,14 @@ import { LogService } from '../log.service';
 export class LogsComponent implements OnInit {
   logs: Log[] = [];
 
-  constructor(private logService: LogService) { }
+  constructor(private logService: LogService, public logFileStorageService: LogFileStorageService) { }
 
   ngOnInit(): void {
     this.getLogs();
   }
 
   getLogs(): void {
-    this.logService.getLogs()
+    this.logService.getLogs(this.logFileStorageService.logFile.path)
         .subscribe(logs => this.logs = logs);
   }
 

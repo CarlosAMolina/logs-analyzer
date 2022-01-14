@@ -61,7 +61,7 @@ class ApiRequests:
     def get_logs_path(cls, logs_path: str) -> List[dict]:
         return cls._get_post_request_results(
             data={"logs-path": logs_path},
-            url=f"{cls.API_URL}/logs-all",
+            url=f"{cls.API_URL}/logs",
         )
 
     @classmethod

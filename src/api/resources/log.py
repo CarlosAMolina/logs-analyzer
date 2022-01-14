@@ -21,7 +21,10 @@ class LogListResource(Resource):
             log.data
             for log in logs_file_parser_manager.get_logs_from_file(get_logs_path())
         ]
-        return {"data": data}, HTTPStatus.OK
+        return build_actual_response(data)
+
+    def options(self):
+        return build_preflight_response()
 
 
 def get_logs_path() -> str:

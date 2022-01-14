@@ -41,6 +41,7 @@ export class RemoteAddrRequestsCountService {
     );
   }
 
+  // TODO refactor extract common http functions to other script
   /**
    * Handle Http operation that failed.
    * Let the app continue.
