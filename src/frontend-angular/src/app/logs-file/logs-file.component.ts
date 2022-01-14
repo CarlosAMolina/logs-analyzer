@@ -11,6 +11,7 @@ import { LogFileStorageService } from '../log-file-storage.service';
 })
 export class LogsFileComponent implements OnInit {
   logsPathInput = '/tmp/access.log';
+  errorMsg = '';
 
   constructor(private logFileService: LogFileService, public logFileStorageService: LogFileStorageService) { }
 
@@ -25,11 +26,25 @@ export class LogsFileComponent implements OnInit {
   };
 
   setLogsFile(logFileInput: string): void {
+    logFileInput = logFileInput.trim();
     this.logFileService.isFile(logFileInput)
-          .subscribe(isFileResult => {
-              this.logFileStorageService.logFile=isFileResult;
+          .subscribe(logFileResult => {
+              this.setErrorMsg(logFileResult);
+              if (logFileResult.isFile) {
+                this.logFileStorageService.logFile=logFileResult;
+              }
           }
     );
+  }
+
+  setErrorMsg(logFile: LogFile): void {
+    if (!logFile.path.length) {
+        this.errorMsg = 'ERROR. Empty path provided';
+    } else if (!logFile.isFile) {
+        this.errorMsg = `ERROR. File not found: ${logFile.path}`;
+    } else {
+        this.errorMsg = '';
+    }
   }
 
 }

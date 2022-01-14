@@ -10,13 +10,8 @@ export class LogFileStorageService {
 
   constructor() { }
 
-  hasDefaultValues(): boolean {
-    return this.logFile.isFile === false && this.logFile.path !== '';
-  }
-
   hasPath(): boolean {
     return this.logFile.path.length != 0;
   }
 
-  // TODO create setPath(path: string) and remove blank spaces at beginning and end of the path
 }

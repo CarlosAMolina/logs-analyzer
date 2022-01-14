@@ -7,7 +7,6 @@
   <input type="text" id="log-file" class="logs-file" value="{{ this.logsPathInput }}" #logsFileInput>
   <button type="submit" (click) = 'setLogsFile(logsFileInput.value)'>Analyze file</button>
 </div>
-<div *ngIf="this.logFileStorageService.hasDefaultValues() !== false">
-  <p class="error-msg"> ERROR. File not found: {{ this.logFileStorageService.logFile.path }} </p>
+<div *ngIf="this.errorMsg.length">
+<p class="error-msg"> {{ this.errorMsg }} </p>
 </div>
-
