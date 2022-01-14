@@ -18,8 +18,9 @@ export class LogsFileComponent implements OnInit {
     this.setLogPathForInput();
   }
 
+  // TODO rename to setLogPathInput
   setLogPathForInput(): void {
-    if (this.logFileStorageService.logFile.path.length != 0 ) {
+    if ( this.logFileStorageService.hasPath() ) {
       this.logsPathInput = this.logFileStorageService.logFile.path;
     }
   };
