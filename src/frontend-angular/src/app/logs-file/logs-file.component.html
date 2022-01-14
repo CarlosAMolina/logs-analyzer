@@ -7,7 +7,7 @@
   <input type="text" id="log-file" class="logs-file" value="{{ this.logsPathInput }}" #logsFileInput>
   <button type="submit" (click) = 'setLogsFile(logsFileInput.value)'>Analyze file</button>
 </div>
-<div *ngIf="this.logFileService.logFile.isFile === false && this.logFileService.logFile.path">
-  <p class="error-msg"> ERROR. File not found: {{ this.logFileService.logFile.path }} </p>
+<div *ngIf="this.logFileStorageService.logFile.isFile === false && this.logFileStorageService.logFile.path">
+  <p class="error-msg"> ERROR. File not found: {{ this.logFileStorageService.logFile.path }} </p>
 </div>
 
