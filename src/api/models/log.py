@@ -42,14 +42,14 @@ class Log:
     @property
     def data(self):
         return {
-            "remote_addr": self.remote_addr,
-            "remote_user": self.remote_user,
-            "time_local": self._time_local_str,
+            "remoteAddr": self.remote_addr,
+            "remoteUser": self.remote_user,
+            "timeLocal": self._time_local_str,
             "request": self.request,
             "status": self.status,
-            "body_bytes_sent": self.body_bytes_sent,
-            "http_referer": self.http_referer,
-            "http_user_agent": self.http_user_agent,
+            "bodyBytesSent": self.body_bytes_sent,
+            "httpReferer": self.http_referer,
+            "httpUserAgent": self.http_user_agent,
         }
 
     @property
