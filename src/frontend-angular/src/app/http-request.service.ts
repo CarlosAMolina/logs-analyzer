@@ -27,7 +27,7 @@ export class HttpRequestService {
     const body = JSON.stringify(httpRequestPost.bodyObject);
     return this.http.post<T>(httpRequestPost.url, body, this.httpOptions)
       .pipe(
-        tap((newData:T) => this.log(`fetched ${httpRequestPost.operation}. Value=${JSON.stringify(newData)}`)),
+        tap((newData:T) => this.log(`fetched ${httpRequestPost.operation}`)),
         catchError(this.handleError<T>(httpRequestPost.service, httpRequestPost.operation, httpRequestPost.responseDefault ))
     );
   }

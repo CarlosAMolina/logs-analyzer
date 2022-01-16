@@ -9,7 +9,6 @@ import { LogFile } from './log-file';
   providedIn: 'root'
 })
 export class LogFileService {
-  private isFileUrl = 'http://127.0.0.1:5000/log-file-is-file';
 
   constructor(
     private httpRequestService: HttpRequestService
@@ -21,7 +20,7 @@ export class LogFileService {
       operation: 'isFile',
       responseDefault: { isFile: false, path: logPath },
       service: 'LogFileService',
-      url: this.isFileUrl,
+      url: 'http://127.0.0.1:5000/log-file-is-file',
     }
     return this.httpRequestService.getPostResults<LogFile>(httpRequestPost);
   }
