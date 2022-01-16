@@ -23,13 +23,13 @@
     <tbody>
       <tr *ngFor="let log of logs">
         <td>{{ log.remoteAddr }}</td>
-        <td>{{ log.remoteUser }}</td>
+        <td [innerHTML]="getStringShortenedAsHtml(log.remoteUser)"></td>
         <td>{{ log.timeLocal }}</td>
-        <td>{{ log.request }}</td>
+        <td [innerHTML]="getStringShortenedAsHtml(log.request)"></td>
         <td>{{ log.status }}</td>
         <td>{{ log.bodyBytesSent }}</td>
-        <td>{{ log.httpReferer }}</td>
-        <td>{{ log.httpUserAgent }}</td>
+        <td [innerHTML]="getStringShortenedAsHtml(log.httpReferer)"></td>
+        <td [innerHTML]="getStringShortenedAsHtml(log.httpUserAgent)"></td>
       </tr>
     <tbody>
   </table>

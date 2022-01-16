@@ -23,4 +23,15 @@ export class LogsComponent implements OnInit {
         .subscribe(logs => this.logs = logs);
   }
 
+  getStringShortenedAsHtml(value: string): string {
+    const maxLength = 50;
+    let result = '';
+    if (value.length < maxLength) {
+        result = `<td>${value}</td>`;
+    } else {
+        result = `<td>${value.slice(0, maxLength)} <a href="${value}" title="${value}">(hover for full log)</a> </td>`;
+    }
+    return result;
+  }
+
 }
