@@ -6,3 +6,4 @@
 
 - Search and manage TODOs in the code 
 
+- Table views: add angular if condition to render only if they have values to avoid show and empty table during the short time the api retrieves data.
