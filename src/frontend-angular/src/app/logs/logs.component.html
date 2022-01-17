@@ -10,6 +10,7 @@
   <table>
     <thead>
       <tr>
+        <th>VT</th>
         <th>remoteAddr</th>
         <th>remoteUser</th>
         <th>timeLocal</th>
@@ -22,6 +23,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let log of logs">
+        <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ log.remoteAddr }}" [(ngModel)]="log.checkedVt"></td>
         <td>{{ log.remoteAddr }}</td>
         <td [innerHTML]="getStringShortenedAsHtml(log.remoteUser)"></td>
         <td>{{ log.timeLocal }}</td>
@@ -33,5 +35,7 @@
       </tr>
     <tbody>
   </table>
+
+  <button (click)="getVtAnalysis()">Check in VT</button>
 </div>
 

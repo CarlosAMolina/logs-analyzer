@@ -34,4 +34,19 @@ export class LogsComponent implements OnInit {
     return result;
   }
 
+  getVtAnalysis() {
+    console.log('VT checked:');
+    const ips = this.getIpsToAnalyzeInVt(this.isVtChecked);
+    console.log(result);
+  }
+
+  private getIpsToAnalyzeInVt(): string[] {
+    // TODO continue here
+    return this.logs.filter(this.isVtChecked);
+  }
+
+  private isVtChecked(log: Log): boolean {
+    return log.checkedVt === true;
+  }
+
 }

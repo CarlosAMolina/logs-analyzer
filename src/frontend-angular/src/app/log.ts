@@ -7,4 +7,5 @@ export interface Log {
   bodyBytesSent: number;
   httpReferer: string;
   httpUserAgent: string;
+  checkedVt?: boolean;
 }

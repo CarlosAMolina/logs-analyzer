@@ -53,6 +53,10 @@ input.logs-file {
   padding: 0.5rem;
 }
 
+input.checkbox {
+  margin-bottom: 0px;
+}
+
 textarea.ips-vt-analysis {
   height: 15em;
   width: 15em;
@@ -69,6 +73,10 @@ table, th, td {
 th {
     background-color: #add8e6;
     color: black;
+}
+
+td.checkbox {
+  text-align:center;
 }
 
 tr:nth-child(odd)	{ background-color:#eee; }
