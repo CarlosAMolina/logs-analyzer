@@ -35,14 +35,17 @@ export class LogsComponent implements OnInit {
   }
 
   getVtAnalysis() {
-    console.log('VT checked:');
-    const ips = this.getIpsToAnalyzeInVt(this.isVtChecked);
-    console.log(result);
+    const ips = this.getIpsToAnalyzeInVt();
+    // TODO continue here
+    console.log('VT checked:'); // TODO delete
+    console.log(ips); // TODO delete
   }
 
   private getIpsToAnalyzeInVt(): string[] {
-    // TODO continue here
-    return this.logs.filter(this.isVtChecked);
+    const result = this.logs.filter(this.isVtChecked).map(log => {
+        return log.remoteAddr
+    });
+    return [...new Set(result)];
   }
 
   private isVtChecked(log: Log): boolean {
