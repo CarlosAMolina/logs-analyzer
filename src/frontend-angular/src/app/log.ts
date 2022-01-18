@@ -1,4 +1,6 @@
 export interface Log {
+  blocked?: boolean;
+  checkedVt?: boolean;
   remoteAddr: string;
   remoteUser: string;
   timeLocal: string;
@@ -7,5 +9,4 @@ export interface Log {
   bodyBytesSent: number;
   httpReferer: string;
   httpUserAgent: string;
-  checkedVt?: boolean;
 }

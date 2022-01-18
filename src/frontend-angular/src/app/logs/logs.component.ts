@@ -12,6 +12,7 @@ import { LogService } from '../log.service';
   styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
+  ipsBlocked: string[] = [];
   ipsVtAnalysis: IpVtAnalysis[] = [];
   logs: Log[] = [];
 
@@ -56,5 +57,29 @@ export class LogsComponent implements OnInit {
   private isVtChecked(log: Log): boolean {
     return log.checkedVt === true;
   }
+
+  getUfwBlockCommandForIp(ip: string): string {
+    return `sudo ufw deny from ${ip} to any`;
+  }
+
+  getIpsUfwBlock(): void {
+    const ipsInLogs = this.logs.filter(this.isLogBlocked).map(log => {
+        return log.remoteAddr
+    });
+    const ipsInVt = this.ipsVtAnalysis.filter(this.isIpVtAnalysisBlocked).map(ipVtAnalysis => {
+        return ipVtAnalysis.ip
+    });
+    const result = ipsInLogs.concat(ipsInVt);
+    this.ipsBlocked = [...new Set(result)];
+  }
+
+  private isLogBlocked(log: Log): boolean {
+    return log.blocked === true;
+  }
+
+  private isIpVtAnalysisBlocked(ipVtAnalysis: IpVtAnalysis): boolean {
+    return ipVtAnalysis.blocked === true;
+  }
+
 
 }

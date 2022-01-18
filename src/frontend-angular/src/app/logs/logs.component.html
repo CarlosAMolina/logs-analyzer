@@ -10,6 +10,7 @@
   <table>
     <thead>
       <tr>
+        <th>Block</th>
         <th>VT</th>
         <th>remoteAddr</th>
         <th>remoteUser</th>
@@ -23,6 +24,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let log of logs">
+        <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ log.remoteAddr }}" [(ngModel)]="log.blocked"></td>
         <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ log.remoteAddr }}" [(ngModel)]="log.checkedVt"></td>
         <td>{{ log.remoteAddr }}</td>
         <td [innerHTML]="getStringShortenedAsHtml(log.remoteUser)"></td>
@@ -39,6 +41,7 @@
     <table>
       <thead>
         <tr>
+          <th>Block</th>
           <th>ip</th>
           <th>malicious</th>
           <th>suspicious</th>
@@ -48,6 +51,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let ipVtAnalysis of ipsVtAnalysis">
+          <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ ipVtAnalysis.ip }}" [(ngModel)]="ipVtAnalysis.blocked"></td>
           <td>{{ipVtAnalysis.ip}}</td>
           <td>{{ipVtAnalysis.malicious}}</td>
           <td>{{ipVtAnalysis.suspicious}}</td>
@@ -59,5 +63,14 @@
   </div>
 
   <button (click)="getVtAnalysis()">Check in VT</button>
+  <button (click)="getIpsUfwBlock()">Show UFW block IPs commands</button>
+
+  <div *ngIf="ipsBlocked.length">
+    <h3>Block IPs with UFW</h3>
+    <p *ngFor="let ip of ipsBlocked">
+      {{ getUfwBlockCommandForIp(ip) }}
+    </p>
+  </div>
+
 </div>
 
