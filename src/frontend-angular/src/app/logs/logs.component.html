@@ -35,6 +35,28 @@
       </tr>
     <tbody>
   </table>
+  <div *ngIf="ipsVtAnalysis.length">
+    <table>
+      <thead>
+        <tr>
+          <th>ip</th>
+          <th>malicious</th>
+          <th>suspicious</th>
+          <th>harmless</th>
+          <th>last_modification_date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ipVtAnalysis of ipsVtAnalysis">
+          <td>{{ipVtAnalysis.ip}}</td>
+          <td>{{ipVtAnalysis.malicious}}</td>
+          <td>{{ipVtAnalysis.suspicious}}</td>
+          <td>{{ipVtAnalysis.harmless}}</td>
+          <td>{{ipVtAnalysis.lastModificationDate}}</td>
+        </tr>
+      <tbody>
+    </table>
+  </div>
 
   <button (click)="getVtAnalysis()">Check in VT</button>
 </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { IpVtAnalysis } from '../ip-vt-analysis';
+import { IpVtAnalysisService } from '../ip-vt-analysis.service';
 import { Log } from '../log';
 import { LogFileStorageService } from '../log-file-storage.service';
 import { LogService } from '../log.service';
@@ -10,9 +12,14 @@ import { LogService } from '../log.service';
   styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
+  ipsVtAnalysis: IpVtAnalysis[] = [];
   logs: Log[] = [];
 
-  constructor(private logService: LogService, public logFileStorageService: LogFileStorageService) { }
+  constructor(
+    private ipVtAnalysisService: IpVtAnalysisService,
+    private logService: LogService,
+    public logFileStorageService: LogFileStorageService
+  ) { }
 
   ngOnInit(): void {
     this.getLogs();
@@ -35,10 +42,8 @@ export class LogsComponent implements OnInit {
   }
 
   getVtAnalysis() {
-    const ips = this.getIpsToAnalyzeInVt();
-    // TODO continue here
-    console.log('VT checked:'); // TODO delete
-    console.log(ips); // TODO delete
+    this.ipVtAnalysisService.getIpsVtAnalysis(this.getIpsToAnalyzeInVt())
+        .subscribe(ipsVtAnalysis => this.ipsVtAnalysis = ipsVtAnalysis);
   }
 
   private getIpsToAnalyzeInVt(): string[] {

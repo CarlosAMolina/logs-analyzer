@@ -4,9 +4,9 @@
 <h2>Logs file</h2>
 <p>Write the path of the file with logs</p>
 <div>
-  <input type="text" id="log-file" class="logs-file" value="{{ this.logsPathInput }}" #logsFileInput>
+  <input type="text" id="log-file" class="logs-file" value="{{ logsPathInput }}" #logsFileInput>
   <button type="submit" (click) = 'setLogsFile(logsFileInput.value)'>Analyze file</button>
 </div>
-<div *ngIf="this.errorMsg.length">
+<div *ngIf="errorMsg.length">
 <p class="error-msg"> {{ this.errorMsg }} </p>
 </div>

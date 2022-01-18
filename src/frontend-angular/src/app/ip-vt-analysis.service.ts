@@ -11,7 +11,9 @@ import { MessageService } from './message.service';
 export class IpVtAnalysisService {
   constructor(private messageService: MessageService) { }
 
-  getIpsVtAnalysis(): Observable<IpVtAnalysis[]> {
+  getIpsVtAnalysis(ips: string[]): Observable<IpVtAnalysis[]> {
+    console.log('VT checked:'); // TODO delete
+    console.log(ips); // TODO delete
     const ipsVtAnalysis = of(IPS_VT_ANALYSIS);
     this.messageService.add('IpVtAnalysisService: fetched ipsVtAnalysis');
     return ipsVtAnalysis;
