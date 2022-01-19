@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { LogsFileComponent } from './logs-file/logs-file.component';
-import { IpsVtAnalysisComponent } from './ips-vt-analysis/ips-vt-analysis.component';
 import { RemoteAddrsRequestsCountComponent } from './remote-addrs-requests-count/remote-addrs-requests-count.component';
 import { LogsComponent } from './logs/logs.component';
 import { MessagesComponent } from './messages/messages.component';
@@ -15,7 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [
     AppComponent,
     LogsFileComponent,
-    IpsVtAnalysisComponent,
     RemoteAddrsRequestsCountComponent,
     LogsComponent,
     MessagesComponent
