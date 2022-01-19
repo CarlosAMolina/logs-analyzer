@@ -2,70 +2,72 @@
 
 <p>Number of logs: {{ logs.length }}</p>
 
-<div>
-  <table>
-    <thead>
-      <tr>
-        <th>Block</th>
-        <th>VT</th>
-        <th>remoteAddr</th>
-        <th>remoteUser</th>
-        <th>timeLocal</th>
-        <th>request</th>
-        <th>status</th>
-        <th>bodyBytesSent</th>
-        <th>httpReferer</th>
-        <th>httpUserAgent</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let log of logs">
-        <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ log.remoteAddr }}" [(ngModel)]="log.blocked"></td>
-        <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ log.remoteAddr }}" [(ngModel)]="log.checkedVt"></td>
-        <td>{{ log.remoteAddr }}</td>
-        <td [innerHTML]="getStringShortenedAsHtml(log.remoteUser)"></td>
-        <td>{{ log.timeLocal }}</td>
-        <td [innerHTML]="getStringShortenedAsHtml(log.request)"></td>
-        <td>{{ log.status }}</td>
-        <td>{{ log.bodyBytesSent }}</td>
-        <td [innerHTML]="getStringShortenedAsHtml(log.httpReferer)"></td>
-        <td [innerHTML]="getStringShortenedAsHtml(log.httpUserAgent)"></td>
-      </tr>
-    <tbody>
-  </table>
-  <div *ngIf="ipsVtAnalysis.length">
+<div *ngIf="logs.length">
+  <div>
     <table>
       <thead>
         <tr>
           <th>Block</th>
-          <th>ip</th>
-          <th>malicious</th>
-          <th>suspicious</th>
-          <th>harmless</th>
-          <th>last_modification_date</th>
+          <th>VT</th>
+          <th>remoteAddr</th>
+          <th>remoteUser</th>
+          <th>timeLocal</th>
+          <th>request</th>
+          <th>status</th>
+          <th>bodyBytesSent</th>
+          <th>httpReferer</th>
+          <th>httpUserAgent</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ipVtAnalysis of ipsVtAnalysis">
-          <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ ipVtAnalysis.ip }}" [(ngModel)]="ipVtAnalysis.blocked"></td>
-          <td>{{ipVtAnalysis.ip}}</td>
-          <td>{{ipVtAnalysis.malicious}}</td>
-          <td>{{ipVtAnalysis.suspicious}}</td>
-          <td>{{ipVtAnalysis.harmless}}</td>
-          <td>{{ipVtAnalysis.lastModificationDate}}</td>
+        <tr *ngFor="let log of logs">
+          <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ log.remoteAddr }}" [(ngModel)]="log.blocked"></td>
+          <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ log.remoteAddr }}" [(ngModel)]="log.checkedVt"></td>
+          <td>{{ log.remoteAddr }}</td>
+          <td [innerHTML]="getStringShortenedAsHtml(log.remoteUser)"></td>
+          <td>{{ log.timeLocal }}</td>
+          <td [innerHTML]="getStringShortenedAsHtml(log.request)"></td>
+          <td>{{ log.status }}</td>
+          <td>{{ log.bodyBytesSent }}</td>
+          <td [innerHTML]="getStringShortenedAsHtml(log.httpReferer)"></td>
+          <td [innerHTML]="getStringShortenedAsHtml(log.httpUserAgent)"></td>
         </tr>
       <tbody>
     </table>
-  </div>
+    <div *ngIf="ipsVtAnalysis.length">
+      <table>
+        <thead>
+          <tr>
+            <th>Block</th>
+            <th>ip</th>
+            <th>malicious</th>
+            <th>suspicious</th>
+            <th>harmless</th>
+            <th>last_modification_date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ipVtAnalysis of ipsVtAnalysis">
+            <td class="checkbox"><input class="checkbox" type="checkbox" value="{{ ipVtAnalysis.ip }}" [(ngModel)]="ipVtAnalysis.blocked"></td>
+            <td>{{ipVtAnalysis.ip}}</td>
+            <td>{{ipVtAnalysis.malicious}}</td>
+            <td>{{ipVtAnalysis.suspicious}}</td>
+            <td>{{ipVtAnalysis.harmless}}</td>
+            <td>{{ipVtAnalysis.lastModificationDate}}</td>
+          </tr>
+        <tbody>
+      </table>
+    </div>
 
-  <button (click)="getVtAnalysis()">Check in VT</button>
-  <button (click)="getIpsUfwBlock()">Show UFW block IPs commands</button>
+    <button (click)="getVtAnalysis()">Check in VT</button>
+    <button (click)="getIpsUfwBlock()">Show UFW block IPs commands</button>
 
-  <div *ngIf="ipsBlocked.length">
-    <h3>Block IPs with UFW</h3>
-    <p *ngFor="let ip of ipsBlocked">
-      {{ getUfwBlockCommandForIp(ip) }}
-    </p>
+    <div *ngIf="ipsBlocked.length">
+      <h3>Block IPs with UFW</h3>
+      <p *ngFor="let ip of ipsBlocked">
+        {{ getUfwBlockCommandForIp(ip) }}
+      </p>
+    </div>
   </div>
 
 </div>

@@ -1,19 +1,22 @@
 <h2>Remote Addrs requests count</h2>
 
 <p>Unique remote addresses: {{ remoteAddrsRequestsCount.length }}</p>
-<div>
-  <table>
-    <thead>
-      <tr>
-        <th>Remote Addr</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let remoteAddrRequestsCount of remoteAddrsRequestsCount">
-        <td>{{ remoteAddrRequestsCount.remoteAddr }}</td>
-        <td>{{ remoteAddrRequestsCount.count }}</td>
-      </tr>
-    <tbody>
-  </table>
+
+<div *ngIf="remoteAddrsRequestsCount.length">
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Remote Addr</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let remoteAddrRequestsCount of remoteAddrsRequestsCount">
+          <td>{{ remoteAddrRequestsCount.remoteAddr }}</td>
+          <td>{{ remoteAddrRequestsCount.count }}</td>
+        </tr>
+      <tbody>
+    </table>
+  </div>
 </div>
