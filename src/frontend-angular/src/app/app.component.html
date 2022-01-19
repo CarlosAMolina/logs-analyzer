@@ -1,11 +1,13 @@
 <h1>{{title}}</h1>
 
-<h2>Menu</h2>
-<nav>
-  <a routerLink="/logs-file">Logs file</a>
-  <a routerLink="/remote-addrs-requests-count">Remote Addrs requests count</a>
-  <a routerLink="/logs">Logs</a>
-</nav>
+<div *ngIf="logFileStorageService.logFile.isFile">
+  <h2>Menu</h2>
+  <nav>
+    <a routerLink="/logs-file">Logs file</a>
+    <a routerLink="/remote-addrs-requests-count">Remote Addrs requests count</a>
+    <a routerLink="/logs">Logs</a>
+  </nav>
+</div>
 
 <router-outlet></router-outlet>
 <app-messages></app-messages>
