@@ -1,13 +1,13 @@
-from flask import request
-from flask_restful import Resource
-from http import HTTPStatus
+import flask
 
 from ...backend.vt import manager
+from . import response
 
 
-class IPVTAnalysisListResource(Resource):
+class IPVTAnalysisListResource(response.ResponseParent):
     def post(self):
-        request_data = request.get_json()
+        request_data = flask.request.get_json()
         ips = request_data["ips"]
         data = [manager.get_analysis_of_ip(ip).data for ip in ips]
-        return {"data": data}, HTTPStatus.OK
+        return self.cors.build_actual_response(data)
+

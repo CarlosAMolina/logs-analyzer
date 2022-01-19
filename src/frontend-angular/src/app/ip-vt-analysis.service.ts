@@ -1,21 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { HttpRequestPost } from './http-request';
+import { HttpRequestService } from './http-request.service';
 import { IpVtAnalysis } from './ip-vt-analysis';
-import { IPS_VT_ANALYSIS } from './mock-ips-vt-analysis';
 import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IpVtAnalysisService {
-  constructor(private messageService: MessageService) { }
+  constructor(
+    private httpRequestService: HttpRequestService
+  ) { }
 
   getIpsVtAnalysis(ips: string[]): Observable<IpVtAnalysis[]> {
-    console.log('VT checked:'); // TODO delete
-    console.log(ips); // TODO delete
-    const ipsVtAnalysis = of(IPS_VT_ANALYSIS);
-    this.messageService.add('IpVtAnalysisService: fetched ipsVtAnalysis');
-    return ipsVtAnalysis;
+    const httpRequestPost: HttpRequestPost<IpVtAnalysis[]> = {
+      bodyObject: { "ips": ips },
+      operation: 'getIpsVtAnalysis',
+      responseDefault: [],
+      service: 'IpVtAnalysisService',
+      url: 'http://127.0.0.1:5000/ips-vt',
+    }
+    return this.httpRequestService.getPostResults<IpVtAnalysis[]>(httpRequestPost);
   }
 }

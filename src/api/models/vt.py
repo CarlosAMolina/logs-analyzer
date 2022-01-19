@@ -24,7 +24,7 @@ class IPVTAnalysis:
             "malicious": self.malicious,
             "suspicious": self.suspicious,
             "harmless": self.harmless,
-            "last_modification_date": self.last_modification_date,
+            "lastModificationDate": self.last_modification_date,
         }
 
     @property
