@@ -58,7 +58,7 @@ Create a virtual environment, activate it and install the `requirements.txt` fil
 Install the Angular requirements:
 
 ```bash
-cd src/frontend-angular/
+cd src/frontend/
 npm install
 ```
 
@@ -96,7 +96,7 @@ python -m src.api
 #### Run the Frontend
 
 ```bash
-cd src/frontend-angular/
+cd src/frontend/
 ng serve --port 4200 --open
 ```
 
