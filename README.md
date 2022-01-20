@@ -13,8 +13,6 @@
   - [Work with the user interface](#work-with-the-user-interface)
     - [Run the API](#run-the-api)
     - [Run the Frontend](#run-the-frontend)
-      - [Run the Frontend with Flask](#run-the-frontend-with-flask)
-      - [Run the Frontend with Angular](#run-the-frontend-with-angular)
 - [Tests](#tests)
   - [Test Python code](#test-python-code)
 
@@ -22,7 +20,7 @@
 
 Project that facilitates logs analysis with an user interface.
 
-Although the main program runs on Python, there are some Bash scripts to analyze a log file.
+The main program runs on Python. There are some Bash scripts but they are not required, you can use them to analyze a log file manually.
 
 ## Configuration
 
@@ -97,32 +95,20 @@ python -m src.api
 
 #### Run the Frontend
 
-You can use Flask or Angular.
-
-##### Run the Frontend with Flask
-
 ```bash
-python -m src.frontend
+cd src/frontend-angular/
+ng serve --port 4200 --open
 ```
 
 Open the following link:
 
 <http://127.0.0.1:4200>
 
-##### Run the Frontend with Angular
-
-```bash
-cd src/frontend-angular/
-ng serve --port 4201 --open
-```
-
-Open the following link:
-
-<http://127.0.0.1:4201>
-
 ## Tests
 
 ### Test Python code
+
+With the virtualenv activated, run the following command:
 
 ```bash
 tox
