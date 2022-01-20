@@ -20,7 +20,7 @@ class TestFunctions(unittest.TestCase):
                 "malicious": 1,
                 "suspicious": 0,
                 "harmless": 79,
-                "last_modification_date": "2021-12-05 11:49:41",
+                "lastModificationDate": "2021-12-05 11:49:41",
             },
             result.data,
         )
