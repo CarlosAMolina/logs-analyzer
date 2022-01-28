@@ -1,3 +1,4 @@
+from typing import Union 
 import datetime
 import os
 
@@ -36,10 +37,13 @@ class IPResults:
             return self._stats["harmless"]
 
     @property
-    def last_modification_date(self) -> datetime.datetime:
+    def last_modification_date(self) -> Union[datetime.datetime, None]:
         if not self._is_error:
-            epoch = self._attributes["last_modification_date"]
-            return datetime.datetime.utcfromtimestamp(epoch)
+            try:
+                epoch = self._attributes["last_modification_date"]
+                return datetime.datetime.utcfromtimestamp(epoch)
+            except KeyError:
+                return None
 
 
 class IPSummary:
