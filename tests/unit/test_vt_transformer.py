@@ -11,8 +11,8 @@ class TestIPResults(unittest.TestCase):
         response = {"data": {"attributes": {"last_modification_date": 1638704981}}}
         vt_parser = transformer.IPResults(response)
         self.assertEqual(
-            datetime.datetime(2021, 12, 5, 11, 49, 41),
-            vt_parser.last_modification_date)
+            datetime.datetime(2021, 12, 5, 11, 49, 41), vt_parser.last_modification_date
+        )
 
     def test_get_last_modification_date_if_value_not_in_response(self):
         response = {"data": {"attributes": {}}}

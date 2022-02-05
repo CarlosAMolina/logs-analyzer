@@ -1,4 +1,3 @@
-from http import HTTPStatus
 import unittest
 import mock
 
@@ -19,7 +18,7 @@ class TestLogListResource(unittest.TestCase):
         with mock.patch("src.api.resources.log.flask.request", FakeRequest):
             result = self.class_.post()
             self.assertEqual(3, len(result.json))
-            self.assertEqual('200 OK', result.status)
+            self.assertEqual("200 OK", result.status)
 
     def test_post_with_file_that_does_not_exit(self):
         class FakeRequest:

@@ -12,6 +12,7 @@ def get_is_file(logs_path: str) -> log_model.LogFile:
         path=logs_path,
     )
 
+
 def get_remote_addrs_count_from_file(logs_path: str) -> List[log_model.RemoteAddrCount]:
     logs = extractor.extract(logs_path)
     return transformer.get_remote_addrs_count(logs)

@@ -19,16 +19,14 @@ class Cors:
 
     def build_actual_response(self, response_data):
         return flask.Response(
-                response=flask.json.dumps(response_data),
-                content_type="application/json",
-                headers=[('Access-Control-Allow-Origin', '*')],
-                )
-    
-    
+            response=flask.json.dumps(response_data),
+            content_type="application/json",
+            headers=[("Access-Control-Allow-Origin", "*")],
+        )
+
     def build_preflight_response(self):
         response = flask.make_response()
         response.headers.add("Access-Control-Allow-Origin", "*")
-        response.headers.add('Access-Control-Allow-Headers', "*")
-        response.headers.add('Access-Control-Allow-Methods', "*")
+        response.headers.add("Access-Control-Allow-Headers", "*")
+        response.headers.add("Access-Control-Allow-Methods", "*")
         return response
-

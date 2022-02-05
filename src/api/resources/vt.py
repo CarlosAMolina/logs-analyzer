@@ -10,4 +10,3 @@ class IPVTAnalysisListResource(response.ResponseParent):
         ips = request_data["ips"]
         data = [manager.get_analysis_of_ip(ip).data for ip in ips]
         return self.cors.build_actual_response(data)
-

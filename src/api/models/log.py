@@ -72,5 +72,3 @@ class RemoteAddrCount:
             "remoteAddr": self.remote_addr,
             "count": self.count,
         }
-
-
