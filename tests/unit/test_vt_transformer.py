@@ -1,8 +1,23 @@
+import datetime
 import json
 import unittest
 
 from src.backend.vt import transformer
 import tests
+
+
+class TestIPResults(unittest.TestCase):
+    def test_get_last_modification_date(self):
+        response = {"data": {"attributes": {"last_modification_date": 1638704981}}}
+        vt_parser = transformer.IPResults(response)
+        self.assertEqual(
+            datetime.datetime(2021, 12, 5, 11, 49, 41),
+            vt_parser.last_modification_date)
+
+    def test_get_last_modification_date_if_value_not_in_response(self):
+        response = {"data": {"attributes": {}}}
+        vt_parser = transformer.IPResults(response)
+        self.assertIsNone(vt_parser.last_modification_date)
 
 
 class TestIPSummary(unittest.TestCase):
