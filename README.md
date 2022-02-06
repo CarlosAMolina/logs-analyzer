@@ -138,7 +138,7 @@ Example:
 #### Run the API
 
 ```bash
-python -m src.api
+python src/api/app.py
 ```
 
 #### Run the Frontend
