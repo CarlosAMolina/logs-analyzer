@@ -1,5 +1,15 @@
 import datetime as datetime
 
+from ..extensions import db
+
+
+# TODO delete, only for tests
+class User(db.Model):
+    __tablename__ = "user"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), nullable=False, unique=True)
+
 
 class LogFile:
     def __init__(

@@ -1,6 +1,6 @@
-from . import app
-from . import config
+from . import app as m_app
 
 
 if __name__ == "__main__":
-    app.app.run(port=config.PORT, debug=True)
+    app = m_app.get_app()
+    app.run()

@@ -1,4 +1,4 @@
--- RDS: PostgreSQL.
+-- Database Management System: PostgreSQL.
 
 -- Table: public.log
 

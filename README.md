@@ -66,12 +66,48 @@ npm install
 
 ### Database
 
+### Database credentials
+
+Configure the database credentials:
+
+```bash
+vi ~/.bashrc
+# Example. Add to the end of the file:
+# export DB_USERNAME="foo"
+# export DB_PASSWORD="bar"
+source ~/.bashrc
+```
+
 #### Create the database
+
+##### Create the database manually
 
 You can find the database DDL at:
 
 ```bash
 less configuration/database/logs_analyzer.ddl
+```
+
+##### Create the database with SQLAlchemy
+
+Follow the steps below after starting the API (you can see how to start the API in the corresponding section).
+
+Change working directory:
+
+```bash
+cd src/api
+```
+
+Initialize the database:
+
+```bash
+flask db init
+```
+
+Create database and tables:
+
+```bash
+flask db migrate
 ```
 
 ## How it works

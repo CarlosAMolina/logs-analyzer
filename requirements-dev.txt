@@ -1,4 +1,4 @@
-black>=21.12b0
-mock>=4.0.3
-pre-commit>=2.16.0
-tox>=3.24.4
+black==22.1.0
+mock==4.0.3
+pre-commit==2.17.0
+tox==3.24.5
