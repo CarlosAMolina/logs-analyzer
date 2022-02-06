@@ -1,7 +1,7 @@
 import datetime
 import unittest
 
-from src.backend.logs_file_parser import transformer
+from backend.logs_file_parser import transformer
 
 
 class TestFileLineParser(unittest.TestCase):

@@ -1,7 +1,7 @@
 import datetime
 import unittest
 
-from src.backend.logs_file_parser import manager
+from backend.logs_file_parser import manager
 from tests import LOGS_PATH
 
 

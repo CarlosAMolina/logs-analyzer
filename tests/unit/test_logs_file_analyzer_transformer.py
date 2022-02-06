@@ -1,6 +1,6 @@
 import unittest
 
-from src.backend.logs_file_analyzer import transformer
+from backend.logs_file_analyzer import transformer
 
 
 class TestLogsAnalyzer(unittest.TestCase):

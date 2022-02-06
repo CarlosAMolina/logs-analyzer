@@ -1,6 +1,7 @@
 import unittest
 
-from src.backend.logs_file_analyzer import manager
+
+from backend.logs_file_analyzer import manager
 from tests import LOGS_PATH
 
 

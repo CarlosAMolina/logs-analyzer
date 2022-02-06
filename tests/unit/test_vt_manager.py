@@ -2,12 +2,12 @@ from unittest import mock
 import json
 import unittest
 
-from src.backend.vt import manager
+from backend.vt import manager
 import tests
 
 
 class TestFunctions(unittest.TestCase):
-    @mock.patch("src.backend.vt.extractor.RequestIP")
+    @mock.patch("backend.vt.extractor.RequestIP")
     def test_get_analysis_of_ip(self, mock_request_ip):
         with open(tests.IP_RESPONSE_PATH, "r") as f:
             vt_response = json.load(f)
