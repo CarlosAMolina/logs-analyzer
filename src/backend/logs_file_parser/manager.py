@@ -1,9 +1,9 @@
 from typing import List
 
-from ...api.models import log as log_model
-from . import exception
-from . import extractor
-from . import transformer
+from api.models import log as log_model
+from backend.logs_file_parser import exception
+from backend.logs_file_parser import extractor
+from backend.logs_file_parser import transformer
 
 
 def get_logs_from_file(logs_path: str) -> List[log_model.Log]:

@@ -1,14 +1,19 @@
+import sys
+import os
+
+PROJECT_PATH = os.path.join(os.path.dirname(__file__), "..")
+sys.path.append(PROJECT_PATH)
+
 import flask
 import flask_migrate
 import flask_restful
 
-from . import config
-from .extensions import db
-
 # TODO uncomment
-# from .models.log import User  # Required to create it's table in the database.
-from .resources import log as log_resources
-from .resources import vt as vt_resources
+# from api.models.log import User  # Required to create it's table in the database.
+from api import config
+from api.extensions import db
+from api.resources import log as log_resources
+from api.resources import vt as vt_resources
 
 
 def get_app():
@@ -34,3 +39,7 @@ def register_resources(app):
     api.add_resource(log_resources.LogListResource, "/logs")
     api.add_resource(log_resources.RemoteAddrCountListResource, "/remote-addrs-count")
     api.add_resource(vt_resources.IPVTAnalysisListResource, "/ips-vt")
+
+
+app = get_app()
+app.run()

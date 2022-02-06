@@ -1,9 +1,9 @@
 from os.path import exists
 from typing import List
 
-from ...api.models import log as log_model
-from . import extractor
-from . import transformer
+from api.models import log as log_model
+from backend.logs_file_analyzer import extractor
+from backend.logs_file_analyzer import transformer
 
 
 def get_is_file(logs_path: str) -> log_model.LogFile:

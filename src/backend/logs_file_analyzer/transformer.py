@@ -1,7 +1,7 @@
 from typing import List
 import collections
 
-from ...api.models import log as log_model
+from api.models import log as log_model
 
 
 def get_remote_addrs_count(

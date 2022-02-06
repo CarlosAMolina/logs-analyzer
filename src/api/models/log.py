@@ -1,6 +1,6 @@
 import datetime as datetime
 
-from ..extensions import db
+from api.extensions import db
 
 
 # TODO delete, only for tests

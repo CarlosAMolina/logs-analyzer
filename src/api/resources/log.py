@@ -1,8 +1,8 @@
 import flask
 
-from ...backend.logs_file_parser import manager as logs_file_parser_manager
-from ...backend.logs_file_analyzer import manager as logs_file_analyzer_manager
-from . import response
+from backend.logs_file_parser import manager as logs_file_parser_manager
+from backend.logs_file_analyzer import manager as logs_file_analyzer_manager
+from api.resources import response
 
 
 class LogFileResource(response.ResponseParent):

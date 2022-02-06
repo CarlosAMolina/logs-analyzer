@@ -1,6 +1,6 @@
-from ...api.models import vt as vt_model
-from . import transformer
-from . import extractor
+from api.models import vt as vt_model
+from backend.vt import transformer
+from backend.vt import extractor
 
 
 def get_analysis_of_ip(ip: str) -> vt_model.IPVTAnalysis:

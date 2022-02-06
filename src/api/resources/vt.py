@@ -1,7 +1,7 @@
 import flask
 
-from ...backend.vt import manager
-from . import response
+from backend.vt import manager
+from api.resources import response
 
 
 class IPVTAnalysisListResource(response.ResponseParent):

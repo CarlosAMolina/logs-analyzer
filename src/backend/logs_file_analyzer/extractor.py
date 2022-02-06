@@ -1,7 +1,7 @@
 from typing import List
 
-from ..logs_file_parser import manager as logs_file_parser_manager
-from ...api.models import log as log_model
+from api.models import log as log_model
+from backend.logs_file_parser import manager as logs_file_parser_manager
 
 
 def extract(file: str) -> List[log_model.Log]:

@@ -1,8 +1,8 @@
 import datetime as datetime
 import re
 
-from . import exception
-from ...api.models import log as log_model
+from api.models import log as log_model
+from backend.logs_file_parser import exception
 
 
 def transform(log: str) -> log_model.Log:
