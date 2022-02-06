@@ -7,6 +7,8 @@
     - [Bash requirements](#bash-requirements)
     - [Python requirements](#python-requirements)
     - [Angular requirements](#angular-requirements)
+  - [Database](#database)
+    - [Create the database](#create-the-database)
 - [How it works](#how-it-works)
   - [Work with Bash scripts](#work-with-bash-scripts)
     - [Analyze an IP with VT](#analyze-an-ip-with-vt)
@@ -60,6 +62,16 @@ Install the Angular requirements:
 ```bash
 cd src/frontend/
 npm install
+```
+
+### Database
+
+#### Create the database
+
+You can find the database DDL at:
+
+```bash
+less configuration/database/logs_analyzer.ddl
 ```
 
 ## How it works
