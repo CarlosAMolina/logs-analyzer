@@ -8,8 +8,8 @@ import flask
 import flask_migrate
 import flask_restful
 
-# TODO uncomment
-# from api.models.log import User  # Required to create it's table in the database.
+# TODO delete. Required to create it's table in the database
+# from api.models.log import User
 from api import config
 from api.extensions import db
 from api.resources import log as log_resources
@@ -42,4 +42,6 @@ def register_resources(app):
 
 
 app = get_app()
-app.run()
+
+if __name__ == "__main__":
+    app.run()

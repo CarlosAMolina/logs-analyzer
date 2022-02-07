@@ -2,6 +2,10 @@ import os
 
 
 class Config:
+    """
+    https://flask-sqlalchemy.palletsprojects.com/en/2.x/config/
+    """
+
     DEBUG = True
     SERVER_NAME = "{host}:{port}".format(
         host="127.0.0.1",
@@ -18,5 +22,4 @@ class Config:
             database="logs_analyzer",
         )
     )
-    # TODO uncomment
-    # SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False

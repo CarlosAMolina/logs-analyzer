@@ -90,7 +90,7 @@ less configuration/database/logs_analyzer.ddl
 
 ##### Create the database with SQLAlchemy
 
-Follow the steps below after starting the API (you can see how to start the API in the corresponding section).
+The Python requirements must be installed.
 
 Change working directory:
 
@@ -108,6 +108,7 @@ Create database and tables:
 
 ```bash
 flask db migrate
+flask db upgrade
 ```
 
 ## How it works

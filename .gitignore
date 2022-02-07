@@ -4,6 +4,9 @@
 # Dependencies
 node_modules
 
+# Flask
+/src/api/migrations/
+
 # Python
 /build/
 /env/
