@@ -8,8 +8,9 @@ import flask
 import flask_migrate
 import flask_restful
 
-# TODO delete. Required to create it's table in the database
-# from api.models.log import User
+# Required to create it's table in the database
+# TODO use correct class
+# from api.models.log import LogB
 from api import config
 from api.extensions import db
 from api.resources import log as log_resources

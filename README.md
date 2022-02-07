@@ -104,10 +104,15 @@ Initialize the database:
 flask db init
 ```
 
-Create database and tables:
+Create database and tables as code:
 
 ```bash
 flask db migrate
+```
+
+Create database and tables in db:
+
+```bash
 flask db upgrade
 ```
 

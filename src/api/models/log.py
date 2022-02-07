@@ -1,5 +1,7 @@
 import datetime as datetime
 
+import sqlalchemy as sa
+
 from api.extensions import db
 
 
@@ -9,6 +11,23 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
+
+
+# TODO move to Log class
+class LogB(db.Model):
+    __tablename__ = "log"
+
+    id = db.Column(db.Integer, db.Sequence("some_id_seq"), primary_key=True)
+    remote_addr = db.Column(sa.dialects.postgresql.INET(), nullable=True)
+    remote_user = db.Column(db.TEXT(), nullable=True)
+    time_local = db.Column(db.TIMESTAMP(timezone=True), nullable=True)
+    request = db.Column(db.TEXT(), nullable=True)
+    status = db.Column(db.SMALLINT(), nullable=True)
+    body_bytes_sent = db.Column(db.INTEGER(), nullable=True)
+    http_referer = db.Column(db.TEXT(), nullable=True)
+    http_user_agent = db.Column(db.TEXT(), nullable=True)
+
+    db.PrimaryKeyConstraint("id", name="log_pkey")
 
 
 class LogFile:
