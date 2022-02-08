@@ -8,13 +8,16 @@ import flask
 import flask_migrate
 import flask_restful
 
-from api.models.user import User  # Required to create it's table in the database
 
-# from api.models.log import Log # Not required to import to create db. I don't know why.
 from api import config
 from api.extensions import db
 from api.resources import log as log_resources
 from api.resources import vt as vt_resources
+from api.models import (
+    user as user_model,
+)  # Import to create it's table in the database with Alembic
+
+# The log model has already been imported in other modules.
 
 
 def get_app():

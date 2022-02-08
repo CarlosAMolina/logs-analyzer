@@ -2,7 +2,7 @@
 https://github.com/TrainingByPackt/Python-API-Development-Fundamentals/blob/master/Lesson03/Exercise19/models/user.py
 """
 
-from extensions import db
+from api.extensions import db
 
 
 class User(db.Model):

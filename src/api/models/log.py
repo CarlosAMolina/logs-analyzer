@@ -38,7 +38,6 @@ class Log(db.Model):
     http_referer = db.Column(db.Text)
     http_user_agent = db.Column(db.Text)
 
-    # TODO fix. flask migrate does not work with this column
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     @property
