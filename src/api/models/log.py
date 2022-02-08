@@ -1,33 +1,14 @@
-import datetime as datetime
-
-import sqlalchemy as sa
+from sqlalchemy.dialects import postgresql
 
 from api.extensions import db
 
 
 # TODO delete, only for tests
-class User(db.Model):
-    __tablename__ = "user"
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), nullable=False, unique=True)
-
-
-# TODO move to Log class
-class LogB(db.Model):
-    __tablename__ = "log"
-
-    id = db.Column(db.Integer, db.Sequence("some_id_seq"), primary_key=True)
-    remote_addr = db.Column(sa.dialects.postgresql.INET(), nullable=True)
-    remote_user = db.Column(db.TEXT(), nullable=True)
-    time_local = db.Column(db.TIMESTAMP(timezone=True), nullable=True)
-    request = db.Column(db.TEXT(), nullable=True)
-    status = db.Column(db.SMALLINT(), nullable=True)
-    body_bytes_sent = db.Column(db.INTEGER(), nullable=True)
-    http_referer = db.Column(db.TEXT(), nullable=True)
-    http_user_agent = db.Column(db.TEXT(), nullable=True)
-
-    db.PrimaryKeyConstraint("id", name="log_pkey")
+# class User(db.Model):
+#    __tablename__ = "user"
+#
+#    id = db.Column(db.Integer, primary_key=True)
+#    username = db.Column(db.String(80), nullable=False, unique=True)
 
 
 class LogFile:
@@ -47,26 +28,23 @@ class LogFile:
         }
 
 
-class Log:
-    def __init__(
-        self,
-        remote_addr: str,
-        remote_user: str,
-        time_local: datetime.datetime,
-        request: str,
-        status: int,
-        body_bytes_sent: int,
-        http_referer: str,
-        http_user_agent: str,
-    ):
-        self.remote_addr = remote_addr
-        self.remote_user = remote_user
-        self.time_local = time_local
-        self.request = request
-        self.status = status
-        self.body_bytes_sent = body_bytes_sent
-        self.http_referer = http_referer
-        self.http_user_agent = http_user_agent
+class Log(db.Model):
+    """
+    Serial column:
+    https://stackoverflow.com/questions/20848300/unable-to-create-autoincrementing-primary-key-with-flask-sqlalchemy
+    """
+
+    __tablename__ = "log"
+
+    id = db.Column(db.Integer, primary_key=True)
+    remote_addr = db.Column(postgresql.INET)
+    remote_user = db.Column(db.Text)
+    time_local = db.Column(db.TIMESTAMP(timezone=True))
+    request = db.Column(db.Text)
+    status = db.Column(db.SmallInteger)
+    body_bytes_sent = db.Column(db.Integer)
+    http_referer = db.Column(db.Text)
+    http_user_agent = db.Column(db.Text)
 
     @property
     def data(self):
