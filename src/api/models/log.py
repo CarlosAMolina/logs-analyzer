@@ -3,14 +3,6 @@ from sqlalchemy.dialects import postgresql
 from api.extensions import db
 
 
-# TODO delete, only for tests
-# class User(db.Model):
-#    __tablename__ = "user"
-#
-#    id = db.Column(db.Integer, primary_key=True)
-#    username = db.Column(db.String(80), nullable=False, unique=True)
-
-
 class LogFile:
     def __init__(
         self,
@@ -45,6 +37,9 @@ class Log(db.Model):
     body_bytes_sent = db.Column(db.Integer)
     http_referer = db.Column(db.Text)
     http_user_agent = db.Column(db.Text)
+
+    # TODO fix. flask migrate does not work with this column
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     @property
     def data(self):

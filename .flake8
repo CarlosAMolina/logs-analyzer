@@ -3,4 +3,5 @@
 max-line-length = 88
 extend-ignore = E203
 per-file-ignores =
-    src/api/app.py: E402
+    src/api/app.py: F401, E402, E501
+

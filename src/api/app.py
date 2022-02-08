@@ -8,9 +8,9 @@ import flask
 import flask_migrate
 import flask_restful
 
-# Required to create it's table in the database
-# TODO use correct class
-# from api.models.log import LogB
+from api.models.user import User  # Required to create it's table in the database
+
+# from api.models.log import Log # Not required to import to create db. I don't know why.
 from api import config
 from api.extensions import db
 from api.resources import log as log_resources
@@ -29,7 +29,6 @@ def get_app():
 
 def register_extensions(app):
     db.init_app(app)
-    # migrate = flask_migrate.Migrate(app, db) # TODO delte if not required
     flask_migrate.Migrate(app, db)
 
 
